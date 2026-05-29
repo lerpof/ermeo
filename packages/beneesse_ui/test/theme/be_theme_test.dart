@@ -54,6 +54,51 @@ void main() {
       expect(theme.textTheme.bodyLarge?.color, colors.textPrimary);
       expect(theme.textTheme.headlineLarge?.color, colors.textPrimary);
     });
+
+    test('light theme configures component themes from semantic tokens', () {
+      final theme = BeTheme.light;
+      final colors = theme.extension<BeColorTokens>()!;
+      final radius = theme.extension<BeRadiusTokens>()!;
+
+      expect(theme.appBarTheme.backgroundColor, colors.surfacePrimary);
+      expect(theme.appBarTheme.foregroundColor, colors.textPrimary);
+      expect(theme.inputDecorationTheme.fillColor, colors.surfaceSecondary);
+      expect(
+        theme.inputDecorationTheme.enabledBorder,
+        isA<OutlineInputBorder>(),
+      );
+      expect(theme.navigationBarTheme.backgroundColor, colors.surfacePrimary);
+      expect(theme.navigationBarTheme.indicatorColor, colors.brandSecondary);
+      expect(theme.cardTheme.color, colors.surfaceElevated);
+      expect(
+        (theme.cardTheme.shape as RoundedRectangleBorder).borderRadius,
+        BorderRadius.circular(radius.card),
+      );
+    });
+
+    test('navigationBarTheme resolves label and icon styles by state', () {
+      final theme = BeTheme.light;
+      final colors = theme.extension<BeColorTokens>()!;
+      final labelStyle = theme.navigationBarTheme.labelTextStyle!;
+      final iconTheme = theme.navigationBarTheme.iconTheme!;
+
+      expect(
+        labelStyle.resolve({WidgetState.selected})?.color,
+        colors.brandPrimary,
+      );
+      expect(
+        labelStyle.resolve({WidgetState.disabled})?.color,
+        colors.textDisabled,
+      );
+      expect(
+        iconTheme.resolve({WidgetState.selected})?.color,
+        colors.brandPrimary,
+      );
+      expect(
+        iconTheme.resolve({WidgetState.disabled})?.color,
+        colors.iconDisabled,
+      );
+    });
   });
 
   group('BeThemeContext', () {

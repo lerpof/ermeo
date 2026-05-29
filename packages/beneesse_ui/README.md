@@ -58,14 +58,83 @@ Widget build(BuildContext context) {
       borderRadius: BorderRadius.circular(radius.card),
       boxShadow: shadows.card,
     ),
-    child: Text(
-      'Hello',
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-        color: colors.textPrimary,
-      ),
-    ),
+    child: BeText('Hello', variant: BeTextVariant.bodyLarge),
   );
 }
+```
+
+## Components
+
+### Atoms
+
+```dart
+import 'package:beneesse_ui/beneesse_ui.dart';
+
+// Typography
+BeText('Welcome back', variant: BeTextVariant.headlineMedium);
+BeText('Error message', color: BeTextColor.error);
+
+// Icons
+BeIcon(Icons.home, size: BeIconSize.md, color: BeIconColor.primary);
+
+// Divider
+BeDivider();
+
+// Buttons — text, text+icon, or icon-only
+BeButton(label: 'Continue', onPressed: () => bloc.add(...));
+BeButton(
+  label: 'Save',
+  icon: Icons.save,
+  variant: BeButtonVariant.secondary,
+  onPressed: onSave,
+);
+BeButton.icon(
+  icon: Icons.close,
+  variant: BeButtonVariant.ghost,
+  onPressed: onClose,
+);
+```
+
+### Molecules
+
+```dart
+// Text field — error text comes from BLoC state
+BeTextField(
+  label: 'Email',
+  controller: emailController,
+  errorText: state.emailError,
+  onChanged: (value) => bloc.add(EmailChanged(value)),
+);
+
+// App bar with optional back button
+BeAppBar(
+  title: 'Settings',
+  showBackButton: true,
+  onBack: () => context.pop(),
+  actions: [
+    BeButton.icon(icon: Icons.search, onPressed: onSearch),
+  ],
+);
+
+// Bottom navigation (Material 3 NavigationBar)
+BeBottomNavBar(
+  selectedIndex: state.tabIndex,
+  onDestinationSelected: (index) => bloc.add(TabSelected(index)),
+  destinations: [
+    BeNavDestination(
+      icon: BeIcon(Icons.home_outlined, color: BeIconColor.secondary),
+      selectedIcon: BeIcon(Icons.home),
+      label: 'Home',
+    ),
+    // ...
+  ],
+);
+
+// Card with optional tap
+BeCard(
+  onTap: onTap,
+  child: BeText('Card content'),
+);
 ```
 
 ## Public API
@@ -82,6 +151,9 @@ Exported from `package:beneesse_ui/beneesse_ui.dart`:
 | `BeShadowTokens` | Semantic elevation shadows |
 | `BeTypographyTokens` | Typography `TextTheme` bundle |
 | `BeSemanticTokens` | Full resolved token bundle per theme |
+| `BeText`, `BeIcon`, `BeDivider`, `BeButton` | Atoms |
+| `BeTextField`, `BeAppBar`, `BeBottomNavBar`, `BeCard` | Molecules |
+| `BeButtonVariant`, `BeButtonSize`, `BeNavDestination` | Component enums / models |
 
 Primitive token classes (`BePrimitiveColors`, etc.) are internal to the package.
 
@@ -102,12 +174,6 @@ Reference syntax: `{color.brand.500}`, `{spacing.md}`, `{radius.lg}`, `{shadow.e
 
 Both themes must define identical semantic keys.
 
-## Deferred (follow-up)
-
-- Atoms: `BeText`, `BeButton`, `BeIcon`, `BeDivider`
-- Molecules: `BeTextField`, `BeAppBar`, `BeCard`
-- Component gallery and golden tests
-
 ## Dependency rules
 
 - No dependency on `beneesse_api`.
@@ -121,4 +187,4 @@ cd packages/beneesse_ui && fvm flutter test
 melos run test
 ```
 
-Tests cover token codegen validation, semantic resolution, and theme wiring.
+Tests cover token codegen validation, semantic resolution, theme wiring, widget tests, and golden tests for all shared components under `test/goldens/`.
