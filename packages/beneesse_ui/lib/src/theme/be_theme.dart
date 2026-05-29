@@ -55,6 +55,88 @@ abstract final class BeTheme {
       scaffoldBackgroundColor: colors.backgroundPrimary,
       dividerColor: colors.divider,
       textTheme: textTheme,
+      appBarTheme: AppBarTheme(
+        backgroundColor: colors.surfacePrimary,
+        foregroundColor: colors.textPrimary,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: textTheme.titleLarge?.copyWith(
+          color: colors.textPrimary,
+        ),
+        iconTheme: IconThemeData(color: colors.iconPrimary),
+        actionsIconTheme: IconThemeData(color: colors.iconPrimary),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: colors.surfaceSecondary,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: tokens.spacing.pagePadding,
+          vertical: tokens.spacing.componentGap,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.input),
+          borderSide: BorderSide(color: colors.borderDefault),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.input),
+          borderSide: BorderSide(color: colors.borderDefault),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.input),
+          borderSide: BorderSide(color: colors.borderFocus, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.input),
+          borderSide: BorderSide(color: colors.errorPrimary),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.input),
+          borderSide: BorderSide(color: colors.errorPrimary, width: 2),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.input),
+          borderSide: BorderSide(color: colors.borderDefault),
+        ),
+        labelStyle: textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
+        hintStyle: textTheme.bodyMedium?.copyWith(color: colors.textTertiary),
+        helperStyle: textTheme.bodySmall?.copyWith(color: colors.textTertiary),
+        errorStyle: textTheme.bodySmall?.copyWith(color: colors.errorPrimary),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: colors.surfacePrimary,
+        indicatorColor: colors.brandSecondary,
+        elevation: 0,
+        height: tokens.spacing.componentGap * 7,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return textTheme.labelMedium?.copyWith(color: colors.textDisabled);
+          }
+          if (states.contains(WidgetState.selected)) {
+            return textTheme.labelMedium?.copyWith(color: colors.brandPrimary);
+          }
+          return textTheme.labelMedium?.copyWith(color: colors.textSecondary);
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return IconThemeData(color: colors.iconDisabled);
+          }
+          if (states.contains(WidgetState.selected)) {
+            return IconThemeData(color: colors.brandPrimary);
+          }
+          return IconThemeData(color: colors.iconSecondary);
+        }),
+      ),
+      cardTheme: CardThemeData(
+        color: colors.surfaceElevated,
+        elevation: 0,
+        shadowColor: colors.overlay.withValues(alpha: 0.1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(tokens.radius.card),
+        ),
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+      ),
       extensions: [
         tokens.colors,
         tokens.spacing,
