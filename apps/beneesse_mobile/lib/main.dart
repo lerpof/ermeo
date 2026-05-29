@@ -1,3 +1,4 @@
+import 'package:beneesse_ui/beneesse_ui.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,8 +10,11 @@ class BeneesseMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
+    return MaterialApp(
+      theme: BeTheme.light,
+      darkTheme: BeTheme.dark,
+      themeMode: ThemeMode.system,
+      home: const Scaffold(
         body: Center(
           child: Text('beneesse_mobile'),
         ),

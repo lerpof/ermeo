@@ -30,3 +30,6 @@ melos:
     clean:
       description: Remove build artifacts from all packages.
       run: melos exec -- "flutter clean 2>/dev/null || true"
+    generate:tokens:
+      description: Regenerate design tokens for beneesse_ui.
+      run: melos exec --scope=beneesse_ui -- "dart run tool/generate_tokens.dart"
