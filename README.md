@@ -2,6 +2,8 @@
 
 Flutter monorepo for Beneesse mobile apps and shared packages. Managed with [Melos 7](https://melos.invertase.dev/) and Dart pub workspaces, pinned to Flutter **3.44.0** via [FVM](https://fvm.app/).
 
+**Project principles:** see [`docs/`](docs/index.md) — required reading for contributors and AI assistants. Clean Architecture, BLoC conventions, and testing standards are in [`docs/principles/`](docs/principles/clean-architecture.md).
+
 ## Structure
 
 ```text
