@@ -10,7 +10,7 @@ Project principles and conventions for humans and AI assistants working in this 
 | [Clean architecture](principles/clean-architecture.md) | Feature/core layout, BLoC rules, layer flow, anti-patterns |
 | [Testing](principles/testing.md) | Coverage targets, BLoC/repo/package tests, golden tests for `beneesse_ui` |
 | [Code quality](principles/code-quality.md) | Dart/Flutter standards, scope, testing, documentation |
-| [Git and workflow](principles/git-and-workflow.md) | Branches, commits, reviews, what not to commit |
+| [Git and workflow](principles/git-and-workflow.md) | Gitflow (`develop` + `main`), commits, PRs, what not to commit |
 | [Tooling](principles/tooling.md) | FVM, Melos, workspace commands, adding packages |
 | [AI guidelines](principles/ai-guidelines.md) | How AI should plan, implement, and verify changes |
 
