@@ -1,5 +1,7 @@
 import 'package:beneesse_api/beneesse_api.dart';
 
+import 'session_notifier.dart';
+
 /// Application-wide dependency placeholders.
 ///
 /// Wire real token storage and base URL during app bootstrap.
@@ -9,9 +11,29 @@ class ServiceLocator {
   static final ServiceLocator instance = ServiceLocator._();
 
   late final BeneesseApiClient apiClient;
+  final SessionNotifier sessionNotifier = SessionNotifier();
 
+  bool _initialized = false;
   String? _accessToken;
   String? _refreshToken;
+
+  bool get isAuthenticated =>
+      _accessToken != null && _accessToken!.isNotEmpty;
+
+  void setSession({
+    required String accessToken,
+    required String refreshToken,
+  }) {
+    _accessToken = accessToken;
+    _refreshToken = refreshToken;
+    sessionNotifier.notifySessionChanged();
+  }
+
+  void clearSession() {
+    _accessToken = null;
+    _refreshToken = null;
+    sessionNotifier.notifySessionChanged();
+  }
 
   void init({
     required String baseUrl,
@@ -22,6 +44,11 @@ class ServiceLocator {
     _accessToken = accessToken;
     _refreshToken = refreshToken;
 
+    if (_initialized) {
+      return;
+    }
+    _initialized = true;
+
     apiClient = BeneesseApiClient(
       baseUrl: baseUrl,
       accessTokenReader: () => _accessToken,
@@ -29,6 +56,7 @@ class ServiceLocator {
         _accessToken = access;
         _refreshToken = refresh;
         onTokensUpdated?.call(access, refresh);
+        sessionNotifier.notifySessionChanged();
       },
       refreshTokens: () async {
         final currentRefresh = _refreshToken;
