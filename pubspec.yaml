@@ -50,5 +50,7 @@ melos:
       description: Run beneesse_mobile against local API (dev env, localhost URL).
       run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json --dart-define=BENEESE_API_BASE_URL=http://localhost:8000"
     generate:api:
-      description: Regenerate Dio client from contracts/openapi.yaml (requires Java 8+).
-      run: melos exec --scope=beneesse_api -- "dart run build_runner build --delete-conflicting-outputs"
+      description: Fetch OpenAPI from running API (GET /openapi.yaml), then regenerate Dio client (requires Java 8+).
+      run: |
+        bash scripts/fetch-openapi-spec.sh
+        melos exec --scope=beneesse_api -- "dart run build_runner build --delete-conflicting-outputs"

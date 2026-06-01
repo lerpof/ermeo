@@ -1,6 +1,6 @@
 # beneesse_api_client
 
-Dio HTTP client and models generated from `contracts/openapi.yaml`.
+Dio HTTP client and models generated from `openapi/openapi.yaml` (fetched from `GET /openapi.yaml`).
 
 Regenerate from `beneesse/packages/beneesse_api`:
 

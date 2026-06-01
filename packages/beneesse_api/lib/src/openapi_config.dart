@@ -5,7 +5,7 @@ import 'package:openapi_generator_annotations/openapi_generator_annotations.dart
     pubName: 'beneesse_api_client',
     pubAuthor: 'Beneesse',
   ),
-  inputSpec: InputSpec(path: '../../../contracts/openapi.yaml'),
+  inputSpec: InputSpec(path: 'openapi/openapi.yaml'),
   generatorName: Generator.dio,
   runSourceGenOnOutput: true,
   outputDirectory: 'lib/generated/beneesse_api_client',

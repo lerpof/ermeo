@@ -34,7 +34,7 @@ Common commands (from repository root):
 | `melos run test` | Run tests in all packages |
 | `melos run format` | Format all packages |
 | `melos run clean` | Clean build artifacts |
-| `melos run generate:api` | Regenerate `beneesse_api` Dio client from `contracts/openapi.yaml` |
+| `melos run generate:api` | Fetch OpenAPI from running BFF (`GET /openapi.yaml`), then regenerate `beneesse_api` |
 
 Cursor slash commands in [`.cursor/commands/`](../../.cursor/commands/) wrap these workflows for agents.
 
@@ -54,11 +54,11 @@ fvm flutter run
 
 ## OpenAPI client generation (`beneesse_api`)
 
-The mobile API package uses [`openapi_generator`](https://pub.dev/packages/openapi_generator). The canonical spec lives at the workspace parent: `WellEsse/contracts/openapi.yaml`.
+The mobile API package uses [`openapi_generator`](https://pub.dev/packages/openapi_generator). The canonical spec lives in `backend/openapi/openapi.yaml` and is fetched from the running API during `melos run generate:api`.
 
 **Prerequisite:** Java 8 or newer (`java -version`). The generator wraps the OpenAPI Generator CLI.
 
-Regenerate after contract changes:
+Regenerate after contract changes (API must be running on `http://localhost:8000`, or the script falls back to `backend/openapi/openapi.yaml`):
 
 ```bash
 cd beneesse
