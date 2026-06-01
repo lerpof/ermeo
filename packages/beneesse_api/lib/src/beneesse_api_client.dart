@@ -47,6 +47,7 @@ class BeneesseApiClient {
 
   gen.HealthApi get health => _generated.health;
   gen.AuthApi get auth => _generated.auth;
+  gen.ExercisesApi get exercises => _generated.exercises;
   gen.WorkoutsApi get workouts => _generated.workouts;
   gen.SessionsApi get sessions => _generated.sessions;
   gen.InstructorsApi get instructors => _generated.instructors;

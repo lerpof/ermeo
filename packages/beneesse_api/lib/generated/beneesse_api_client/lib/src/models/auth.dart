@@ -1,4 +1,12 @@
 // coverage:ignore-file
+enum UserRole {
+  athlete,
+  instructor,
+  admin;
+
+  String get value => name;
+}
+
 class RegisterRequest {
   RegisterRequest({
     required this.email,
@@ -9,14 +17,14 @@ class RegisterRequest {
 
   final String email;
   final String password;
-  final String role;
+  final UserRole role;
   final String displayName;
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
-        'role': role,
-        'displayName': displayName,
+        'role': role.value,
+        'display_name': displayName,
       };
 }
 

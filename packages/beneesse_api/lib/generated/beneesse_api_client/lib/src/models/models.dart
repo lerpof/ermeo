@@ -2,6 +2,7 @@
 export 'api_error.dart';
 export 'assignment.dart';
 export 'auth.dart';
+export 'exercise.dart';
 export 'health.dart';
 export 'instructor.dart';
 export 'session.dart';

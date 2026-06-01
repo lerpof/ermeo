@@ -59,5 +59,10 @@ void main() {
 
       expect(status, 'ok');
     });
+
+    test('exposes exercises API', () {
+      final client = BeneesseApiClient(baseUrl: 'https://api.example.com');
+      expect(client.exercises, isNotNull);
+    });
   });
 }
