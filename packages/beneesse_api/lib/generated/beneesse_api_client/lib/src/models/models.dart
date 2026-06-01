@@ -1,0 +1,8 @@
+// coverage:ignore-file
+export 'api_error.dart';
+export 'assignment.dart';
+export 'auth.dart';
+export 'health.dart';
+export 'instructor.dart';
+export 'session.dart';
+export 'workout.dart';

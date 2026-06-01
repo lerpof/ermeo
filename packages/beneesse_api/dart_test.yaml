@@ -1,0 +1,7 @@
+tags:
+  exclude:
+    - generated
+
+paths:
+  exclude:
+    - lib/generated/**

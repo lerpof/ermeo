@@ -1,0 +1,2 @@
+# Preserve hand-edited files if any; regenerate overwrites most of lib/generated/
+README.md

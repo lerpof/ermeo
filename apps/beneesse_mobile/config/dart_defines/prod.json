@@ -1,0 +1,4 @@
+{
+  "APP_ENV": "prod",
+  "BENEESE_API_BASE_URL": "TODO: set production API base URL"
+}

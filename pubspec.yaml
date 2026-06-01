@@ -40,3 +40,15 @@ melos:
     run:widgetbook:
       description: Run the Widgetbook catalog in Chrome.
       run: melos exec --scope=beneesse_widgetbook -- "flutter run -d chrome"
+    run:mobile:dev:
+      description: Run beneesse_mobile with dev dart-defines.
+      run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json"
+    run:mobile:prod:
+      description: Run beneesse_mobile with prod dart-defines.
+      run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/prod.json"
+    run:mobile:localhost:
+      description: Run beneesse_mobile against local API (dev env, localhost URL).
+      run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json --dart-define=BENEESE_API_BASE_URL=http://localhost:8000"
+    generate:api:
+      description: Regenerate Dio client from contracts/openapi.yaml (requires Java 8+).
+      run: melos exec --scope=beneesse_api -- "dart run build_runner build --delete-conflicting-outputs"
