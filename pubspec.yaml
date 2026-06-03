@@ -15,6 +15,7 @@ workspace:
   - packages/beneesse_secure_storage
   - packages/beneesse_ui
   - packages/beneesse_monitoring
+  - packages/beneesse_l10n
 
 melos:
   sdkPath: .fvm/flutter_sdk
@@ -35,6 +36,11 @@ melos:
     generate:tokens:
       description: Regenerate design tokens for beneesse_ui.
       run: melos exec --scope=beneesse_ui -- "dart run tool/generate_tokens.dart"
+    generate:l10n:
+      description: Regenerate BeLocalizations from ARB files.
+      run: |
+        melos exec --scope=beneesse_l10n -- "flutter gen-l10n"
+        melos exec --scope=beneesse_l10n -- "dart run tool/ensure_generated_coverage_ignore.dart"
     generate:widgetbook:
       description: Regenerate Widgetbook directories for beneesse_widgetbook.
       run: melos exec --scope=beneesse_widgetbook -- "dart run build_runner build -d"

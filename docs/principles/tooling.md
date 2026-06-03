@@ -35,6 +35,7 @@ Common commands (from repository root):
 | `melos run format` | Format all packages |
 | `melos run clean` | Clean build artifacts |
 | `melos run generate:api` | Fetch OpenAPI from running BFF (`GET /openapi.yaml`), then regenerate `beneesse_api` |
+| `melos run generate:l10n` | Regenerate `BeLocalizations` from ARB files in `beneesse_l10n` |
 
 Cursor slash commands in [`.cursor/commands/`](../../.cursor/commands/) wrap these workflows for agents.
 

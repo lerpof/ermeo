@@ -22,6 +22,7 @@ beneesse/
 | `beneesse_api` | Pure Dart | HTTP clients, DTOs, API contracts — no Flutter dependency |
 | `beneesse_ui` | Flutter | Shared widgets, themes, design system |
 | `beneesse_monitoring` | Flutter | Logging, crash reporting, analytics, observability |
+| `beneesse_l10n` | Flutter | ARB strings, generated `BeLocalizations`, localization helpers |
 | `beneesse_mobile` | Flutter app | End-user mobile application |
 
 ## Dependency rules
@@ -34,14 +35,16 @@ flowchart TB
   API[beneesse_api]
   UI[beneesse_ui]
   Mon[beneesse_monitoring]
+  L10n[beneesse_l10n]
   Mobile --> API
   Mobile --> UI
   Mobile --> Mon
+  Mobile --> L10n
 ```
 
-- **`beneesse_mobile`** may depend on all three packages.
+- **`beneesse_mobile`** may depend on workspace packages listed above.
 - **`beneesse_api`** is consumed **only** by `beneesse_mobile`. UI and monitoring must not import it.
-- **`beneesse_ui`** and **`beneesse_monitoring`** are standalone. They must not depend on `beneesse_api` or on each other unless a future ADR says otherwise.
+- **`beneesse_ui`**, **`beneesse_l10n`**, and **`beneesse_monitoring`** are standalone. They must not depend on `beneesse_api` or on each other unless a future ADR says otherwise.
 - **Packages must not depend on apps.**
 
 Rationale: the API layer stays in the app’s domain. UI and monitoring remain reusable without coupling to backend contracts.
@@ -60,6 +63,7 @@ Rationale: the API layer stays in the app’s domain. UI and monitoring remain r
 | BLoC + events/states | `apps/beneesse_mobile/lib/features/<feature>/bloc/` |
 | Screens/widgets | `apps/beneesse_mobile/lib/features/<feature>/presentation/{pages,views,widgets}/` |
 | Shared design system | `packages/beneesse_ui` |
+| User-visible strings (ARB, `BeLocalizations`) | `packages/beneesse_l10n` |
 | Crashlytics, Sentry, analytics wrappers | `packages/beneesse_monitoring` |
 | Router, DI, app bootstrap, cross-feature utilities | `apps/beneesse_mobile/lib/core/` |
 

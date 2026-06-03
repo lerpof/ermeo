@@ -9,6 +9,7 @@ Instructions for Cursor and other AI assistants working in the Beneesse reposito
 3. Confirm **dependency rules** in [architecture.md](architecture.md), especially for `beneesse_api`.
 4. Inspect existing code in the target folder and **match its style**.
 5. For app feature work, read [clean-architecture.md](clean-architecture.md) and identify the correct layer before writing code.
+6. For user-visible copy or ARB keys, read [localization.md](../guides/localization.md) and apply the `add-l10n-string` skill in [`.cursor/skills/add-l10n-string/`](../../.cursor/skills/add-l10n-string/).
 
 ## Clean Architecture checklist
 
@@ -44,7 +45,9 @@ Before implementing app feature code, confirm:
 |----------------------|----------|-----------|
 | API calls, DTOs | `beneesse_api` | Add Flutter imports |
 | Shared widgets / theme | `beneesse_ui` | Import `beneesse_api` |
+| User-visible strings (ARB) | `beneesse_l10n` | Import `beneesse_api`; use l10n in BLoC |
 | Logging / crash / analytics | `beneesse_monitoring` | Import `beneesse_api` |
+| User-visible strings (ARB) | `beneesse_l10n` | Import `beneesse_api`; use l10n from BLoC |
 | App flow, screens, wiring | `beneesse_mobile` | Move app-specific logic into packages prematurely |
 
 ### Quality bar

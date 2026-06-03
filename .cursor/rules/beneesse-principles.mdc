@@ -15,6 +15,7 @@ Before planning or implementing any change, read and follow the documentation in
 - [docs/principles/git-and-workflow.md](../../docs/principles/git-and-workflow.md) — commits and PRs
 - [docs/principles/tooling.md](../../docs/principles/tooling.md) — FVM, Melos, commands
 - [docs/principles/ai-guidelines.md](../../docs/principles/ai-guidelines.md) — AI-specific workflow
+- [docs/guides/localization.md](../../docs/guides/localization.md) — ARB keys and adding strings (`beneesse_l10n`)
 
 ## Critical rules
 

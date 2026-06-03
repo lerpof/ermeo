@@ -6,7 +6,7 @@ Testing and coverage policy for the Beneesse workspace.
 
 | Target | Requirement |
 |--------|-------------|
-| All workspace **packages** (`beneesse_api`, `beneesse_ui`, `beneesse_monitoring`) | **100% line coverage** |
+| All workspace **packages** (`beneesse_api`, `beneesse_ui`, `beneesse_monitoring`, `beneesse_l10n`) | **100% line coverage** |
 | App **BLoCs** | **100% coverage** |
 | App **repositories** (in feature `data/`) | **100% coverage** |
 | App **presentation** layer (`presentation/views`, `widgets`, `pages`) | **Excluded** from coverage thresholds |
@@ -37,6 +37,7 @@ Testing and coverage policy for the Beneesse workspace.
 |---------|----------|
 | `beneesse_api` | Unit tests for pure Dart — clients, parsers, error mapping |
 | `beneesse_ui` | Widget tests **and golden tests** for shared components |
+| `beneesse_l10n` | Widget tests for `context.l10n` and delegate wiring |
 | `beneesse_monitoring` | Unit/widget tests for wrappers and configuration |
 
 ### Running tests
