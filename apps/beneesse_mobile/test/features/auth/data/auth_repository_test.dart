@@ -1,5 +1,5 @@
 import 'package:beneesse_api/beneesse_api.dart';
-import 'package:beneesse_mobile/core/di/service_locator.dart';
+import 'package:beneesse_mobile/core/session/session_service.dart';
 import 'package:beneesse_mobile/features/auth/data/auth_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,14 +9,16 @@ class _MockBeneesseApiClient extends Mock implements BeneesseApiClient {}
 
 class _MockAuthApi extends Mock implements AuthApi {}
 
+class _MockSessionService extends Mock implements SessionService {}
+
 void main() {
   group('AuthRepositoryImpl', () {
     late _MockBeneesseApiClient apiClient;
     late _MockAuthApi authApi;
+    late _MockSessionService sessionService;
     late AuthRepositoryImpl repository;
 
     setUpAll(() {
-      ServiceLocator.instance.init(baseUrl: 'https://api.test');
       registerFallbackValue(
         LoginRequest(email: 'a@b.com', password: 'password'),
       );
@@ -33,6 +35,7 @@ void main() {
     setUp(() {
       apiClient = _MockBeneesseApiClient();
       authApi = _MockAuthApi();
+      sessionService = _MockSessionService();
       when(() => apiClient.auth).thenReturn(authApi);
       when(() => apiClient.run<AuthTokens>(any())).thenAnswer(
         (invocation) async {
@@ -41,10 +44,17 @@ void main() {
           return call();
         },
       );
-      repository = AuthRepositoryImpl(apiClient: apiClient);
+      when(
+        () => sessionService.setSession(
+          accessToken: any(named: 'accessToken'),
+          refreshToken: any(named: 'refreshToken'),
+        ),
+      ).thenAnswer((_) async {});
+      repository = AuthRepositoryImpl(
+        apiClient: apiClient,
+        sessionService: sessionService,
+      );
     });
-
-    tearDown(ServiceLocator.instance.clearSession);
 
     test('login stores session on success', () async {
       when(() => authApi.loginUser(any())).thenAnswer(
@@ -61,7 +71,12 @@ void main() {
 
       await repository.login(email: 'user@test.com', password: 'password1');
 
-      expect(ServiceLocator.instance.isAuthenticated, isTrue);
+      verify(
+        () => sessionService.setSession(
+          accessToken: 'access',
+          refreshToken: 'refresh',
+        ),
+      ).called(1);
       verify(() => authApi.loginUser(any())).called(1);
     });
 
@@ -85,7 +100,12 @@ void main() {
         role: UserRole.instructor,
       );
 
-      expect(ServiceLocator.instance.isAuthenticated, isTrue);
+      verify(
+        () => sessionService.setSession(
+          accessToken: 'access',
+          refreshToken: 'refresh',
+        ),
+      ).called(1);
       verify(() => authApi.registerUser(any())).called(1);
     });
 
@@ -102,7 +122,12 @@ void main() {
         repository.login(email: 'user@test.com', password: 'wrongpass'),
         throwsA(isA<ApiException>()),
       );
-      expect(ServiceLocator.instance.isAuthenticated, isFalse);
+      verifyNever(
+        () => sessionService.setSession(
+          accessToken: any(named: 'accessToken'),
+          refreshToken: any(named: 'refreshToken'),
+        ),
+      );
     });
   });
 }

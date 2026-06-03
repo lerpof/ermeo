@@ -1,6 +1,6 @@
 import 'package:beneesse_api/beneesse_api.dart';
 
-import '../../../core/di/service_locator.dart';
+import '../../../core/session/session_service.dart';
 
 abstract class AuthRepository {
   Future<void> login({
@@ -17,10 +17,14 @@ abstract class AuthRepository {
 }
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({BeneesseApiClient? apiClient})
-      : _api = apiClient ?? ServiceLocator.instance.apiClient;
+  AuthRepositoryImpl({
+    required BeneesseApiClient apiClient,
+    required SessionService sessionService,
+  })  : _api = apiClient,
+        _sessionService = sessionService;
 
   final BeneesseApiClient _api;
+  final SessionService _sessionService;
 
   @override
   Future<void> login({
@@ -32,7 +36,7 @@ class AuthRepositoryImpl implements AuthRepository {
           .loginUser(LoginRequest(email: email, password: password))
           .then((r) => r.data!),
     );
-    ServiceLocator.instance.setSession(
+    await _sessionService.setSession(
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
     );
@@ -57,7 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
           )
           .then((r) => r.data!),
     );
-    ServiceLocator.instance.setSession(
+    await _sessionService.setSession(
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
     );

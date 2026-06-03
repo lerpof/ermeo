@@ -1,38 +1,81 @@
+import 'package:beneesse_api/beneesse_api.dart';
+import 'package:beneesse_secure_storage/beneesse_secure_storage.dart';
 import 'package:beneesse_ui/beneesse_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/config/app_config.dart';
-import 'core/di/service_locator.dart';
 import 'core/router/app_router.dart';
+import 'core/session/session_service.dart';
 import 'features/auth/data/auth_repository.dart';
 import 'features/exercises/data/exercise_repository.dart';
 
-void main() {
-  ServiceLocator.instance.init(baseUrl: AppConfig.apiBaseUrl);
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  final authRepository = AuthRepositoryImpl();
-  final exerciseRepository = ExerciseRepositoryImpl();
-  final appRouter = AppRouter(
-    authRepository: authRepository,
-    exerciseRepository: exerciseRepository,
+  final tokenStorage = FlutterTokenSecureStorage();
+  final sessionService = SessionServiceImpl(
+    tokenStorage: tokenStorage,
+    baseUrl: AppConfig.apiBaseUrl,
+  );
+  await sessionService.restore();
+
+  final apiClient = BeneesseApiClient(
+    baseUrl: AppConfig.apiBaseUrl,
+    accessTokenReader: sessionService.readAccessToken,
+    accessTokenWriter: sessionService.onTokensUpdated,
+    refreshTokens: sessionService.refreshTokens,
   );
 
-  runApp(BeneesseMobileApp(router: appRouter.router));
+  final authRepository = AuthRepositoryImpl(
+    apiClient: apiClient,
+    sessionService: sessionService,
+  );
+  final exerciseRepository = ExerciseRepositoryImpl(apiClient: apiClient);
+  final appRouter = AppRouter(
+    sessionService: sessionService,
+  );
+
+  runApp(
+    BeneesseMobileApp(
+      appRouter: appRouter,
+      sessionService: sessionService,
+      authRepository: authRepository,
+      exerciseRepository: exerciseRepository,
+    ),
+  );
 }
 
 class BeneesseMobileApp extends StatelessWidget {
-  const BeneesseMobileApp({required this.router, super.key});
+  const BeneesseMobileApp({
+    required this.appRouter,
+    required this.sessionService,
+    required this.authRepository,
+    required this.exerciseRepository,
+    super.key,
+  });
 
-  final GoRouter router;
+  final AppRouter appRouter;
+  final SessionService sessionService;
+  final AuthRepository authRepository;
+  final ExerciseRepository exerciseRepository;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: BeTheme.light,
-      darkTheme: BeTheme.dark,
-      themeMode: ThemeMode.system,
-      routerConfig: router,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>.value(value: authRepository),
+        RepositoryProvider<ExerciseRepository>.value(value: exerciseRepository),
+      ],
+      child: MaterialApp.router(
+        theme: BeTheme.light,
+        darkTheme: BeTheme.dark,
+        themeMode: ThemeMode.system,
+        routerConfig: appRouter.config(
+          reevaluateListenable: sessionService.listenable,
+          navigatorObservers: () => const [],
+        ),
+      ),
     );
   }
 }

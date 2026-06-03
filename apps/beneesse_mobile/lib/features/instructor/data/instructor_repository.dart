@@ -1,6 +1,5 @@
 import 'package:beneesse_api/beneesse_api.dart' hide InstructorSummary;
 
-import '../../../core/di/service_locator.dart';
 import '../models/instructor_summary.dart';
 import 'instructor_converter.dart';
 
@@ -10,9 +9,9 @@ abstract class InstructorRepository {
 
 class InstructorRepositoryImpl implements InstructorRepository {
   InstructorRepositoryImpl({
-    BeneesseApiClient? apiClient,
+    required BeneesseApiClient apiClient,
     InstructorConverter? converter,
-  })  : _api = apiClient ?? ServiceLocator.instance.apiClient,
+  })  : _api = apiClient,
         _converter = converter ?? const InstructorConverter();
 
   final BeneesseApiClient _api;

@@ -1,25 +1,42 @@
-import 'package:beneesse_mobile/core/di/service_locator.dart';
+import 'package:beneesse_mobile/core/session/session_service.dart';
 import 'package:beneesse_mobile/core/router/app_router.dart';
-import 'package:beneesse_mobile/features/auth/data/auth_repository.dart';
-import 'package:beneesse_mobile/features/exercises/data/exercise_repository.dart';
+import 'package:beneesse_secure_storage/beneesse_secure_storage.dart';
 import 'package:beneesse_mobile/main.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class _MockAuthRepository extends Mock implements AuthRepository {}
+import 'helpers/fakes.dart';
 
-class _MockExerciseRepository extends Mock implements ExerciseRepository {}
+class _InMemoryTokenStorage implements TokenSecureStorage {
+  @override
+  Future<void> clearTokens() async {}
+
+  @override
+  Future<SessionTokens?> readTokens() async => null;
+
+  @override
+  Future<void> writeTokens(SessionTokens tokens) async {}
+}
 
 void main() {
   testWidgets('shows login when unauthenticated', (tester) async {
-    ServiceLocator.instance.init(baseUrl: 'https://api.test');
+    final sessionService = SessionServiceImpl(
+      tokenStorage: _InMemoryTokenStorage(),
+      baseUrl: 'https://api.test',
+    );
+    await sessionService.restore();
 
     final appRouter = AppRouter(
-      authRepository: _MockAuthRepository(),
-      exerciseRepository: _MockExerciseRepository(),
+      sessionService: sessionService,
     );
 
-    await tester.pumpWidget(BeneesseMobileApp(router: appRouter.router));
+    await tester.pumpWidget(
+      BeneesseMobileApp(
+        appRouter: appRouter,
+        sessionService: sessionService,
+        authRepository: FakeAuthRepository(),
+        exerciseRepository: FakeExerciseRepository(),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Sign in'), findsWidgets);

@@ -1,6 +1,5 @@
 import 'package:beneesse_api/beneesse_api.dart';
 
-import '../../../core/di/service_locator.dart';
 import '../models/workout_summary.dart';
 import 'workout_converter.dart';
 
@@ -11,9 +10,9 @@ abstract class WorkoutRepository {
 
 class WorkoutRepositoryImpl implements WorkoutRepository {
   WorkoutRepositoryImpl({
-    BeneesseApiClient? apiClient,
+    required BeneesseApiClient apiClient,
     WorkoutConverter? converter,
-  })  : _api = apiClient ?? ServiceLocator.instance.apiClient,
+  })  : _api = apiClient,
         _converter = converter ?? const WorkoutConverter();
 
   final BeneesseApiClient _api;

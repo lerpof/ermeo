@@ -1,52 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:auto_route/auto_route.dart';
 
-import '../../features/auth/data/auth_repository.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
-import '../../features/exercises/data/exercise_repository.dart';
 import '../../features/exercises/presentation/pages/exercises_page.dart';
-import '../di/service_locator.dart';
+import '../session/session_service.dart';
+import 'auth_guard.dart';
 
-class AppRouter {
-  AppRouter({
-    required AuthRepository authRepository,
-    required ExerciseRepository exerciseRepository,
-    ServiceLocator? serviceLocator,
-  })  : _serviceLocator = serviceLocator ?? ServiceLocator.instance,
-        _authRepository = authRepository,
-        _exerciseRepository = exerciseRepository;
+part 'app_router.gr.dart';
 
-  final ServiceLocator _serviceLocator;
-  final AuthRepository _authRepository;
-  final ExerciseRepository _exerciseRepository;
+@AutoRouterConfig(replaceInRouteName: 'Page,Route')
+class AppRouter extends RootStackRouter {
+  AppRouter({required this._sessionService});
 
-  late final GoRouter router = GoRouter(
-    initialLocation: '/',
-    refreshListenable: _serviceLocator.sessionNotifier,
-    redirect: _redirect,
-    routes: [
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => AuthPage(authRepository: _authRepository),
-      ),
-      GoRoute(
-        path: '/',
-        builder: (context, state) =>
-            ExercisesPage(exerciseRepository: _exerciseRepository),
-      ),
-    ],
-  );
+  final SessionService _sessionService;
 
-  String? _redirect(BuildContext context, GoRouterState state) {
-    final isAuthenticated = _serviceLocator.isAuthenticated;
-    final loggingIn = state.matchedLocation == '/login';
+  @override
+  RouteType get defaultRouteType => const RouteType.material();
 
-    if (!isAuthenticated && !loggingIn) {
-      return '/login';
-    }
-    if (isAuthenticated && loggingIn) {
-      return '/';
-    }
-    return null;
-  }
+  @override
+  List<AutoRoute> get routes => [
+    AutoRoute(
+      page: AuthRoute.page,
+      path: '/login',
+      guards: [GuestGuard(_sessionService)],
+    ),
+    AutoRoute(
+      page: ExercisesRoute.page,
+      path: '/',
+      initial: true,
+      guards: [AuthGuard(_sessionService)],
+    ),
+  ];
 }
