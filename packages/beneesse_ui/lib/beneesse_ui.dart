@@ -1,5 +1,5 @@
 /// Shared Flutter UI design system for Beneesse apps.
-library beneesse_ui;
+library;
 
 export 'src/components/atoms/be_button.dart';
 export 'src/components/atoms/be_button_style.dart';

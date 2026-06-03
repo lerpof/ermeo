@@ -4,7 +4,7 @@ import '../../theme/be_theme_context.dart';
 
 /// Horizontal divider styled with semantic divider color and spacing.
 class BeDivider extends StatelessWidget {
-  BeDivider({super.key, this.indent, this.endIndent, this.thickness = 1});
+  const BeDivider({super.key, this.indent, this.endIndent, this.thickness = 1});
 
   final double? indent;
   final double? endIndent;
