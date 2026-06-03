@@ -20,10 +20,14 @@ Future<void> main() async {
     sessionService: sessionService,
   );
 
-  final appRouter = AppRouter(sessionService: sessionService);
+  final appRouter = AppRouter();
 
   runApp(
-    BeneesseMobileApp(appRouter: appRouter, sessionService: sessionService),
+    BeneesseMobileApp(
+      appRouter: appRouter,
+      sessionService: sessionService,
+      apiClient: apiClient,
+    ),
   );
 }
 
@@ -31,11 +35,15 @@ class BeneesseMobileApp extends StatelessWidget {
   const BeneesseMobileApp({
     required this.appRouter,
     required this.sessionService,
+    required this.apiClient,
     super.key,
   });
 
   final AppRouter appRouter;
   final AppSessionService sessionService;
+
+  /// Wired with [sessionService] for proactive token refresh; pass to repositories.
+  final BeneesseApiClient apiClient;
 
   @override
   Widget build(BuildContext context) {
