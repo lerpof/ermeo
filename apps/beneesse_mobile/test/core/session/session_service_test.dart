@@ -17,13 +17,13 @@ class _InMemoryTokenStorage implements TokenSecureStorage {
 }
 
 void main() {
-  group('SessionServiceImpl', () {
+  group('AppSessionService', () {
     late _InMemoryTokenStorage tokenStorage;
-    late SessionServiceImpl service;
+    late AppSessionService service;
 
     setUp(() {
       tokenStorage = _InMemoryTokenStorage();
-      service = SessionServiceImpl(tokenStorage: tokenStorage);
+      service = AppSessionService(tokenStorage: tokenStorage);
     });
 
     test('restore authenticates when stored tokens exist', () async {

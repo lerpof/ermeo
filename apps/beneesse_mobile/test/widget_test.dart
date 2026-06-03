@@ -19,7 +19,7 @@ class _InMemoryTokenStorage implements TokenSecureStorage {
 
 void main() {
   testWidgets('shows login when unauthenticated', (tester) async {
-    final sessionService = SessionServiceImpl(
+    final sessionService = AppSessionService(
       tokenStorage: _InMemoryTokenStorage(),
     );
     await sessionService.restore();

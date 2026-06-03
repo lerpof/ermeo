@@ -25,10 +25,10 @@ class _InMemoryTokenStorage implements TokenSecureStorage {
 
 void main() {
   group('AppRouter', () {
-    late SessionServiceImpl sessionService;
+    late AppSessionService sessionService;
 
     setUp(() {
-      sessionService = SessionServiceImpl(
+      sessionService = AppSessionService(
         tokenStorage: _InMemoryTokenStorage(),
       );
     });
