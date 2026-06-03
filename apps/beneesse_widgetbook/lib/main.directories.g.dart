@@ -24,6 +24,8 @@ import 'package:beneesse_widgetbook/use_cases/molecules/be_bottom_nav_bar_use_ca
     as _beneesse_widgetbook_use_cases_molecules_be_bottom_nav_bar_use_cases;
 import 'package:beneesse_widgetbook/use_cases/molecules/be_card_use_cases.dart'
     as _beneesse_widgetbook_use_cases_molecules_be_card_use_cases;
+import 'package:beneesse_widgetbook/use_cases/molecules/be_tab_bar_use_cases.dart'
+    as _beneesse_widgetbook_use_cases_molecules_be_tab_bar_use_cases;
 import 'package:beneesse_widgetbook/use_cases/molecules/be_text_field_use_cases.dart'
     as _beneesse_widgetbook_use_cases_molecules_be_text_field_use_cases;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
@@ -189,6 +191,34 @@ final directories = <_widgetbook.WidgetbookNode>[
                 builder:
                     _beneesse_widgetbook_use_cases_molecules_be_card_use_cases
                         .beCardTappable,
+              ),
+            ],
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookFolder(
+        name: 'BeTabBar',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'BeTabBar',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Interactive',
+                builder:
+                    _beneesse_widgetbook_use_cases_molecules_be_tab_bar_use_cases
+                        .beTabBarInteractive,
+              ),
+              _widgetbook.WidgetbookUseCase(
+                name: 'Knobs',
+                builder:
+                    _beneesse_widgetbook_use_cases_molecules_be_tab_bar_use_cases
+                        .beTabBarKnobs,
+              ),
+              _widgetbook.WidgetbookUseCase(
+                name: 'Sizes',
+                builder:
+                    _beneesse_widgetbook_use_cases_molecules_be_tab_bar_use_cases
+                        .beTabBarSizes,
               ),
             ],
           ),

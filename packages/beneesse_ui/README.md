@@ -130,6 +130,16 @@ BeBottomNavBar(
   ],
 );
 
+// Segmented tab bar (e.g. login / sign up)
+BeTabBar(
+  selectedIndex: state.authModeIndex,
+  onTabSelected: (index) => bloc.add(AuthModeSelected(index)),
+  tabs: [
+    BeTab(label: state.loginTabLabel),
+    BeTab(label: state.signupTabLabel),
+  ],
+);
+
 // Card with optional tap
 BeCard(
   onTap: onTap,
@@ -152,8 +162,8 @@ Exported from `package:beneesse_ui/beneesse_ui.dart`:
 | `BeTypographyTokens` | Typography `TextTheme` bundle |
 | `BeSemanticTokens` | Full resolved token bundle per theme |
 | `BeText`, `BeIcon`, `BeDivider`, `BeButton` | Atoms |
-| `BeTextField`, `BeAppBar`, `BeBottomNavBar`, `BeCard` | Molecules |
-| `BeButtonVariant`, `BeButtonSize`, `BeNavDestination` | Component enums / models |
+| `BeTextField`, `BeAppBar`, `BeBottomNavBar`, `BeTabBar`, `BeCard` | Molecules |
+| `BeButtonVariant`, `BeButtonSize`, `BeNavDestination`, `BeTab`, `BeTabBarSize` | Component enums / models |
 
 Primitive token classes (`BePrimitiveColors`, etc.) are internal to the package.
 
