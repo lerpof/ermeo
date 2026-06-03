@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 
 import 'api_exception.dart';
 import 'auth_interceptor.dart';
+import 'session_service.dart';
 
 /// Hand-written facade over the generated OpenAPI Dio client.
 class BeneesseApiClient {
@@ -10,9 +11,7 @@ class BeneesseApiClient {
     required String baseUrl,
     Duration connectTimeout = const Duration(seconds: 15),
     Duration receiveTimeout = const Duration(seconds: 30),
-    AccessTokenReader? accessTokenReader,
-    AccessTokenWriter? accessTokenWriter,
-    RefreshTokensCallback? refreshTokens,
+    SessionService? sessionService,
     Dio? dio,
   }) : _dio = dio ?? Dio() {
     _dio.options
@@ -24,15 +23,14 @@ class BeneesseApiClient {
         'Accept': 'application/json',
       };
 
-    if (accessTokenReader != null &&
-        accessTokenWriter != null &&
-        refreshTokens != null) {
+    if (sessionService != null) {
       _dio.interceptors.add(
         AuthInterceptor(
-          readAccessToken: accessTokenReader,
-          writeTokens: accessTokenWriter,
-          refreshTokens: refreshTokens,
-          refreshDio: _dio,
+          sessionService: sessionService,
+          baseUrl: baseUrl,
+          connectTimeout: connectTimeout,
+          receiveTimeout: receiveTimeout,
+          retryDio: _dio,
         ),
       );
     }

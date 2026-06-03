@@ -30,7 +30,6 @@ void main() {
     setUp(() {
       sessionService = SessionServiceImpl(
         tokenStorage: _InMemoryTokenStorage(),
-        baseUrl: 'https://api.test',
       );
     });
 

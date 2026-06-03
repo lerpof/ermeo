@@ -14,17 +14,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final tokenStorage = FlutterTokenSecureStorage();
-  final sessionService = SessionServiceImpl(
-    tokenStorage: tokenStorage,
-    baseUrl: AppConfig.apiBaseUrl,
-  );
+  final sessionService = AppSessionService(tokenStorage: tokenStorage);
   await sessionService.restore();
 
   final apiClient = BeneesseApiClient(
     baseUrl: AppConfig.apiBaseUrl,
-    accessTokenReader: sessionService.readAccessToken,
-    accessTokenWriter: sessionService.onTokensUpdated,
-    refreshTokens: sessionService.refreshTokens,
+    sessionService: sessionService,
   );
 
   final authRepository = AuthRepositoryImpl(
@@ -32,9 +27,7 @@ Future<void> main() async {
     sessionService: sessionService,
   );
   final exerciseRepository = ExerciseRepositoryImpl(apiClient: apiClient);
-  final appRouter = AppRouter(
-    sessionService: sessionService,
-  );
+  final appRouter = AppRouter(sessionService: sessionService);
 
   runApp(
     BeneesseMobileApp(
@@ -56,7 +49,7 @@ class BeneesseMobileApp extends StatelessWidget {
   });
 
   final AppRouter appRouter;
-  final SessionService sessionService;
+  final AppSessionService sessionService;
   final AuthRepository authRepository;
   final ExerciseRepository exerciseRepository;
 
@@ -73,7 +66,6 @@ class BeneesseMobileApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         routerConfig: appRouter.config(
           reevaluateListenable: sessionService.listenable,
-          navigatorObservers: () => const [],
         ),
       ),
     );

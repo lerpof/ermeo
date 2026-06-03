@@ -9,13 +9,13 @@ class _MockBeneesseApiClient extends Mock implements BeneesseApiClient {}
 
 class _MockAuthApi extends Mock implements AuthApi {}
 
-class _MockSessionService extends Mock implements SessionService {}
+class _MockAppSessionService extends Mock implements AppSessionService {}
 
 void main() {
   group('AuthRepositoryImpl', () {
     late _MockBeneesseApiClient apiClient;
     late _MockAuthApi authApi;
-    late _MockSessionService sessionService;
+    late _MockAppSessionService sessionService;
     late AuthRepositoryImpl repository;
 
     setUpAll(() {
@@ -35,7 +35,7 @@ void main() {
     setUp(() {
       apiClient = _MockBeneesseApiClient();
       authApi = _MockAuthApi();
-      sessionService = _MockSessionService();
+      sessionService = _MockAppSessionService();
       when(() => apiClient.auth).thenReturn(authApi);
       when(() => apiClient.run<AuthTokens>(any())).thenAnswer(
         (invocation) async {

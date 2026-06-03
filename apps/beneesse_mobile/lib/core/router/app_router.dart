@@ -11,7 +11,7 @@ part 'app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   AppRouter({required this._sessionService});
 
-  final SessionService _sessionService;
+  final AppSessionService _sessionService;
 
   @override
   RouteType get defaultRouteType => const RouteType.material();

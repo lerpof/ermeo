@@ -6,7 +6,7 @@ import 'app_router.dart';
 class AuthGuard extends AutoRouteGuard {
   AuthGuard(this._sessionService);
 
-  final SessionService _sessionService;
+  final AppSessionService _sessionService;
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
@@ -23,7 +23,7 @@ class AuthGuard extends AutoRouteGuard {
 class GuestGuard extends AutoRouteGuard {
   GuestGuard(this._sessionService);
 
-  final SessionService _sessionService;
+  final AppSessionService _sessionService;
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {

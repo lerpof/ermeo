@@ -21,7 +21,6 @@ void main() {
   testWidgets('shows login when unauthenticated', (tester) async {
     final sessionService = SessionServiceImpl(
       tokenStorage: _InMemoryTokenStorage(),
-      baseUrl: 'https://api.test',
     );
     await sessionService.restore();
 

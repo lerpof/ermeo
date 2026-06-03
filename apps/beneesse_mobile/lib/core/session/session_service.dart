@@ -1,62 +1,32 @@
-import 'dart:async';
-
-import 'package:beneesse_api/beneesse_api.dart';
+import 'package:beneesse_api/beneesse_api.dart' as api;
 import 'package:beneesse_secure_storage/beneesse_secure_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import 'session_state.dart';
 
-abstract class SessionService {
-  Listenable get listenable;
-
-  SessionStatus get status;
-
-  bool get isAuthenticated;
-
-  String? readAccessToken();
-
-  Future<void> restore();
-
-  Future<void> setSession({
-    required String accessToken,
-    required String refreshToken,
-  });
-
-  Future<void> clearSession();
-
-  void onTokensUpdated(String accessToken, String refreshToken);
-
-  Future<({String accessToken, String refreshToken})?> refreshTokens();
-}
-
-class SessionServiceImpl extends ChangeNotifier implements SessionService {
-  SessionServiceImpl({
-    required TokenSecureStorage tokenStorage,
-    required String baseUrl,
-  })  : _tokenStorage = tokenStorage,
-        _baseUrl = baseUrl;
+class AppSessionService extends ChangeNotifier implements api.SessionService {
+  AppSessionService({required this._tokenStorage});
 
   final TokenSecureStorage _tokenStorage;
-  final String _baseUrl;
-
-  @override
-  Listenable get listenable => this;
 
   SessionStatus _status = SessionStatus.unknown;
-  String? _accessToken;
-  String? _refreshToken;
-  BeneesseApiClient? _refreshClient;
 
-  @override
+  String? _accessToken;
+
+  String? _refreshToken;
+
+  Listenable get listenable => this;
+
   SessionStatus get status => _status;
 
-  @override
   bool get isAuthenticated => _status == SessionStatus.authenticated;
 
   @override
   String? readAccessToken() => _accessToken;
 
   @override
+  String? readRefreshToken() => _refreshToken;
+
   Future<void> restore() async {
     final tokens = await _tokenStorage.readTokens();
     if (tokens == null) {
@@ -64,25 +34,25 @@ class SessionServiceImpl extends ChangeNotifier implements SessionService {
       return;
     }
 
-    _accessToken = tokens.accessToken;
-    _refreshToken = tokens.refreshToken;
-    _setStatus(SessionStatus.authenticated);
+    await _persistTokens(
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    );
   }
 
-  @override
   Future<void> setSession({
     required String accessToken,
     required String refreshToken,
   }) async {
-    _accessToken = accessToken;
-    _refreshToken = refreshToken;
-    await _tokenStorage.writeTokens(
-      SessionTokens(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      ),
-    );
-    _setStatus(SessionStatus.authenticated);
+    await _persistTokens(accessToken: accessToken, refreshToken: refreshToken);
+  }
+
+  @override
+  Future<void> updateTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    await _persistTokens(accessToken: accessToken, refreshToken: refreshToken);
   }
 
   @override
@@ -93,50 +63,16 @@ class SessionServiceImpl extends ChangeNotifier implements SessionService {
     _setStatus(SessionStatus.unauthenticated);
   }
 
-  @override
-  void onTokensUpdated(String accessToken, String refreshToken) {
+  Future<void> _persistTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
     _accessToken = accessToken;
     _refreshToken = refreshToken;
-    unawaited(
-      _tokenStorage.writeTokens(
-        SessionTokens(
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        ),
-      ),
+    await _tokenStorage.writeTokens(
+      SessionTokens(accessToken: accessToken, refreshToken: refreshToken),
     );
     _setStatus(SessionStatus.authenticated);
-  }
-
-  @override
-  Future<({String accessToken, String refreshToken})?> refreshTokens() async {
-    final currentRefresh = _refreshToken;
-    if (currentRefresh == null || currentRefresh.isEmpty) {
-      return null;
-    }
-
-    final refreshClient = _refreshClient ??= BeneesseApiClient(baseUrl: _baseUrl);
-
-    try {
-      final response = await refreshClient.run(
-        () => refreshClient.auth
-            .refreshAuth(RefreshRequest(refreshToken: currentRefresh))
-            .then((r) => r.data!),
-      );
-
-      await setSession(
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-      );
-
-      return (
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-      );
-    } on ApiException {
-      await clearSession();
-      return null;
-    }
   }
 
   void _setStatus(SessionStatus status) {

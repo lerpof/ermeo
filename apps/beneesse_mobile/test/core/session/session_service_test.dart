@@ -23,10 +23,7 @@ void main() {
 
     setUp(() {
       tokenStorage = _InMemoryTokenStorage();
-      service = SessionServiceImpl(
-        tokenStorage: tokenStorage,
-        baseUrl: 'https://api.test',
-      );
+      service = SessionServiceImpl(tokenStorage: tokenStorage);
     });
 
     test('restore authenticates when stored tokens exist', () async {
@@ -75,6 +72,29 @@ void main() {
       expect(service.status, SessionStatus.unauthenticated);
       expect(service.readAccessToken(), isNull);
       expect(await tokenStorage.readTokens(), isNull);
+    });
+
+    test('readRefreshToken returns stored refresh token', () async {
+      await service.setSession(
+        accessToken: 'access',
+        refreshToken: 'refresh',
+      );
+
+      expect(service.readRefreshToken(), 'refresh');
+    });
+
+    test('updateTokens writes tokens and authenticates', () async {
+      await service.updateTokens(
+        accessToken: 'new-access',
+        refreshToken: 'new-refresh',
+      );
+
+      expect(service.status, SessionStatus.authenticated);
+      expect(service.readAccessToken(), 'new-access');
+      expect(service.readRefreshToken(), 'new-refresh');
+      final stored = await tokenStorage.readTokens();
+      expect(stored?.accessToken, 'new-access');
+      expect(stored?.refreshToken, 'new-refresh');
     });
 
     test('notifies listeners when auth state changes', () async {

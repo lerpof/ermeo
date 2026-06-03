@@ -19,12 +19,12 @@ abstract class AuthRepository {
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({
     required BeneesseApiClient apiClient,
-    required SessionService sessionService,
+    required AppSessionService sessionService,
   })  : _api = apiClient,
         _sessionService = sessionService;
 
   final BeneesseApiClient _api;
-  final SessionService _sessionService;
+  final AppSessionService _sessionService;
 
   @override
   Future<void> login({

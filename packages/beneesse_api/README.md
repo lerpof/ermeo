@@ -17,9 +17,7 @@ import 'package:beneesse_api/beneesse_api.dart';
 
 final client = BeneesseApiClient(
   baseUrl: 'https://api.example.com',
-  accessTokenReader: () => storedAccessToken,
-  accessTokenWriter: (access, refresh) => saveTokens(access, refresh),
-  refreshTokens: () async => refreshFromServer(),
+  sessionService: mySessionService,
 );
 
 final workouts = await client.run(

@@ -60,9 +60,46 @@ void main() {
       expect(status, 'ok');
     });
 
-    test('exposes exercises API', () {
+    test('exposes generated API accessors', () {
       final client = BeneesseApiClient(baseUrl: 'https://api.example.com');
+      expect(client.health, isNotNull);
+      expect(client.auth, isNotNull);
       expect(client.exercises, isNotNull);
+      expect(client.workouts, isNotNull);
+      expect(client.sessions, isNotNull);
+      expect(client.instructors, isNotNull);
+      expect(client.assignments, isNotNull);
+      expect(client.athletes, isNotNull);
+    });
+
+    test('registers AuthInterceptor when sessionService is provided', () {
+      final session = _FakeSessionService();
+      final client = BeneesseApiClient(
+        baseUrl: 'https://api.example.com',
+        sessionService: session,
+      );
+
+      expect(
+        client.dio.interceptors.whereType<AuthInterceptor>(),
+        isNotEmpty,
+      );
     });
   });
+}
+
+class _FakeSessionService implements SessionService {
+  @override
+  String? readAccessToken() => null;
+
+  @override
+  String? readRefreshToken() => null;
+
+  @override
+  Future<void> updateTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {}
+
+  @override
+  Future<void> clearSession() async {}
 }
