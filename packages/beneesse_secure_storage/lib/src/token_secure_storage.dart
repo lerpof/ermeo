@@ -13,10 +13,24 @@ abstract class TokenSecureStorage {
   Future<void> clearTokens();
 }
 
+class InMemoryTokenSecureStorage implements TokenSecureStorage {
+  InMemoryTokenSecureStorage();
+
+  SessionTokens? _tokens;
+
+  @override
+  Future<SessionTokens?> readTokens() async => _tokens;
+
+  @override
+  Future<void> writeTokens(SessionTokens tokens) async => _tokens = tokens;
+
+  @override
+  Future<void> clearTokens() async => _tokens = null;
+}
+
 class FlutterTokenSecureStorage implements TokenSecureStorage {
-  FlutterTokenSecureStorage({
-    FlutterSecureStorage? storage,
-  }) : _storage = storage ?? const FlutterSecureStorage();
+  FlutterTokenSecureStorage({FlutterSecureStorage? storage})
+    : _storage = storage ?? const FlutterSecureStorage();
 
   final FlutterSecureStorage _storage;
 
@@ -29,22 +43,13 @@ class FlutterTokenSecureStorage implements TokenSecureStorage {
       return null;
     }
 
-    return SessionTokens(
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    );
+    return SessionTokens(accessToken: accessToken, refreshToken: refreshToken);
   }
 
   @override
   Future<void> writeTokens(SessionTokens tokens) async {
-    await _storage.write(
-      key: _accessTokenKey,
-      value: tokens.accessToken,
-    );
-    await _storage.write(
-      key: _refreshTokenKey,
-      value: tokens.refreshToken,
-    );
+    await _storage.write(key: _accessTokenKey, value: tokens.accessToken);
+    await _storage.write(key: _refreshTokenKey, value: tokens.refreshToken);
   }
 
   @override
