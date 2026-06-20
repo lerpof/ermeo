@@ -1,0 +1,34 @@
+---
+description: Ermeo project principles — read docs before making changes
+alwaysApply: true
+---
+
+# Ermeo project principles
+
+Before planning or implementing any change, read and follow the documentation in `docs/`:
+
+- [docs/index.md](../../docs/index.md) — overview and non-negotiables
+- [docs/principles/architecture.md](../../docs/principles/architecture.md) — monorepo layout and dependency rules
+- [docs/principles/clean-architecture.md](../../docs/principles/clean-architecture.md) — feature/core layout, BLoC rules, layer flow
+- [docs/principles/testing.md](../../docs/principles/testing.md) — coverage targets and test guidance
+- [docs/principles/code-quality.md](../../docs/principles/code-quality.md) — Dart/Flutter standards
+- [docs/principles/git-and-workflow.md](../../docs/principles/git-and-workflow.md) — commits and PRs
+- [docs/principles/tooling.md](../../docs/principles/tooling.md) — FVM, Melos, commands
+- [docs/principles/ai-guidelines.md](../../docs/principles/ai-guidelines.md) — AI-specific workflow
+- [docs/guides/localization.md](../../docs/guides/localization.md) — ARB keys and adding strings (`ermeo_l10n`)
+
+## Critical rules
+
+1. Use **FVM**: `fvm flutter`, `fvm dart` — not system SDK when versions differ.
+2. **`ermeo_api`** is consumed **only** by `ermeo_mobile`. `ermeo_ui` and `ermeo_monitoring` must not depend on it.
+3. **Clean Architecture + BLoC** — `flutter_bloc` only; BLoC owns all business logic, orchestration, and display formatting.
+4. **Presentation is dumb** — never import repositories, call APIs, or put business/formatting logic in `presentation/` (pages, views, widgets).
+5. **Feature layout** — `bloc/`, `presentation/{views,widgets,pages}/`, `data/`, `models/` under `features/<name>/`; shared app code in `core/`.
+6. **BLoC → Repository** — no `use_cases` layer; BLoC calls repositories directly.
+7. **Coverage** — 100% on workspace packages, app BLoCs, and repositories; app presentation excluded; `ermeo_ui` requires widget + golden tests.
+8. **Minimize scope** — smallest correct diff; match existing conventions.
+9. Run **`melos run analyze`** before considering work done.
+10. Do not commit, push, or amend git history unless the user explicitly asks.
+11. Never commit secrets, `.env`, or ignored build/SDK artifacts.
+
+When principles conflict with a user request, ask for clarification rather than violating architecture rules silently.

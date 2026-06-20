@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Fetch canonical OpenAPI from a running Beneesse API (BFF) for beneesse_api codegen.
+# Fetch canonical OpenAPI from a running Ermeo API (BFF) for ermeo_api codegen.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BENEESE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-OUT="${1:-${BENEESE_ROOT}/packages/beneesse_api/openapi/openapi.yaml}"
-URL="${BENEESE_OPENAPI_URL:-http://localhost:8000/openapi.yaml}"
+ERMEO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+OUT="${1:-${ERMEO_ROOT}/packages/ermeo_api/openapi/openapi.yaml}"
+URL="${ERMEO_OPENAPI_URL:-http://localhost:8000/openapi.yaml}"
 
 mkdir -p "$(dirname "${OUT}")"
 
@@ -14,7 +14,7 @@ if curl -fsSL "${URL}" -o "${OUT}"; then
   exit 0
 fi
 
-FALLBACK="${BENEESE_OPENAPI_FALLBACK:-${BENEESE_ROOT}/../backend/openapi/openapi.yaml}"
+FALLBACK="${ERMEO_OPENAPI_FALLBACK:-${ERMEO_ROOT}/../backend/openapi/openapi.yaml}"
 if [[ -f "${FALLBACK}" ]]; then
   cp "${FALLBACK}" "${OUT}"
   echo "Warning: could not reach ${URL}; copied fallback ${FALLBACK} -> ${OUT}" >&2

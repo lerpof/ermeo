@@ -1,12 +1,12 @@
 # AI guidelines
 
-Instructions for Cursor and other AI assistants working in the Beneesse repository.
+Instructions for Cursor and other AI assistants working in the Ermeo repository.
 
 ## Before you change anything
 
 1. Read [`docs/index.md`](../index.md) and the relevant principle documents.
 2. Identify which **app or package** owns the work — do not put code in the wrong layer.
-3. Confirm **dependency rules** in [architecture.md](architecture.md), especially for `beneesse_api`.
+3. Confirm **dependency rules** in [architecture.md](architecture.md), especially for `ermeo_api`.
 4. Inspect existing code in the target folder and **match its style**.
 5. For app feature work, read [clean-architecture.md](clean-architecture.md) and identify the correct layer before writing code.
 6. For user-visible copy or ARB keys, read [localization.md](../guides/localization.md) and apply the `add-l10n-string` skill in [`.cursor/skills/add-l10n-string/`](../../.cursor/skills/add-l10n-string/).
@@ -15,7 +15,7 @@ Instructions for Cursor and other AI assistants working in the Beneesse reposito
 
 Before implementing app feature code, confirm:
 
-- [ ] Feature folder exists or will be created under `apps/beneesse_mobile/lib/features/<feature_name>/`
+- [ ] Feature folder exists or will be created under `apps/ermeo_mobile/lib/features/<feature_name>/`
 - [ ] BLoC, events, and states go in `bloc/`
 - [ ] Repositories and converters go in `data/`
 - [ ] Feature domain models go in `models/`
@@ -43,12 +43,12 @@ Before implementing app feature code, confirm:
 
 | If the task involves… | Work in… | Must not… |
 |----------------------|----------|-----------|
-| API calls, DTOs | `beneesse_api` | Add Flutter imports |
-| Shared widgets / theme | `beneesse_ui` | Import `beneesse_api` |
-| User-visible strings (ARB) | `beneesse_l10n` | Import `beneesse_api`; use l10n in BLoC |
-| Logging / crash / analytics | `beneesse_monitoring` | Import `beneesse_api` |
-| User-visible strings (ARB) | `beneesse_l10n` | Import `beneesse_api`; use l10n from BLoC |
-| App flow, screens, wiring | `beneesse_mobile` | Move app-specific logic into packages prematurely |
+| API calls, DTOs | `ermeo_api` | Add Flutter imports |
+| Shared widgets / theme | `ermeo_ui` | Import `ermeo_api` |
+| User-visible strings (ARB) | `ermeo_l10n` | Import `ermeo_api`; use l10n in BLoC |
+| Logging / crash / analytics | `ermeo_monitoring` | Import `ermeo_api` |
+| User-visible strings (ARB) | `ermeo_l10n` | Import `ermeo_api`; use l10n from BLoC |
+| App flow, screens, wiring | `ermeo_mobile` | Move app-specific logic into packages prematurely |
 
 ### Quality bar
 
@@ -79,7 +79,7 @@ A task is complete when:
 - [ ] No logic or repository usage in presentation — formatting lives in BLoC
 - [ ] BLoC tests and repository tests added or updated when BLoC or repo code changes
 - [ ] Package changes meet **100% coverage** target for that package — see [testing.md](testing.md)
-- [ ] `beneesse_ui` changes include widget and golden tests when applicable
+- [ ] `ermeo_ui` changes include widget and golden tests when applicable
 - [ ] `fvm dart pub get` succeeds if manifests changed
 - [ ] `melos run analyze` passes (no new errors)
 - [ ] Relevant README/docs updated if needed

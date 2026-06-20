@@ -1,19 +1,19 @@
 # Localization guide
 
-Canonical rules for adding and using user-visible strings in the Beneesse monorepo.
+Canonical rules for adding and using user-visible strings in the Ermeo monorepo.
 
 ## Where strings live
 
 | Location | Role |
 |----------|------|
-| [`packages/beneesse_l10n/lib/l10n/app_en.arb`](../../packages/beneesse_l10n/lib/l10n/app_en.arb) | Template locale — **define every new key here first** |
+| [`packages/ermeo_l10n/lib/l10n/app_en.arb`](../../packages/ermeo_l10n/lib/l10n/app_en.arb) | Template locale — **define every new key here first** |
 | `app_<locale>.arb` | Translations only (same keys as template); add when that locale is supported |
-| [`packages/beneesse_l10n/lib/src/generated/`](../../packages/beneesse_l10n/lib/src/generated/) | Generated — never hand-edit |
-| App presentation | Consume via `context.l10n.<key>` — import `package:beneesse_l10n/beneesse_l10n.dart` |
+| [`packages/ermeo_l10n/lib/src/generated/`](../../packages/ermeo_l10n/lib/src/generated/) | Generated — never hand-edit |
+| App presentation | Consume via `context.l10n.<key>` — import `package:ermeo_l10n/ermeo_l10n.dart` |
 
 ## ARB key naming (required)
 
-- **Format**: `lowerCamelCase`, valid Dart identifier (becomes `BeLocalizations.keyName` getter).
+- **Format**: `lowerCamelCase`, valid Dart identifier (becomes `ErLocalizations.keyName` getter).
 - **Structure**: `<scope><Context><Element>` — scope first, then screen/area, then widget or concept.
   - Feature UI: `authLoginTitle`, `authLoginSubmitButton`, `profileSettingsLogout`
   - Shared copy: `commonCancel`, `commonRetry`, `commonErrorNetwork`
@@ -56,17 +56,17 @@ Every non-trivial key has a sibling metadata entry `@keyName`:
 ## Clean Architecture alignment
 
 - **Presentation** (`pages` / `views` / `widgets`): use `context.l10n` for static labels, hints, buttons, empty states tied to the UI.
-- **BLoC**: do not use `BuildContext` or `BeLocalizations` directly. Emit domain/error **codes** (e.g. `AuthFailure.invalidCredentials`); map codes to ARB keys in presentation, or format non-UI messages in BLoC only when using an injected locale-agnostic formatter (document if introduced later).
-- **`beneesse_ui`**: keep passing `String` labels from the app unless a component is explicitly designed with built-in copy (then depend on `beneesse_l10n` in a follow-up).
+- **BLoC**: do not use `BuildContext` or `ErLocalizations` directly. Emit domain/error **codes** (e.g. `AuthFailure.invalidCredentials`); map codes to ARB keys in presentation, or format non-UI messages in BLoC only when using an injected locale-agnostic formatter (document if introduced later).
+- **`ermeo_ui`**: keep passing `String` labels from the app unless a component is explicitly designed with built-in copy (then depend on `ermeo_l10n` in a follow-up).
 
 ## App wiring
 
-`beneesse_mobile` registers localization at bootstrap:
+`ermeo_mobile` registers localization at bootstrap:
 
 ```dart
 MaterialApp.router(
-  localizationsDelegates: beLocalizationDelegates,
-  supportedLocales: BeLocalizations.supportedLocales,
+  localizationsDelegates: erLocalizationDelegates,
+  supportedLocales: ErLocalizations.supportedLocales,
   // ...
 );
 ```
@@ -89,7 +89,7 @@ Commit changed files under `lib/src/generated/` with the ARB change. Use **FVM**
 
 ## Related docs
 
-- [`packages/beneesse_l10n/README.md`](../../packages/beneesse_l10n/README.md) — package API and workflow
+- [`packages/ermeo_l10n/README.md`](../../packages/ermeo_l10n/README.md) — package API and workflow
 - [Architecture](../principles/architecture.md) — package boundaries
-- [Testing](../principles/testing.md) — `beneesse_l10n` coverage expectations
+- [Testing](../principles/testing.md) — `ermeo_l10n` coverage expectations
 - [AI guidelines](../principles/ai-guidelines.md) — agent workflow for copy changes

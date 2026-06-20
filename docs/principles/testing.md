@@ -1,33 +1,33 @@
 # Testing principles
 
-Testing and coverage policy for the Beneesse workspace.
+Testing and coverage policy for the Ermeo workspace.
 
 ## Coverage requirements
 
 | Target | Requirement |
 |--------|-------------|
-| All workspace **packages** (`beneesse_api`, `beneesse_ui`, `beneesse_monitoring`, `beneesse_l10n`) | **100% line coverage** |
+| All workspace **packages** (`ermeo_api`, `ermeo_ui`, `ermeo_monitoring`, `ermeo_l10n`) | **100% line coverage** |
 | App **BLoCs** | **100% coverage** |
 | App **repositories** (in feature `data/`) | **100% coverage** |
 | App **presentation** layer (`presentation/views`, `widgets`, `pages`) | **Excluded** from coverage thresholds |
-| [`beneesse_ui`](../../packages/beneesse_ui) | Widget tests **and golden tests** required for shared UI components |
+| [`ermeo_ui`](../../packages/ermeo_ui) | Widget tests **and golden tests** required for shared UI components |
 
 ### Presentation vs shared UI
 
-- **App presentation** (`apps/beneesse_mobile/lib/features/*/presentation/`) is not coverage-gated. Screens and feature widgets are exercised manually or via integration tests when added.
-- **`beneesse_ui`** is fully tested — including goldens — because shared widgets must be stable and reusable across the app.
+- **App presentation** (`apps/ermeo_mobile/lib/features/*/presentation/`) is not coverage-gated. Screens and feature widgets are exercised manually or via integration tests when added.
+- **`ermeo_ui`** is fully tested — including goldens — because shared widgets must be stable and reusable across the app.
 
 ## Testing guidance
 
-### BLoC tests (`beneesse_mobile`)
+### BLoC tests (`ermeo_mobile`)
 
 - Use `bloc_test` with mocked repositories.
 - Cover all events, state transitions, error paths, and display formatting emitted in state.
 - Mock repository interfaces; do not hit real API or local storage.
 
-### Repository tests (`beneesse_mobile`)
+### Repository tests (`ermeo_mobile`)
 
-- Mock `beneesse_api` clients and local data sources.
+- Mock `ermeo_api` clients and local data sources.
 - Verify converter integration: API/DTO shapes map correctly to feature `models/`.
 - Cover success, failure, and edge-case responses.
 
@@ -35,18 +35,18 @@ Testing and coverage policy for the Beneesse workspace.
 
 | Package | Approach |
 |---------|----------|
-| `beneesse_api` | Unit tests for pure Dart — clients, parsers, error mapping |
-| `beneesse_ui` | Widget tests **and golden tests** for shared components |
-| `beneesse_l10n` | Widget tests for `context.l10n` and delegate wiring |
-| `beneesse_monitoring` | Unit/widget tests for wrappers and configuration |
+| `ermeo_api` | Unit tests for pure Dart — clients, parsers, error mapping |
+| `ermeo_ui` | Widget tests **and golden tests** for shared components |
+| `ermeo_l10n` | Widget tests for `context.l10n` and delegate wiring |
+| `ermeo_monitoring` | Unit/widget tests for wrappers and configuration |
 
 ### Running tests
 
 ```bash
 melos run test
 # or package-level:
-cd apps/beneesse_mobile && fvm flutter test
-cd packages/beneesse_api && fvm dart test
+cd apps/ermeo_mobile && fvm flutter test
+cd packages/ermeo_api && fvm dart test
 ```
 
 ## Coverage enforcement

@@ -1,4 +1,4 @@
-name: beneesse_workspace
+name: ermeo_workspace
 publish_to: none
 
 environment:
@@ -9,13 +9,13 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 workspace:
-  - apps/beneesse_mobile
-  - apps/beneesse_widgetbook
-  - packages/beneesse_api
-  - packages/beneesse_secure_storage
-  - packages/beneesse_ui
-  - packages/beneesse_monitoring
-  - packages/beneesse_l10n
+  - apps/ermeo_mobile
+  - apps/ermeo_widgetbook
+  - packages/ermeo_api
+  - packages/ermeo_secure_storage
+  - packages/ermeo_ui
+  - packages/ermeo_monitoring
+  - packages/ermeo_l10n
 
 melos:
   sdkPath: .fvm/flutter_sdk
@@ -34,33 +34,33 @@ melos:
       description: Remove build artifacts from all packages.
       run: melos exec -- "flutter clean 2>/dev/null || true"
     generate:tokens:
-      description: Regenerate design tokens for beneesse_ui.
-      run: melos exec --scope=beneesse_ui -- "dart run tool/generate_tokens.dart"
+      description: Regenerate design tokens for ermeo_ui.
+      run: melos exec --scope=ermeo_ui -- "dart run tool/generate_tokens.dart"
     generate:l10n:
-      description: Regenerate BeLocalizations from ARB files.
+      description: Regenerate ErLocalizations from ARB files.
       run: |
-        melos exec --scope=beneesse_l10n -- "flutter gen-l10n"
-        melos exec --scope=beneesse_l10n -- "dart run tool/ensure_generated_coverage_ignore.dart"
+        melos exec --scope=ermeo_l10n -- "flutter gen-l10n"
+        melos exec --scope=ermeo_l10n -- "dart run tool/ensure_generated_coverage_ignore.dart"
     generate:widgetbook:
-      description: Regenerate Widgetbook directories for beneesse_widgetbook.
-      run: melos exec --scope=beneesse_widgetbook -- "dart run build_runner build -d"
+      description: Regenerate Widgetbook directories for ermeo_widgetbook.
+      run: melos exec --scope=ermeo_widgetbook -- "dart run build_runner build -d"
     generate:routes:
-      description: Regenerate auto_route files for beneesse_mobile.
-      run: melos exec --scope=beneesse_mobile -- "dart run build_runner build --delete-conflicting-outputs"
+      description: Regenerate auto_route files for ermeo_mobile.
+      run: melos exec --scope=ermeo_mobile -- "dart run build_runner build --delete-conflicting-outputs"
     run:widgetbook:
       description: Run the Widgetbook catalog in Chrome.
-      run: melos exec --scope=beneesse_widgetbook -- "flutter run -d chrome"
+      run: melos exec --scope=ermeo_widgetbook -- "flutter run -d chrome"
     run:mobile:dev:
-      description: Run beneesse_mobile with dev dart-defines.
-      run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json"
+      description: Run ermeo_mobile with dev dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json"
     run:mobile:prod:
-      description: Run beneesse_mobile with prod dart-defines.
-      run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/prod.json"
+      description: Run ermeo_mobile with prod dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --dart-define-from-file=config/dart_defines/prod.json"
     run:mobile:localhost:
-      description: Run beneesse_mobile against local API (dev env, localhost URL).
-      run: melos exec --scope=beneesse_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json --dart-define=BENEESE_API_BASE_URL=http://localhost:8000"
+      description: Run ermeo_mobile against local API (dev env, localhost URL).
+      run: melos exec --scope=ermeo_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json --dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
     generate:api:
       description: Fetch OpenAPI from running API (GET /openapi.yaml), then regenerate Dio client (requires Java 8+).
       run: |
         bash scripts/fetch-openapi-spec.sh
-        melos exec --scope=beneesse_api -- "dart run build_runner build --delete-conflicting-outputs"
+        melos exec --scope=ermeo_api -- "dart run build_runner build --delete-conflicting-outputs"

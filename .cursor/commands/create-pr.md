@@ -1,5 +1,5 @@
 create-pr
-Create a pull request for the current branch using Beneesse Gitflow conventions.
+Create a pull request for the current branch using Ermeo Gitflow conventions.
 
 Only run when the user explicitly invokes this command. Use `gh` for all GitHub operations.
 

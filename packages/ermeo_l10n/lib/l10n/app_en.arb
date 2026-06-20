@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "appTitle": "Ermeo",
+  "@appTitle": {
+    "description": "Application name shown in the system UI where a global title is needed."
+  }
+}

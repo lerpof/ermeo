@@ -3,7 +3,7 @@
 ## Monorepo layout
 
 ```text
-beneesse/
+ermeo/
 ├── apps/           # Runnable Flutter applications
 ├── packages/       # Shared libraries consumed by apps
 ├── docs/           # Project principles and guides
@@ -19,11 +19,11 @@ beneesse/
 
 | Package | Type | Role |
 |---------|------|------|
-| `beneesse_api` | Pure Dart | HTTP clients, DTOs, API contracts — no Flutter dependency |
-| `beneesse_ui` | Flutter | Shared widgets, themes, design system |
-| `beneesse_monitoring` | Flutter | Logging, crash reporting, analytics, observability |
-| `beneesse_l10n` | Flutter | ARB strings, generated `BeLocalizations`, localization helpers |
-| `beneesse_mobile` | Flutter app | End-user mobile application |
+| `ermeo_api` | Pure Dart | HTTP clients, DTOs, API contracts — no Flutter dependency |
+| `ermeo_ui` | Flutter | Shared widgets, themes, design system |
+| `ermeo_monitoring` | Flutter | Logging, crash reporting, analytics, observability |
+| `ermeo_l10n` | Flutter | ARB strings, generated `ErLocalizations`, localization helpers |
+| `ermeo_mobile` | Flutter app | End-user mobile application |
 
 ## Dependency rules
 
@@ -31,41 +31,41 @@ These rules are **fixed** unless explicitly changed in this document and agreed 
 
 ```mermaid
 flowchart TB
-  Mobile[beneesse_mobile]
-  API[beneesse_api]
-  UI[beneesse_ui]
-  Mon[beneesse_monitoring]
-  L10n[beneesse_l10n]
+  Mobile[ermeo_mobile]
+  API[ermeo_api]
+  UI[ermeo_ui]
+  Mon[ermeo_monitoring]
+  L10n[ermeo_l10n]
   Mobile --> API
   Mobile --> UI
   Mobile --> Mon
   Mobile --> L10n
 ```
 
-- **`beneesse_mobile`** may depend on workspace packages listed above.
-- **`beneesse_api`** is consumed **only** by `beneesse_mobile`. UI and monitoring must not import it.
-- **`beneesse_ui`**, **`beneesse_l10n`**, and **`beneesse_monitoring`** are standalone. They must not depend on `beneesse_api` or on each other unless a future ADR says otherwise.
+- **`ermeo_mobile`** may depend on workspace packages listed above.
+- **`ermeo_api`** is consumed **only** by `ermeo_mobile`. UI and monitoring must not import it.
+- **`ermeo_ui`**, **`ermeo_l10n`**, and **`ermeo_monitoring`** are standalone. They must not depend on `ermeo_api` or on each other unless a future ADR says otherwise.
 - **Packages must not depend on apps.**
 
 Rationale: the API layer stays in the app’s domain. UI and monitoring remain reusable without coupling to backend contracts.
 
 ## Application architecture (Clean Architecture)
 
-`beneesse_mobile` follows Clean Architecture with **flutter_bloc** and a **BLoC → Repository** flow (no use-case layer). See [clean-architecture.md](clean-architecture.md) for folder layout, layer rules, and anti-patterns.
+`ermeo_mobile` follows Clean Architecture with **flutter_bloc** and a **BLoC → Repository** flow (no use-case layer). See [clean-architecture.md](clean-architecture.md) for folder layout, layer rules, and anti-patterns.
 
 ## Where code belongs
 
 | Concern | Location |
 |---------|----------|
-| API clients, DTOs | `packages/beneesse_api` |
-| Feature repositories, converters | `apps/beneesse_mobile/lib/features/<feature>/data/` |
-| Feature models | `apps/beneesse_mobile/lib/features/<feature>/models/` |
-| BLoC + events/states | `apps/beneesse_mobile/lib/features/<feature>/bloc/` |
-| Screens/widgets | `apps/beneesse_mobile/lib/features/<feature>/presentation/{pages,views,widgets}/` |
-| Shared design system | `packages/beneesse_ui` |
-| User-visible strings (ARB, `BeLocalizations`) | `packages/beneesse_l10n` |
-| Crashlytics, Sentry, analytics wrappers | `packages/beneesse_monitoring` |
-| Router, DI, app bootstrap, cross-feature utilities | `apps/beneesse_mobile/lib/core/` |
+| API clients, DTOs | `packages/ermeo_api` |
+| Feature repositories, converters | `apps/ermeo_mobile/lib/features/<feature>/data/` |
+| Feature models | `apps/ermeo_mobile/lib/features/<feature>/models/` |
+| BLoC + events/states | `apps/ermeo_mobile/lib/features/<feature>/bloc/` |
+| Screens/widgets | `apps/ermeo_mobile/lib/features/<feature>/presentation/{pages,views,widgets}/` |
+| Shared design system | `packages/ermeo_ui` |
+| User-visible strings (ARB, `ErLocalizations`) | `packages/ermeo_l10n` |
+| Crashlytics, Sentry, analytics wrappers | `packages/ermeo_monitoring` |
+| Router, DI, app bootstrap, cross-feature utilities | `apps/ermeo_mobile/lib/core/` |
 
 When unsure, prefer the **smallest package** that can own the code without violating dependency rules.
 

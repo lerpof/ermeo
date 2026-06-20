@@ -34,8 +34,8 @@ Common commands (from repository root):
 | `melos run test` | Run tests in all packages |
 | `melos run format` | Format all packages |
 | `melos run clean` | Clean build artifacts |
-| `melos run generate:api` | Fetch OpenAPI from running BFF (`GET /openapi.yaml`), then regenerate `beneesse_api` |
-| `melos run generate:l10n` | Regenerate `BeLocalizations` from ARB files in `beneesse_l10n` |
+| `melos run generate:api` | Fetch OpenAPI from running BFF (`GET /openapi.yaml`), then regenerate `ermeo_api` |
+| `melos run generate:l10n` | Regenerate `ErLocalizations` from ARB files in `ermeo_l10n` |
 
 Cursor slash commands in [`.cursor/commands/`](../../.cursor/commands/) wrap these workflows for agents.
 
@@ -49,11 +49,11 @@ Cursor slash commands in [`.cursor/commands/`](../../.cursor/commands/) wrap the
 ## Running the mobile app
 
 ```bash
-cd apps/beneesse_mobile
+cd apps/ermeo_mobile
 fvm flutter run
 ```
 
-## OpenAPI client generation (`beneesse_api`)
+## OpenAPI client generation (`ermeo_api`)
 
 The mobile API package uses [`openapi_generator`](https://pub.dev/packages/openapi_generator). The canonical spec lives in `backend/openapi/openapi.yaml` and is fetched from the running API during `melos run generate:api`.
 
@@ -62,12 +62,12 @@ The mobile API package uses [`openapi_generator`](https://pub.dev/packages/opena
 Regenerate after contract changes (API must be running on `http://localhost:8000`, or the script falls back to `backend/openapi/openapi.yaml`):
 
 ```bash
-cd beneesse
+cd ermeo
 fvm dart pub get
 melos run generate:api
 ```
 
-Commit both the spec change and regenerated files under `packages/beneesse_api/lib/generated/`. Mobile-only developers can use the committed client without Java until the contract changes.
+Commit both the spec change and regenerated files under `packages/ermeo_api/lib/generated/`. Mobile-only developers can use the committed client without Java until the contract changes.
 
 ## Verification before merge
 

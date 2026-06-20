@@ -1,5 +1,5 @@
 commit-message
-Commit message guidelines for the Beneesse monorepo.
+Commit message guidelines for the Ermeo monorepo.
 
 Format: `<type>(<scope>): <short description>`
 

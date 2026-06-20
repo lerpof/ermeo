@@ -1,0 +1,44 @@
+name: API contract
+
+on:
+  push:
+    branches: [main, master, develop]
+    paths:
+      - 'packages/ermeo_api/**'
+      - 'scripts/**'
+      - '.github/workflows/api-contract.yml'
+  pull_request:
+    paths:
+      - 'packages/ermeo_api/**'
+      - 'scripts/**'
+      - '.github/workflows/api-contract.yml'
+
+jobs:
+  ermeo-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.0'
+          channel: stable
+      - name: Pub get
+        run: dart pub get
+      - name: Analyze ermeo_api
+        run: dart analyze packages/ermeo_api
+      - name: Test ermeo_api
+        run: dart test packages/ermeo_api
+      - name: Check generated client committed (Java optional)
+        continue-on-error: true
+        run: |
+          if ! command -v java >/dev/null 2>&1; then
+            echo "Java not available; skipping openapi_generator drift check"
+            exit 0
+          fi
+          bash scripts/fetch-openapi-spec.sh packages/ermeo_api/openapi/openapi.yaml
+          cd packages/ermeo_api
+          dart run build_runner build --delete-conflicting-outputs
+          git diff --exit-code lib/generated || (
+            echo "Generated client out of date. Run: melos run generate:api"
+            exit 1
+          )

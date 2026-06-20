@@ -1,9 +1,0 @@
-name: beneesse_api_client
-description: Generated Dio client for Beneesse API (commit until regen via openapi_generator).
-publish_to: none
-
-environment:
-  sdk: ^3.12.0
-
-dependencies:
-  dio: ^5.9.0

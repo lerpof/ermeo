@@ -1,19 +1,19 @@
-# Beneesse
+# Ermeo
 
-Flutter monorepo for Beneesse mobile apps and shared packages. Managed with [Melos 7](https://melos.invertase.dev/) and Dart pub workspaces, pinned to Flutter **3.44.0** via [FVM](https://fvm.app/).
+Flutter monorepo for Ermeo mobile apps and shared packages. Managed with [Melos 7](https://melos.invertase.dev/) and Dart pub workspaces, pinned to Flutter **3.44.0** via [FVM](https://fvm.app/).
 
 **Project principles:** see [`docs/`](docs/index.md) — required reading for contributors and AI assistants. Clean Architecture, BLoC conventions, and testing standards are in [`docs/principles/`](docs/principles/clean-architecture.md).
 
 ## Structure
 
 ```text
-beneesse/
+ermeo/
 ├── apps/
-│   └── beneesse_mobile/       # Flutter app (only consumer of beneesse_api)
+│   └── ermeo_mobile/       # Flutter app (only consumer of ermeo_api)
 ├── packages/
-│   ├── beneesse_api/          # Pure Dart API layer
-│   ├── beneesse_ui/           # Shared Flutter UI
-│   └── beneesse_monitoring/   # Monitoring / observability
+│   ├── ermeo_api/          # Pure Dart API layer
+│   ├── ermeo_ui/           # Shared Flutter UI
+│   └── ermeo_monitoring/   # Monitoring / observability
 ├── .cursor/commands/          # Cursor slash commands
 ├── pubspec.yaml               # Workspace root + Melos config
 └── analysis_options.yaml
@@ -36,7 +36,7 @@ melos run analyze   # optional verification
 ## Run the mobile app
 
 ```bash
-cd apps/beneesse_mobile
+cd apps/ermeo_mobile
 fvm flutter run
 ```
 
@@ -61,5 +61,5 @@ See [`.cursor/commands/`](.cursor/commands/) for Cursor agent slash commands (`b
 
 ## Dependency rules
 
-- **`beneesse_api`** is consumed only by `beneesse_mobile`.
-- **`beneesse_ui`** and **`beneesse_monitoring`** do not depend on `beneesse_api`.
+- **`ermeo_api`** is consumed only by `ermeo_mobile`.
+- **`ermeo_ui`** and **`ermeo_monitoring`** do not depend on `ermeo_api`.

@@ -18,30 +18,30 @@
 
 ## Package-specific notes
 
-### `beneesse_api` (pure Dart)
+### `ermeo_api` (pure Dart)
 
 - No `flutter` or `dart:ui` imports.
 - Prefer immutable models (e.g. `freezed` / manual `copyWith` when introduced).
 - Network errors and parsing failures should be modeled explicitly, not swallowed.
 
-### `beneesse_ui` (Flutter)
+### `ermeo_ui` (Flutter)
 
 - Widgets should be as stateless as possible; state belongs in the app BLoC layer.
 - No direct API or monitoring SDK calls — UI receives data and callbacks from outside.
 - Shared widgets require **widget tests and golden tests** — see [testing.md](testing.md).
 
-### `beneesse_monitoring` (Flutter)
+### `ermeo_monitoring` (Flutter)
 
 - Provide thin wrappers around third-party SDKs so the app does not scatter monitoring calls.
-- No dependency on `beneesse_api`.
+- No dependency on `ermeo_api`.
 
-### `beneesse_mobile` (app)
+### `ermeo_mobile` (app)
 
 - Owns composition: DI, routing, feature modules, and Clean Architecture feature folders — see [clean-architecture.md](clean-architecture.md).
 - Feature code should not leak into shared packages unless it is genuinely reusable.
 - **No business logic in presentation** — widgets, views, and pages only render BLoC state and dispatch events.
 - **Display formatting belongs in BLoC** — not in `build()` methods.
-- Presentation must not import repositories or call `beneesse_api` directly.
+- Presentation must not import repositories or call `ermeo_api` directly.
 
 ## Tests
 

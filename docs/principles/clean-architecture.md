@@ -1,10 +1,10 @@
 # Clean Architecture
 
-Primary reference for `beneesse_mobile` app structure, layer rules, and BLoC conventions.
+Primary reference for `ermeo_mobile` app structure, layer rules, and BLoC conventions.
 
 ## App layout
 
-Feature code lives under `apps/beneesse_mobile/lib/`:
+Feature code lives under `apps/ermeo_mobile/lib/`:
 
 ```text
 lib/
@@ -16,7 +16,7 @@ lib/
         │   ├── views/
         │   ├── widgets/
         │   └── pages/
-        ├── data/            # converters + repositories (call beneesse_api / local sources)
+        ├── data/            # converters + repositories (call ermeo_api / local sources)
         └── models/
 ```
 
@@ -42,8 +42,8 @@ flowchart TB
     Converter[Converter]
   end
   subgraph external [external]
-    ApiPkg[beneesse_api]
-    UiPkg[beneesse_ui]
+    ApiPkg[ermeo_api]
+    UiPkg[ermeo_ui]
   end
   Pages --> Bloc
   Views --> Bloc
@@ -56,7 +56,7 @@ flowchart TB
   Widgets --> UiPkg
 ```
 
-Presentation dispatches events to BLoC and renders state. BLoC orchestrates business logic and calls repositories. Repositories use converters and `beneesse_api` (or local/DB sources). Presentation may import `beneesse_ui` for shared widgets but must not reach into data or API layers.
+Presentation dispatches events to BLoC and renders state. BLoC orchestrates business logic and calls repositories. Repositories use converters and `ermeo_api` (or local/DB sources). Presentation may import `ermeo_ui` for shared widgets but must not reach into data or API layers.
 
 ## Non-negotiable rules
 
@@ -65,10 +65,10 @@ Presentation dispatches events to BLoC and renders state. BLoC orchestrates busi
 | State management | **flutter_bloc** only; all business logic, orchestration, and **display formatting** live in BLoC |
 | Presentation is dumb | No repository imports, no API calls, no formatting logic in `presentation/` — only render state and dispatch events |
 | BLoC → Repository | BLoC calls repository interfaces/implementations directly; **no `use_cases` layer** |
-| Data layer | Repositories + converters in `data/`; repositories call `beneesse_api` (or local/DB), converters map API/DTO shapes → feature `models/` |
-| Models | Feature-owned domain models in `models/`; API DTOs stay in [`beneesse_api`](../../packages/beneesse_api) |
+| Data layer | Repositories + converters in `data/`; repositories call `ermeo_api` (or local/DB), converters map API/DTO shapes → feature `models/` |
+| Models | Feature-owned domain models in `models/`; API DTOs stay in [`ermeo_api`](../../packages/ermeo_api) |
 | Core | Cross-feature concerns only (router, DI, shared blocs/utils, app bootstrap) — not feature-specific screens |
-| Package boundaries | Unchanged: `beneesse_api` consumed only by `beneesse_mobile`; UI/monitoring packages remain independent |
+| Package boundaries | Unchanged: `ermeo_api` consumed only by `ermeo_mobile`; UI/monitoring packages remain independent |
 
 ## Anti-patterns
 

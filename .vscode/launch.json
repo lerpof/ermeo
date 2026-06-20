@@ -2,42 +2,42 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "beneesse_mobile (dev)",
+      "name": "ermeo_mobile (dev)",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "cwd": "${workspaceFolder}/apps/beneesse_mobile",
+      "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
         "--dart-define-from-file=config/dart_defines/dev.json"
       ]
     },
     {
-      "name": "beneesse_mobile (prod)",
+      "name": "ermeo_mobile (prod)",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "cwd": "${workspaceFolder}/apps/beneesse_mobile",
+      "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
         "--dart-define-from-file=config/dart_defines/prod.json"
       ]
     },
     {
-      "name": "beneesse_mobile (localhost)",
+      "name": "ermeo_mobile (localhost)",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "cwd": "${workspaceFolder}/apps/beneesse_mobile",
+      "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
         "--dart-define-from-file=config/dart_defines/dev.json",
-        "--dart-define=BENEESE_API_BASE_URL=http://localhost:8000"
+        "--dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
       ]
     },
     {
-      "name": "beneesse_widgetbook (Chrome)",
+      "name": "ermeo_widgetbook (Chrome)",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "cwd": "${workspaceFolder}/apps/beneesse_widgetbook",
+      "cwd": "${workspaceFolder}/apps/ermeo_widgetbook",
       "deviceId": "chrome"
     }
   ]
