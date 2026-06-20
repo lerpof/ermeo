@@ -16,6 +16,7 @@ Before planning or implementing any change, read and follow the documentation in
 - [docs/principles/tooling.md](../../docs/principles/tooling.md) — FVM, Melos, commands
 - [docs/principles/ai-guidelines.md](../../docs/principles/ai-guidelines.md) — AI-specific workflow
 - [docs/guides/localization.md](../../docs/guides/localization.md) — ARB keys and adding strings (`ermeo_l10n`)
+- [docs/guides/routing.md](../../docs/guides/routing.md) — auto_route, `@RoutePage`, navigation, deeplinks
 
 ## Critical rules
 

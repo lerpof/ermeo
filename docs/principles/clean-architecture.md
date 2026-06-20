@@ -86,5 +86,6 @@ When in doubt, ask: *does this file only render state and dispatch events?* If n
 ## Related docs
 
 - [Architecture](architecture.md) — monorepo layout and package dependency rules
+- [Routing](../guides/routing.md) — `@RoutePage`, typed navigation, deeplinks
 - [Testing](testing.md) — coverage requirements for BLoCs, repositories, and packages
 - [Code quality](code-quality.md) — Dart/Flutter standards and presentation rules

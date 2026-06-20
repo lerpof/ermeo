@@ -6,7 +6,8 @@ Project principles and conventions for humans and AI assistants working in this 
 
 | Document | What it covers |
 |----------|----------------|
-| [Localization](guides/localization.md) | ARB key format, adding strings, `context.l10n`, regeneration |
+| [Localization](guides/localization.md) | ARB key format, placeholders, `context.l10n`, regeneration workflow |
+| [Routing](guides/routing.md) | auto_route setup, `@RoutePage`, typed navigation, deeplinks |
 
 ## Principles
 
@@ -19,12 +20,6 @@ Project principles and conventions for humans and AI assistants working in this 
 | [Git and workflow](principles/git-and-workflow.md) | Gitflow (`develop` + `main`), commits, PRs, what not to commit |
 | [Tooling](principles/tooling.md) | FVM, Melos, workspace commands, adding packages |
 | [AI guidelines](principles/ai-guidelines.md) | How AI should plan, implement, and verify changes |
-
-## Guides
-
-| Document | What it covers |
-|----------|----------------|
-| [Localization](guides/localization.md) | ARB key format, placeholders, `context.l10n`, regeneration workflow |
 
 ## Who this is for
 

@@ -10,6 +10,7 @@ Instructions for Cursor and other AI assistants working in the Ermeo repository.
 4. Inspect existing code in the target folder and **match its style**.
 5. For app feature work, read [clean-architecture.md](clean-architecture.md) and identify the correct layer before writing code.
 6. For user-visible copy or ARB keys, read [localization.md](../guides/localization.md) and apply the `add-l10n-string` skill in [`.cursor/skills/add-l10n-string/`](../../.cursor/skills/add-l10n-string/).
+7. For new screens, navigation, or deeplinks, read [routing.md](../guides/routing.md) before adding `@RoutePage` or router entries.
 
 ## Clean Architecture checklist
 
@@ -21,6 +22,7 @@ Before implementing app feature code, confirm:
 - [ ] Feature domain models go in `models/`
 - [ ] Pages, views, and widgets go in `presentation/{pages,views,widgets}/`
 - [ ] Cross-feature wiring (router, DI) stays in `core/`
+- [ ] New pages use `@RoutePage()` and are registered in `AppRouter` — see [routing.md](../guides/routing.md)
 - [ ] No `use_cases` layer — BLoC calls repositories directly
 - [ ] Presentation will not import repositories or contain formatting logic
 

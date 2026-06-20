@@ -36,6 +36,7 @@ Common commands (from repository root):
 | `melos run clean` | Clean build artifacts |
 | `melos run generate:api` | Fetch OpenAPI from running BFF (`GET /openapi.yaml`), then regenerate `ermeo_api` |
 | `melos run generate:l10n` | Regenerate `ErLocalizations` from ARB files in `ermeo_l10n` |
+| `melos run generate:routes` | Regenerate auto_route files for `ermeo_mobile` |
 
 Cursor slash commands in [`.cursor/commands/`](../../.cursor/commands/) wrap these workflows for agents.
 
