@@ -47,18 +47,23 @@ melos:
     generate:routes:
       description: Regenerate auto_route files for ermeo_mobile.
       run: melos exec --scope=ermeo_mobile -- "dart run build_runner build --delete-conflicting-outputs"
+    generate:icons:
+      description: Regenerate dev and prod launcher icons for ermeo_mobile.
+      run: |
+        melos exec --scope=ermeo_mobile -- "dart run flutter_launcher_icons -f flutter_launcher_icons-prod.yaml"
+        melos exec --scope=ermeo_mobile -- "dart run flutter_launcher_icons -f flutter_launcher_icons-dev.yaml"
     run:widgetbook:
       description: Run the Widgetbook catalog in Chrome.
       run: melos exec --scope=ermeo_widgetbook -- "flutter run -d chrome"
     run:mobile:dev:
-      description: Run ermeo_mobile with dev dart-defines.
-      run: melos exec --scope=ermeo_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json"
+      description: Run ermeo_mobile with dev flavor and dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor dev --dart-define-from-file=config/dart_defines/dev.json"
     run:mobile:prod:
-      description: Run ermeo_mobile with prod dart-defines.
-      run: melos exec --scope=ermeo_mobile -- "flutter run --dart-define-from-file=config/dart_defines/prod.json"
+      description: Run ermeo_mobile with prod flavor and dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor prod --dart-define-from-file=config/dart_defines/prod.json"
     run:mobile:localhost:
-      description: Run ermeo_mobile against local API (dev env, localhost URL).
-      run: melos exec --scope=ermeo_mobile -- "flutter run --dart-define-from-file=config/dart_defines/dev.json --dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
+      description: Run ermeo_mobile against local API (dev flavor, localhost URL).
+      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor dev --dart-define-from-file=config/dart_defines/dev.json --dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
     generate:api:
       description: Fetch OpenAPI from running API (GET /openapi.yaml), then regenerate Dio client (requires Java 8+).
       run: |

@@ -1,4 +1,4 @@
-package com.ermeo.ermeo_mobile
+package com.lerpof.ermeo
 
 import io.flutter.embedding.android.FlutterActivity
 

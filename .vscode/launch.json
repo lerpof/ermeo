@@ -8,6 +8,8 @@
       "program": "lib/main.dart",
       "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
+        "--flavor",
+        "dev",
         "--dart-define-from-file=config/dart_defines/dev.json"
       ]
     },
@@ -18,6 +20,8 @@
       "program": "lib/main.dart",
       "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
+        "--flavor",
+        "prod",
         "--dart-define-from-file=config/dart_defines/prod.json"
       ]
     },
@@ -28,6 +32,8 @@
       "program": "lib/main.dart",
       "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
+        "--flavor",
+        "dev",
         "--dart-define-from-file=config/dart_defines/dev.json",
         "--dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
       ]

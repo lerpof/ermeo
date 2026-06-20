@@ -1,0 +1,4 @@
+#include "Debug.xcconfig"
+PRODUCT_BUNDLE_IDENTIFIER=com.lerpof.ermeo
+ASSETCATALOG_COMPILER_APPICON_NAME=AppIcon-prod
+APP_DISPLAY_NAME=Ermeo
