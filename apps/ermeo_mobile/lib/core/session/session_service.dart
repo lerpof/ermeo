@@ -2,7 +2,7 @@ import 'package:ermeo_api/ermeo_api.dart' as api;
 import 'package:ermeo_secure_storage/ermeo_secure_storage.dart';
 import 'package:flutter/foundation.dart';
 
-import 'session_state.dart';
+import 'package:ermeo_mobile/core/session/session_state.dart';
 
 class AppSessionService extends ChangeNotifier implements api.SessionService {
   AppSessionService({required this._tokenStorage});

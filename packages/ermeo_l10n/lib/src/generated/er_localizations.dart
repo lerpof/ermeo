@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -99,6 +100,66 @@ abstract class ErLocalizations {
   /// In en, this message translates to:
   /// **'Ermeo'**
   String get appTitle;
+
+  /// Title on the login screen app bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authLoginTitle;
+
+  /// Title on the register screen app bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get authRegisterTitle;
+
+  /// Label for the email field on the login screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authLoginEmailLabel;
+
+  /// Label for the password field on the login screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authLoginPasswordLabel;
+
+  /// Label for the email field on the register screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authRegisterEmailLabel;
+
+  /// Label for the password field on the register screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authRegisterPasswordLabel;
+
+  /// Primary submit button on the login screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authLoginSubmitButton;
+
+  /// Primary submit button on the register screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get authRegisterSubmitButton;
+
+  /// Link on the login screen to navigate to register.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account'**
+  String get authLoginGoToRegister;
+
+  /// Link on the register screen to navigate to login.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign in'**
+  String get authRegisterGoToLogin;
 }
 
 class _ErLocalizationsDelegate extends LocalizationsDelegate<ErLocalizations> {

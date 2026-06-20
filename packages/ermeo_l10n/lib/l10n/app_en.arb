@@ -3,5 +3,45 @@
   "appTitle": "Ermeo",
   "@appTitle": {
     "description": "Application name shown in the system UI where a global title is needed."
+  },
+  "authLoginTitle": "Sign in",
+  "@authLoginTitle": {
+    "description": "Title on the login screen app bar."
+  },
+  "authRegisterTitle": "Create account",
+  "@authRegisterTitle": {
+    "description": "Title on the register screen app bar."
+  },
+  "authLoginEmailLabel": "Email",
+  "@authLoginEmailLabel": {
+    "description": "Label for the email field on the login screen."
+  },
+  "authLoginPasswordLabel": "Password",
+  "@authLoginPasswordLabel": {
+    "description": "Label for the password field on the login screen."
+  },
+  "authRegisterEmailLabel": "Email",
+  "@authRegisterEmailLabel": {
+    "description": "Label for the email field on the register screen."
+  },
+  "authRegisterPasswordLabel": "Password",
+  "@authRegisterPasswordLabel": {
+    "description": "Label for the password field on the register screen."
+  },
+  "authLoginSubmitButton": "Sign in",
+  "@authLoginSubmitButton": {
+    "description": "Primary submit button on the login screen."
+  },
+  "authRegisterSubmitButton": "Create account",
+  "@authRegisterSubmitButton": {
+    "description": "Primary submit button on the register screen."
+  },
+  "authLoginGoToRegister": "Create an account",
+  "@authLoginGoToRegister": {
+    "description": "Link on the login screen to navigate to register."
+  },
+  "authRegisterGoToLogin": "Already have an account? Sign in",
+  "@authRegisterGoToLogin": {
+    "description": "Link on the register screen to navigate to login."
   }
 }

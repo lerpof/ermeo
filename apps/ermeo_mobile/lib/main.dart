@@ -4,9 +4,9 @@ import 'package:ermeo_secure_storage/ermeo_secure_storage.dart';
 import 'package:ermeo_ui/ermeo_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'core/config/app_config.dart';
-import 'core/router/app_router.dart';
-import 'core/session/session_service.dart';
+import 'package:ermeo_mobile/core/config/app_config.dart';
+import 'package:ermeo_mobile/core/router/app_router.dart';
+import 'package:ermeo_mobile/core/session/session_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
