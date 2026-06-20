@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../theme/be_theme_context.dart';
 
+/// Size scale for [BeTextField].
+enum BeTextFieldSize {
+  standard,
+  search,
+}
+
 /// Token-driven text field with semantic decoration.
 class BeTextField extends StatelessWidget {
   const BeTextField({
@@ -21,6 +27,7 @@ class BeTextField extends StatelessWidget {
     this.enabled = true,
     this.autofocus = false,
     this.maxLines = 1,
+    this.size = BeTextFieldSize.standard,
   });
 
   final TextEditingController? controller;
@@ -38,12 +45,21 @@ class BeTextField extends StatelessWidget {
   final bool enabled;
   final bool autofocus;
   final int maxLines;
+  final BeTextFieldSize size;
 
   bool get _hasError => errorText != null && errorText!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.beColors;
+    final spacing = context.beSpacing;
+
+    final verticalPadding = size == BeTextFieldSize.search
+        ? spacing.componentGap + spacing.inlineGap / 2
+        : spacing.componentGap;
+    final horizontalPadding = size == BeTextFieldSize.search
+        ? spacing.componentGap * 2
+        : spacing.componentGap + spacing.inlineGap;
 
     return TextField(
       controller: controller,
@@ -56,7 +72,7 @@ class BeTextField extends StatelessWidget {
       autofocus: autofocus,
       maxLines: maxLines,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: enabled ? colors.textPrimary : colors.textDisabled,
+        color: enabled ? colors.onDark : colors.ash,
       ),
       decoration: InputDecoration(
         labelText: label,
@@ -65,6 +81,11 @@ class BeTextField extends StatelessWidget {
         errorText: _hasError ? errorText : null,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding,
+          vertical: verticalPadding,
+        ),
+        isDense: size == BeTextFieldSize.standard,
       ),
     );
   }

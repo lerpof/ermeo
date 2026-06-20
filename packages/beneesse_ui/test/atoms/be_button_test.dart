@@ -74,8 +74,8 @@ void main() {
           matching: find.byWidgetPredicate(
             (widget) =>
                 widget is SizedBox &&
-                widget.width == 40 &&
-                widget.height == 40,
+                widget.width == 36 &&
+                widget.height == 36,
           ),
         ),
         findsOneWidget,

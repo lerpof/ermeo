@@ -26,33 +26,33 @@ void main() {
       expect(theme.extension<BeTypographyTokens>(), isNotNull);
     });
 
-    test('light ColorScheme maps semantic brand and surface colors', () {
+    test('light ColorScheme maps semantic primary and surface colors', () {
       final theme = BeTheme.light;
       final colors = theme.extension<BeColorTokens>()!;
 
-      expect(theme.colorScheme.primary, colors.brandPrimary);
-      expect(theme.colorScheme.surface, colors.surfacePrimary);
-      expect(theme.colorScheme.onSurface, colors.textPrimary);
-      expect(theme.colorScheme.error, colors.errorPrimary);
-      expect(theme.scaffoldBackgroundColor, colors.backgroundPrimary);
-      expect(theme.dividerColor, colors.divider);
+      expect(theme.colorScheme.primary, colors.primary);
+      expect(theme.colorScheme.surface, colors.surface);
+      expect(theme.colorScheme.onSurface, colors.ink);
+      expect(theme.colorScheme.error, colors.accentRed);
+      expect(theme.scaffoldBackgroundColor, colors.canvas);
+      expect(theme.dividerColor, colors.hairline);
     });
 
-    test('dark ColorScheme maps semantic brand and surface colors', () {
+    test('dark ColorScheme maps semantic primary and surface colors', () {
       final theme = BeTheme.dark;
       final colors = theme.extension<BeColorTokens>()!;
 
-      expect(theme.colorScheme.primary, colors.brandPrimary);
-      expect(theme.colorScheme.surface, colors.surfacePrimary);
-      expect(theme.scaffoldBackgroundColor, colors.backgroundPrimary);
+      expect(theme.colorScheme.primary, colors.primary);
+      expect(theme.colorScheme.surface, colors.surface);
+      expect(theme.scaffoldBackgroundColor, colors.canvas);
     });
 
     test('text theme uses semantic text colors', () {
       final theme = BeTheme.light;
       final colors = theme.extension<BeColorTokens>()!;
 
-      expect(theme.textTheme.bodyLarge?.color, colors.textPrimary);
-      expect(theme.textTheme.headlineLarge?.color, colors.textPrimary);
+      expect(theme.textTheme.bodyLarge?.color, colors.ink);
+      expect(theme.textTheme.headlineLarge?.color, colors.ink);
     });
 
     test('light theme configures component themes from semantic tokens', () {
@@ -60,19 +60,23 @@ void main() {
       final colors = theme.extension<BeColorTokens>()!;
       final radius = theme.extension<BeRadiusTokens>()!;
 
-      expect(theme.appBarTheme.backgroundColor, colors.surfacePrimary);
-      expect(theme.appBarTheme.foregroundColor, colors.textPrimary);
-      expect(theme.inputDecorationTheme.fillColor, colors.surfaceSecondary);
+      expect(theme.appBarTheme.backgroundColor, colors.canvas);
+      expect(theme.appBarTheme.foregroundColor, colors.ink);
+      expect(theme.inputDecorationTheme.fillColor, colors.surfaceElevated);
       expect(
         theme.inputDecorationTheme.enabledBorder,
         isA<OutlineInputBorder>(),
       );
-      expect(theme.navigationBarTheme.backgroundColor, colors.surfacePrimary);
-      expect(theme.navigationBarTheme.indicatorColor, colors.brandSecondary);
-      expect(theme.cardTheme.color, colors.surfaceElevated);
+      expect(theme.navigationBarTheme.backgroundColor, colors.canvas);
+      expect(theme.navigationBarTheme.indicatorColor, colors.surfaceElevated);
+      expect(theme.cardTheme.color, colors.surface);
       expect(
         (theme.cardTheme.shape as RoundedRectangleBorder).borderRadius,
         BorderRadius.circular(radius.card),
+      );
+      expect(
+        (theme.cardTheme.shape as RoundedRectangleBorder).side.color,
+        colors.hairline,
       );
     });
 
@@ -84,19 +88,19 @@ void main() {
 
       expect(
         labelStyle.resolve({WidgetState.selected})?.color,
-        colors.brandPrimary,
+        colors.ink,
       );
       expect(
         labelStyle.resolve({WidgetState.disabled})?.color,
-        colors.textDisabled,
+        colors.ash,
       );
       expect(
         iconTheme.resolve({WidgetState.selected})?.color,
-        colors.brandPrimary,
+        colors.ink,
       );
       expect(
         iconTheme.resolve({WidgetState.disabled})?.color,
-        colors.iconDisabled,
+        colors.ash,
       );
     });
   });
@@ -125,7 +129,7 @@ void main() {
         ),
       );
 
-      expect(colors.backgroundPrimary, BeSemanticTokens.light.colors.backgroundPrimary);
+      expect(colors.canvas, BeSemanticTokens.light.colors.canvas);
       expect(spacing.pagePadding, BeSemanticTokens.light.spacing.pagePadding);
       expect(radius.card, BeSemanticTokens.light.radius.card);
       expect(shadows.card, BeSemanticTokens.light.shadows.card);
@@ -150,7 +154,7 @@ void main() {
         ),
       );
 
-      expect(colors.backgroundPrimary, BeSemanticTokens.dark.colors.backgroundPrimary);
+      expect(colors.canvas, BeSemanticTokens.dark.colors.canvas);
     });
   });
 }

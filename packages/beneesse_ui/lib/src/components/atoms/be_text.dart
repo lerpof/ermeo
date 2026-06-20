@@ -10,6 +10,8 @@ enum BeTextColor {
   tertiary,
   disabled,
   inverse,
+  onDark,
+  onDarkMute,
   error,
 }
 
@@ -101,6 +103,8 @@ class BeText extends StatelessWidget {
       BeTextColor.tertiary => colors.textTertiary,
       BeTextColor.disabled => colors.textDisabled,
       BeTextColor.inverse => colors.textInverse,
+      BeTextColor.onDark => colors.onDark,
+      BeTextColor.onDarkMute => colors.onDarkMute,
       BeTextColor.error => colors.errorPrimary,
     };
   }

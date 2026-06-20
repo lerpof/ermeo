@@ -7,25 +7,38 @@ void main() {
     test('light theme resolves expected semantic colors', () {
       final colors = BeSemanticTokens.light.colors;
 
-      expect(colors.backgroundPrimary, const Color(0xFFFFFFFF));
-      expect(colors.textPrimary, const Color(0xFF111827));
-      expect(colors.brandPrimary, const Color(0xFF3B82F6));
-      expect(colors.errorPrimary, const Color(0xFFEF4444));
+      expect(colors.canvas, const Color(0xFFFAFAFA));
+      expect(colors.backgroundPrimary, colors.canvas);
+      expect(colors.textPrimary, const Color(0xFF0A0A0C));
+      expect(colors.brandPrimary, const Color(0xFF000000));
+      expect(colors.primary, colors.brandPrimary);
+      expect(colors.errorPrimary, const Color(0xFFFF6161));
+      expect(colors.hairline, const Color(0xFFE0E0E2));
     });
 
     test('dark theme resolves expected semantic colors', () {
       final colors = BeSemanticTokens.dark.colors;
 
-      expect(colors.backgroundPrimary, const Color(0xFF030712));
-      expect(colors.textPrimary, const Color(0xFFF9FAFB));
-      expect(colors.brandPrimary, const Color(0xFF60A5FA));
+      expect(colors.canvas, const Color(0xFF07080A));
+      expect(colors.textPrimary, const Color(0xFFF4F4F6));
+      expect(colors.brandPrimary, const Color(0xFFFFFFFF));
+      expect(colors.surfaceElevated, const Color(0xFF101111));
+    });
+
+    test('Raycast-native and legacy aliases resolve consistently', () {
+      final colors = BeSemanticTokens.dark.colors;
+
+      expect(colors.backgroundPrimary, colors.canvas);
+      expect(colors.textPrimary, colors.ink);
+      expect(colors.borderDefault, colors.hairline);
+      expect(colors.brandPrimary, colors.primary);
     });
 
     test('semantic spacing resolves to primitive values', () {
       final spacing = BeSemanticTokens.light.spacing;
 
-      expect(spacing.pagePadding, 16);
-      expect(spacing.sectionGap, 24);
+      expect(spacing.pagePadding, 24);
+      expect(spacing.sectionGap, 96);
       expect(spacing.componentGap, 8);
     });
 
@@ -33,24 +46,27 @@ void main() {
       final radius = BeSemanticTokens.light.radius;
 
       expect(radius.button, 8);
-      expect(radius.card, 12);
+      expect(radius.card, 10);
       expect(radius.chip, 9999);
     });
 
-    test('semantic shadows resolve to box shadows', () {
+    test('semantic shadows resolve to zero elevation', () {
       final shadows = BeSemanticTokens.light.shadows;
 
       expect(shadows.card, isNotEmpty);
-      expect(shadows.card.first.blurRadius, 2);
-      expect(shadows.card.first.offset, const Offset(0, 1));
-      expect(shadows.modal.first.blurRadius, greaterThan(shadows.card.first.blurRadius));
+      expect(shadows.card.first.blurRadius, 0);
+      expect(shadows.card.first.color.a, 0);
     });
 
     test('typography tokens expose text theme from primitives', () {
       final typography = BeSemanticTokens.light.typography;
 
-      expect(typography.textTheme.bodyLarge?.fontSize, 16);
-      expect(typography.textTheme.headlineLarge?.fontWeight, FontWeight.w600);
+      expect(typography.textTheme.bodyLarge?.fontSize, 18);
+      expect(typography.textTheme.displayLarge?.fontWeight, FontWeight.w600);
+      expect(
+        typography.textTheme.bodyMedium?.fontFeatures,
+        contains(const FontFeature('ss03')),
+      );
     });
   });
 
@@ -91,7 +107,7 @@ void main() {
         0.5,
       );
 
-      expect(result.pagePadding, 16);
+      expect(result.pagePadding, 24);
     });
 
     test('BeSpacingTokens lerp returns self when other is null', () {
@@ -110,7 +126,7 @@ void main() {
         0.5,
       );
 
-      expect(result.card, 12);
+      expect(result.card, 10);
     });
 
     test('BeRadiusTokens lerp returns self when other is null', () {

@@ -10,12 +10,16 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:beneesse_widgetbook/use_cases/atoms/be_badge_use_cases.dart'
+    as _beneesse_widgetbook_use_cases_atoms_be_badge_use_cases;
 import 'package:beneesse_widgetbook/use_cases/atoms/be_button_use_cases.dart'
     as _beneesse_widgetbook_use_cases_atoms_be_button_use_cases;
 import 'package:beneesse_widgetbook/use_cases/atoms/be_divider_use_cases.dart'
     as _beneesse_widgetbook_use_cases_atoms_be_divider_use_cases;
 import 'package:beneesse_widgetbook/use_cases/atoms/be_icon_use_cases.dart'
     as _beneesse_widgetbook_use_cases_atoms_be_icon_use_cases;
+import 'package:beneesse_widgetbook/use_cases/atoms/be_keycap_use_cases.dart'
+    as _beneesse_widgetbook_use_cases_atoms_be_keycap_use_cases;
 import 'package:beneesse_widgetbook/use_cases/atoms/be_text_use_cases.dart'
     as _beneesse_widgetbook_use_cases_atoms_be_text_use_cases;
 import 'package:beneesse_widgetbook/use_cases/molecules/be_app_bar_use_cases.dart'
@@ -24,6 +28,8 @@ import 'package:beneesse_widgetbook/use_cases/molecules/be_bottom_nav_bar_use_ca
     as _beneesse_widgetbook_use_cases_molecules_be_bottom_nav_bar_use_cases;
 import 'package:beneesse_widgetbook/use_cases/molecules/be_card_use_cases.dart'
     as _beneesse_widgetbook_use_cases_molecules_be_card_use_cases;
+import 'package:beneesse_widgetbook/use_cases/molecules/be_pill_tab_bar_use_cases.dart'
+    as _beneesse_widgetbook_use_cases_molecules_be_pill_tab_bar_use_cases;
 import 'package:beneesse_widgetbook/use_cases/molecules/be_tab_bar_use_cases.dart'
     as _beneesse_widgetbook_use_cases_molecules_be_tab_bar_use_cases;
 import 'package:beneesse_widgetbook/use_cases/molecules/be_text_field_use_cases.dart'
@@ -34,6 +40,21 @@ final directories = <_widgetbook.WidgetbookNode>[
   _widgetbook.WidgetbookCategory(
     name: 'Atoms',
     children: [
+      _widgetbook.WidgetbookFolder(
+        name: 'BeBadge',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'BeBadge',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Variants',
+                builder: _beneesse_widgetbook_use_cases_atoms_be_badge_use_cases
+                    .beBadgeVariants,
+              ),
+            ],
+          ),
+        ],
+      ),
       _widgetbook.WidgetbookFolder(
         name: 'BeButton',
         children: [
@@ -106,6 +127,22 @@ final directories = <_widgetbook.WidgetbookNode>[
                 name: 'Size and color matrix',
                 builder: _beneesse_widgetbook_use_cases_atoms_be_icon_use_cases
                     .beIconMatrix,
+              ),
+            ],
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookFolder(
+        name: 'BeKeycap',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'BeKeycap',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Default',
+                builder:
+                    _beneesse_widgetbook_use_cases_atoms_be_keycap_use_cases
+                        .beKeycapDefault,
               ),
             ],
           ),
@@ -191,6 +228,28 @@ final directories = <_widgetbook.WidgetbookNode>[
                 builder:
                     _beneesse_widgetbook_use_cases_molecules_be_card_use_cases
                         .beCardTappable,
+              ),
+            ],
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookFolder(
+        name: 'BePillTabBar',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'BePillTabBar',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Default',
+                builder:
+                    _beneesse_widgetbook_use_cases_molecules_be_pill_tab_bar_use_cases
+                        .bePillTabBarDefault,
+              ),
+              _widgetbook.WidgetbookUseCase(
+                name: 'Knobs',
+                builder:
+                    _beneesse_widgetbook_use_cases_molecules_be_pill_tab_bar_use_cases
+                        .bePillTabBarKnobs,
               ),
             ],
           ),

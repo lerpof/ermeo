@@ -24,7 +24,7 @@ void main() {
               ),
           ],
         ),
-        surface: kBeGoldenSurfaceSizeTall,
+        surface: const Size(400, 480),
       );
 
       await expectLater(

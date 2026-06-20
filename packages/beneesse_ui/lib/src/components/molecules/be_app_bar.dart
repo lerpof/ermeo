@@ -16,7 +16,6 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showBackButton = false,
     this.onBack,
     this.centerTitle,
-    this.useShadow = false,
   }) : assert(
          title != null || titleWidget != null,
          'Either title or titleWidget must be provided',
@@ -29,7 +28,6 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final VoidCallback? onBack;
   final bool? centerTitle;
-  final bool useShadow;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -37,7 +35,6 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.beColors;
-    final shadows = context.beShadows;
 
     Widget? resolvedLeading = leading;
     if (resolvedLeading == null && showBackButton && onBack != null) {
@@ -51,24 +48,25 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
     final resolvedTitle = titleWidget ??
         BeText(
           title!,
-          variant: BeTextVariant.titleLarge,
+          variant: BeTextVariant.labelLarge,
         );
 
     return Material(
-      elevation: useShadow ? 1 : 0,
-      shadowColor: colors.overlay.withValues(alpha: 0.1),
-      color: colors.surfacePrimary,
+      elevation: 0,
+      color: colors.canvas,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: colors.surfacePrimary,
-          boxShadow: useShadow ? shadows.card : shadows.none,
+          color: colors.canvas,
+          border: Border(
+            bottom: BorderSide(color: colors.hairline),
+          ),
         ),
         child: AppBar(
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           scrolledUnderElevation: 0,
-          foregroundColor: colors.textPrimary,
+          foregroundColor: colors.ink,
           centerTitle: centerTitle,
           leading: resolvedLeading,
           title: resolvedTitle,

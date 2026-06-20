@@ -39,14 +39,47 @@ class BeSemanticTokens {
 }
 
 /// Semantic color roles resolved for the active theme.
+///
+/// Includes Raycast-native roles (`canvas`, `ink`, `hairline`, …) and legacy
+/// aliases (`backgroundPrimary`, `brandPrimary`, …) for backward compatibility.
 class BeColorTokens extends ThemeExtension<BeColorTokens> {
   const BeColorTokens({
+    required this.canvas,
+    required this.surface,
+    required this.surfaceElevated,
+    required this.surfaceCard,
+    required this.buttonFg,
+    required this.hairline,
+    required this.hairlineSoft,
+    required this.hairlineStrong,
+    required this.ink,
+    required this.body,
+    required this.charcoal,
+    required this.mute,
+    required this.ash,
+    required this.stone,
+    required this.onDark,
+    required this.onDarkMute,
+    required this.primary,
+    required this.primaryPressed,
+    required this.onPrimary,
+    required this.keyBgStart,
+    required this.keyBgEnd,
+    required this.accentBlue,
+    required this.accentBlueSoft,
+    required this.accentRed,
+    required this.accentRedSoft,
+    required this.accentGreen,
+    required this.accentGreenSoft,
+    required this.accentYellow,
+    required this.accentYellowSoft,
+    required this.heroStripeStart,
+    required this.heroStripeEnd,
     required this.backgroundPrimary,
     required this.backgroundSecondary,
     required this.backgroundTertiary,
     required this.surfacePrimary,
     required this.surfaceSecondary,
-    required this.surfaceElevated,
     required this.textPrimary,
     required this.textSecondary,
     required this.textTertiary,
@@ -84,12 +117,42 @@ class BeColorTokens extends ThemeExtension<BeColorTokens> {
     }
 
     return BeColorTokens(
+      canvas: require('canvas'),
+      surface: require('surface'),
+      surfaceElevated: require('surfaceElevated'),
+      surfaceCard: require('surfaceCard'),
+      buttonFg: require('buttonFg'),
+      hairline: require('hairline'),
+      hairlineSoft: require('hairlineSoft'),
+      hairlineStrong: require('hairlineStrong'),
+      ink: require('ink'),
+      body: require('body'),
+      charcoal: require('charcoal'),
+      mute: require('mute'),
+      ash: require('ash'),
+      stone: require('stone'),
+      onDark: require('onDark'),
+      onDarkMute: require('onDarkMute'),
+      primary: require('primary'),
+      primaryPressed: require('primaryPressed'),
+      onPrimary: require('onPrimary'),
+      keyBgStart: require('keyBgStart'),
+      keyBgEnd: require('keyBgEnd'),
+      accentBlue: require('accentBlue'),
+      accentBlueSoft: require('accentBlueSoft'),
+      accentRed: require('accentRed'),
+      accentRedSoft: require('accentRedSoft'),
+      accentGreen: require('accentGreen'),
+      accentGreenSoft: require('accentGreenSoft'),
+      accentYellow: require('accentYellow'),
+      accentYellowSoft: require('accentYellowSoft'),
+      heroStripeStart: require('heroStripeStart'),
+      heroStripeEnd: require('heroStripeEnd'),
       backgroundPrimary: require('backgroundPrimary'),
       backgroundSecondary: require('backgroundSecondary'),
       backgroundTertiary: require('backgroundTertiary'),
       surfacePrimary: require('surfacePrimary'),
       surfaceSecondary: require('surfaceSecondary'),
-      surfaceElevated: require('surfaceElevated'),
       textPrimary: require('textPrimary'),
       textSecondary: require('textSecondary'),
       textTertiary: require('textTertiary'),
@@ -118,12 +181,42 @@ class BeColorTokens extends ThemeExtension<BeColorTokens> {
     );
   }
 
+  final Color canvas;
+  final Color surface;
+  final Color surfaceElevated;
+  final Color surfaceCard;
+  final Color buttonFg;
+  final Color hairline;
+  final Color hairlineSoft;
+  final Color hairlineStrong;
+  final Color ink;
+  final Color body;
+  final Color charcoal;
+  final Color mute;
+  final Color ash;
+  final Color stone;
+  final Color onDark;
+  final Color onDarkMute;
+  final Color primary;
+  final Color primaryPressed;
+  final Color onPrimary;
+  final Color keyBgStart;
+  final Color keyBgEnd;
+  final Color accentBlue;
+  final Color accentBlueSoft;
+  final Color accentRed;
+  final Color accentRedSoft;
+  final Color accentGreen;
+  final Color accentGreenSoft;
+  final Color accentYellow;
+  final Color accentYellowSoft;
+  final Color heroStripeStart;
+  final Color heroStripeEnd;
   final Color backgroundPrimary;
   final Color backgroundSecondary;
   final Color backgroundTertiary;
   final Color surfacePrimary;
   final Color surfaceSecondary;
-  final Color surfaceElevated;
   final Color textPrimary;
   final Color textSecondary;
   final Color textTertiary;
@@ -152,12 +245,42 @@ class BeColorTokens extends ThemeExtension<BeColorTokens> {
 
   @override
   BeColorTokens copyWith({
+    Color? canvas,
+    Color? surface,
+    Color? surfaceElevated,
+    Color? surfaceCard,
+    Color? buttonFg,
+    Color? hairline,
+    Color? hairlineSoft,
+    Color? hairlineStrong,
+    Color? ink,
+    Color? body,
+    Color? charcoal,
+    Color? mute,
+    Color? ash,
+    Color? stone,
+    Color? onDark,
+    Color? onDarkMute,
+    Color? primary,
+    Color? primaryPressed,
+    Color? onPrimary,
+    Color? keyBgStart,
+    Color? keyBgEnd,
+    Color? accentBlue,
+    Color? accentBlueSoft,
+    Color? accentRed,
+    Color? accentRedSoft,
+    Color? accentGreen,
+    Color? accentGreenSoft,
+    Color? accentYellow,
+    Color? accentYellowSoft,
+    Color? heroStripeStart,
+    Color? heroStripeEnd,
     Color? backgroundPrimary,
     Color? backgroundSecondary,
     Color? backgroundTertiary,
     Color? surfacePrimary,
     Color? surfaceSecondary,
-    Color? surfaceElevated,
     Color? textPrimary,
     Color? textSecondary,
     Color? textTertiary,
@@ -185,12 +308,42 @@ class BeColorTokens extends ThemeExtension<BeColorTokens> {
     Color? overlay,
   }) {
     return BeColorTokens(
+      canvas: canvas ?? this.canvas,
+      surface: surface ?? this.surface,
+      surfaceElevated: surfaceElevated ?? this.surfaceElevated,
+      surfaceCard: surfaceCard ?? this.surfaceCard,
+      buttonFg: buttonFg ?? this.buttonFg,
+      hairline: hairline ?? this.hairline,
+      hairlineSoft: hairlineSoft ?? this.hairlineSoft,
+      hairlineStrong: hairlineStrong ?? this.hairlineStrong,
+      ink: ink ?? this.ink,
+      body: body ?? this.body,
+      charcoal: charcoal ?? this.charcoal,
+      mute: mute ?? this.mute,
+      ash: ash ?? this.ash,
+      stone: stone ?? this.stone,
+      onDark: onDark ?? this.onDark,
+      onDarkMute: onDarkMute ?? this.onDarkMute,
+      primary: primary ?? this.primary,
+      primaryPressed: primaryPressed ?? this.primaryPressed,
+      onPrimary: onPrimary ?? this.onPrimary,
+      keyBgStart: keyBgStart ?? this.keyBgStart,
+      keyBgEnd: keyBgEnd ?? this.keyBgEnd,
+      accentBlue: accentBlue ?? this.accentBlue,
+      accentBlueSoft: accentBlueSoft ?? this.accentBlueSoft,
+      accentRed: accentRed ?? this.accentRed,
+      accentRedSoft: accentRedSoft ?? this.accentRedSoft,
+      accentGreen: accentGreen ?? this.accentGreen,
+      accentGreenSoft: accentGreenSoft ?? this.accentGreenSoft,
+      accentYellow: accentYellow ?? this.accentYellow,
+      accentYellowSoft: accentYellowSoft ?? this.accentYellowSoft,
+      heroStripeStart: heroStripeStart ?? this.heroStripeStart,
+      heroStripeEnd: heroStripeEnd ?? this.heroStripeEnd,
       backgroundPrimary: backgroundPrimary ?? this.backgroundPrimary,
       backgroundSecondary: backgroundSecondary ?? this.backgroundSecondary,
       backgroundTertiary: backgroundTertiary ?? this.backgroundTertiary,
       surfacePrimary: surfacePrimary ?? this.surfacePrimary,
       surfaceSecondary: surfaceSecondary ?? this.surfaceSecondary,
-      surfaceElevated: surfaceElevated ?? this.surfaceElevated,
       textPrimary: textPrimary ?? this.textPrimary,
       textSecondary: textSecondary ?? this.textSecondary,
       textTertiary: textTertiary ?? this.textTertiary,
@@ -228,6 +381,37 @@ class BeColorTokens extends ThemeExtension<BeColorTokens> {
     Color lerpColor(Color a, Color b) => Color.lerp(a, b, t) ?? a;
 
     return BeColorTokens(
+      canvas: lerpColor(canvas, other.canvas),
+      surface: lerpColor(surface, other.surface),
+      surfaceElevated: lerpColor(surfaceElevated, other.surfaceElevated),
+      surfaceCard: lerpColor(surfaceCard, other.surfaceCard),
+      buttonFg: lerpColor(buttonFg, other.buttonFg),
+      hairline: lerpColor(hairline, other.hairline),
+      hairlineSoft: lerpColor(hairlineSoft, other.hairlineSoft),
+      hairlineStrong: lerpColor(hairlineStrong, other.hairlineStrong),
+      ink: lerpColor(ink, other.ink),
+      body: lerpColor(body, other.body),
+      charcoal: lerpColor(charcoal, other.charcoal),
+      mute: lerpColor(mute, other.mute),
+      ash: lerpColor(ash, other.ash),
+      stone: lerpColor(stone, other.stone),
+      onDark: lerpColor(onDark, other.onDark),
+      onDarkMute: lerpColor(onDarkMute, other.onDarkMute),
+      primary: lerpColor(primary, other.primary),
+      primaryPressed: lerpColor(primaryPressed, other.primaryPressed),
+      onPrimary: lerpColor(onPrimary, other.onPrimary),
+      keyBgStart: lerpColor(keyBgStart, other.keyBgStart),
+      keyBgEnd: lerpColor(keyBgEnd, other.keyBgEnd),
+      accentBlue: lerpColor(accentBlue, other.accentBlue),
+      accentBlueSoft: lerpColor(accentBlueSoft, other.accentBlueSoft),
+      accentRed: lerpColor(accentRed, other.accentRed),
+      accentRedSoft: lerpColor(accentRedSoft, other.accentRedSoft),
+      accentGreen: lerpColor(accentGreen, other.accentGreen),
+      accentGreenSoft: lerpColor(accentGreenSoft, other.accentGreenSoft),
+      accentYellow: lerpColor(accentYellow, other.accentYellow),
+      accentYellowSoft: lerpColor(accentYellowSoft, other.accentYellowSoft),
+      heroStripeStart: lerpColor(heroStripeStart, other.heroStripeStart),
+      heroStripeEnd: lerpColor(heroStripeEnd, other.heroStripeEnd),
       backgroundPrimary: lerpColor(backgroundPrimary, other.backgroundPrimary),
       backgroundSecondary: lerpColor(
         backgroundSecondary,
@@ -239,7 +423,6 @@ class BeColorTokens extends ThemeExtension<BeColorTokens> {
       ),
       surfacePrimary: lerpColor(surfacePrimary, other.surfacePrimary),
       surfaceSecondary: lerpColor(surfaceSecondary, other.surfaceSecondary),
-      surfaceElevated: lerpColor(surfaceElevated, other.surfaceElevated),
       textPrimary: lerpColor(textPrimary, other.textPrimary),
       textSecondary: lerpColor(textSecondary, other.textSecondary),
       textTertiary: lerpColor(textTertiary, other.textTertiary),
@@ -493,19 +676,42 @@ class BeTypographyTokens extends ThemeExtension<BeTypographyTokens> {
   }
 }
 
+/// Inter ss03 stylistic set — Raycast signature alternate `g` glyph.
+const _interBodyFeatures = <FontFeature>[
+  FontFeature('calt'),
+  FontFeature('kern'),
+  FontFeature('liga'),
+  FontFeature('ss03'),
+];
+
+/// Display-xl wordmark features (ss02 + ss08, ligatures off).
+const _interDisplayFeatures = <FontFeature>[
+  FontFeature('calt'),
+  FontFeature('kern'),
+  FontFeature('ss02'),
+  FontFeature('ss08'),
+];
+
 TextTheme _buildTextTheme() {
-  TextStyle fromPrimitive(BePrimitiveTextStyleDefinition definition) {
+  TextStyle fromPrimitive(
+    BePrimitiveTextStyleDefinition definition, {
+    List<FontFeature>? fontFeatures,
+  }) {
     return TextStyle(
       fontFamily: BePrimitiveTypography.fontFamily,
       fontSize: definition.size,
       fontWeight: definition.weight,
       height: definition.height,
       letterSpacing: definition.letterSpacing,
+      fontFeatures: fontFeatures ?? _interBodyFeatures,
     );
   }
 
   return TextTheme(
-    displayLarge: fromPrimitive(BePrimitiveTypography.displayLarge),
+    displayLarge: fromPrimitive(
+      BePrimitiveTypography.displayLarge,
+      fontFeatures: _interDisplayFeatures,
+    ),
     displayMedium: fromPrimitive(BePrimitiveTypography.displayMedium),
     displaySmall: fromPrimitive(BePrimitiveTypography.displaySmall),
     headlineLarge: fromPrimitive(BePrimitiveTypography.headlineLarge),

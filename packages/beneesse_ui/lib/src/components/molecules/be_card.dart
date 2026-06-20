@@ -9,59 +9,54 @@ class BeCard extends StatelessWidget {
     super.key,
     this.padding,
     this.onTap,
+    this.elevated = false,
   });
 
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onTap;
 
+  /// When true, uses [BeColorTokens.surfaceElevated] instead of [surface].
+  final bool elevated;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.beColors;
     final spacing = context.beSpacing;
     final radius = context.beRadius;
-    final shadows = context.beShadows;
 
     final borderRadius = BorderRadius.circular(radius.card);
     final resolvedPadding = padding ?? EdgeInsets.all(spacing.pagePadding);
+    final backgroundColor = elevated ? colors.surfaceElevated : colors.surface;
 
     final content = Padding(
       padding: resolvedPadding,
       child: child,
     );
 
+    final shape = RoundedRectangleBorder(
+      borderRadius: borderRadius,
+      side: BorderSide(color: colors.hairline),
+    );
+
     if (onTap == null) {
       return Material(
-        color: colors.surfaceElevated,
+        color: backgroundColor,
         elevation: 0,
-        shadowColor: colors.overlay.withValues(alpha: 0.1),
-        shape: RoundedRectangleBorder(borderRadius: borderRadius),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: borderRadius,
-            boxShadow: shadows.card,
-          ),
-          child: content,
-        ),
+        shape: shape,
+        child: content,
       );
     }
 
     return Material(
-      color: colors.surfaceElevated,
+      color: backgroundColor,
       elevation: 0,
-      shadowColor: colors.overlay.withValues(alpha: 0.1),
-      shape: RoundedRectangleBorder(borderRadius: borderRadius),
+      shape: shape,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         borderRadius: borderRadius,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: borderRadius,
-            boxShadow: shadows.card,
-          ),
-          child: content,
-        ),
+        child: content,
       ),
     );
   }

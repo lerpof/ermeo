@@ -7,7 +7,9 @@ import '../../theme/be_theme_context.dart';
 enum BeButtonVariant {
   primary,
   secondary,
+  tertiary,
   outline,
+  install,
   ghost,
   destructive,
 }
@@ -67,7 +69,7 @@ abstract final class BeButtonStyle {
     final typography = context.beTypography.textTheme;
 
     final height = _heightForSize(size, spacing);
-    final horizontalPadding = _horizontalPaddingForSize(size, spacing);
+    final horizontalPadding = _horizontalPaddingForSize(size, spacing, variant);
     final iconGap = spacing.componentGap;
     final labelStyle = _labelStyleForSize(size, typography);
     final iconSize = spacing.inlineGap * 5;
@@ -91,20 +93,28 @@ abstract final class BeButtonStyle {
 
   static double _heightForSize(BeButtonSize size, BeSpacingTokens spacing) {
     return switch (size) {
-      BeButtonSize.sm => spacing.componentGap * 4,
-      BeButtonSize.md => spacing.componentGap * 5,
-      BeButtonSize.lg => spacing.componentGap * 6,
+      BeButtonSize.sm => 32,
+      BeButtonSize.md => 36,
+      BeButtonSize.lg => 44,
     };
   }
 
   static double _horizontalPaddingForSize(
     BeButtonSize size,
     BeSpacingTokens spacing,
+    BeButtonVariant variant,
   ) {
+    if (variant == BeButtonVariant.install) {
+      return switch (size) {
+        BeButtonSize.sm => 10,
+        BeButtonSize.md => 14,
+        BeButtonSize.lg => 16,
+      };
+    }
     return switch (size) {
-      BeButtonSize.sm => spacing.componentGap * 1.5,
-      BeButtonSize.md => spacing.pagePadding,
-      BeButtonSize.lg => spacing.pagePadding * 1.5,
+      BeButtonSize.sm => spacing.componentGap,
+      BeButtonSize.md => spacing.componentGap * 2,
+      BeButtonSize.lg => spacing.pagePadding,
     };
   }
 
@@ -126,33 +136,36 @@ abstract final class BeButtonStyle {
   ) {
     if (!enabled) {
       return _ButtonPalette(
-        background: colors.surfaceSecondary,
-        foreground: colors.textDisabled,
-        border: variant == BeButtonVariant.outline ? colors.borderDefault : null,
+        background: colors.surfaceElevated,
+        foreground: colors.ash,
+        border: variant == BeButtonVariant.outline ||
+                variant == BeButtonVariant.install
+            ? colors.hairlineStrong
+            : null,
       );
     }
 
     return switch (variant) {
       BeButtonVariant.primary => _ButtonPalette(
-        background: colors.brandPrimary,
-        foreground: colors.brandOnPrimary,
+        background: colors.primary,
+        foreground: colors.onPrimary,
       ),
-      BeButtonVariant.secondary => _ButtonPalette(
-        background: colors.brandSecondary,
-        foreground: colors.textPrimary,
-      ),
-      BeButtonVariant.outline => _ButtonPalette(
+      BeButtonVariant.secondary || BeButtonVariant.ghost => _ButtonPalette(
         background: Colors.transparent,
-        foreground: colors.brandPrimary,
-        border: colors.borderDefault,
+        foreground: colors.onDark,
       ),
-      BeButtonVariant.ghost => _ButtonPalette(
+      BeButtonVariant.tertiary => _ButtonPalette(
+        background: colors.surfaceElevated,
+        foreground: colors.onDark,
+      ),
+      BeButtonVariant.outline || BeButtonVariant.install => _ButtonPalette(
         background: Colors.transparent,
-        foreground: colors.brandPrimary,
+        foreground: colors.onDark,
+        border: colors.hairlineStrong,
       ),
       BeButtonVariant.destructive => _ButtonPalette(
-        background: colors.errorPrimary,
-        foreground: colors.errorOnPrimary,
+        background: colors.accentRed,
+        foreground: colors.onPrimary,
       ),
     };
   }

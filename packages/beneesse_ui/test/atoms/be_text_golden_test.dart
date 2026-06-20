@@ -2,7 +2,6 @@ import 'package:beneesse_ui/beneesse_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../helpers/golden_config.dart';
 import '../helpers/pump_be_widget.dart';
 
 void main() {
@@ -21,7 +20,7 @@ void main() {
             BeText('Error color', color: BeTextColor.error),
           ],
         ),
-        surface: kBeGoldenSurfaceSizeTall,
+        surface: const Size(400, 480),
       );
 
       await expectLater(

@@ -1,37 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/be_semantic_tokens.dart';
 import '../../theme/be_theme_context.dart';
-import '../atoms/be_button_style.dart';
 
-/// Labelled tab item for [BeTabBar].
-class BeTab {
-  const BeTab({required this.label});
+/// Labelled tab item for [BePillTabBar].
+class BePillTab {
+  const BePillTab({required this.label});
 
   final String label;
 }
 
-/// Size scale for [BeTabBar], aligned with [BeButtonSize].
-enum BeTabBarSize { sm, md, lg }
-
-/// Horizontal pill-tab strip for switching between a small number of views.
-///
-/// Active tab uses [BeColorTokens.surfaceElevated] fill; unselected tabs are
-/// transparent with [BeColorTokens.body] label color.
-class BeTabBar extends StatelessWidget {
-  const BeTabBar({
+/// Horizontal scrollable filter chip strip (`pill-tab` / `pill-tab-active`).
+class BePillTabBar extends StatelessWidget {
+  const BePillTabBar({
     required this.tabs,
     required this.selectedIndex,
     required this.onTabSelected,
     super.key,
-    this.size = BeTabBarSize.md,
   }) : assert(tabs.length > 0, 'tabs must not be empty'),
        assert(selectedIndex >= 0, 'selectedIndex must be non-negative');
 
-  final List<BeTab> tabs;
+  final List<BePillTab> tabs;
   final int selectedIndex;
   final ValueChanged<int> onTabSelected;
-  final BeTabBarSize size;
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +34,16 @@ class BeTabBar extends StatelessWidget {
     final spacing = context.beSpacing;
     final radius = context.beRadius;
     final typography = context.beTypography.textTheme;
-    final buttonSize = _buttonSizeForTabBarSize(size);
-    final tabHeight = _tabHeightForSize(buttonSize);
-    final labelStyle = _labelStyleForSize(buttonSize, typography);
+    final labelStyle = typography.bodySmall!;
     final tabRadius = BorderRadius.circular(radius.chip);
 
-    return SizedBox(
-      height: tabHeight,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           for (var index = 0; index < tabs.length; index++) ...[
             if (index > 0) SizedBox(width: spacing.inlineGap),
-            _BeTabCell(
+            _BePillTabCell(
               label: tabs[index].label,
               isSelected: index == selectedIndex,
               onTap: () {
@@ -66,44 +54,16 @@ class BeTabBar extends StatelessWidget {
               selectedBackgroundColor: colors.surfaceElevated,
               selectedForegroundColor: colors.onDark,
               unselectedForegroundColor: colors.body,
-              horizontalPadding: spacing.componentGap + spacing.inlineGap / 2,
             ),
           ],
         ],
       ),
     );
   }
-
-  static BeButtonSize _buttonSizeForTabBarSize(BeTabBarSize size) {
-    return switch (size) {
-      BeTabBarSize.sm => BeButtonSize.sm,
-      BeTabBarSize.md => BeButtonSize.md,
-      BeTabBarSize.lg => BeButtonSize.lg,
-    };
-  }
-
-  static double _tabHeightForSize(BeButtonSize buttonSize) {
-    return switch (buttonSize) {
-      BeButtonSize.sm => 28,
-      BeButtonSize.md => 32,
-      BeButtonSize.lg => 36,
-    };
-  }
-
-  static TextStyle _labelStyleForSize(
-    BeButtonSize buttonSize,
-    TextTheme typography,
-  ) {
-    return switch (buttonSize) {
-      BeButtonSize.sm => typography.bodySmall!,
-      BeButtonSize.md => typography.bodySmall!,
-      BeButtonSize.lg => typography.labelLarge!,
-    };
-  }
 }
 
-class _BeTabCell extends StatelessWidget {
-  const _BeTabCell({
+class _BePillTabCell extends StatelessWidget {
+  const _BePillTabCell({
     required this.label,
     required this.isSelected,
     required this.onTap,
@@ -112,7 +72,6 @@ class _BeTabCell extends StatelessWidget {
     required this.selectedBackgroundColor,
     required this.selectedForegroundColor,
     required this.unselectedForegroundColor,
-    required this.horizontalPadding,
   });
 
   final String label;
@@ -123,7 +82,6 @@ class _BeTabCell extends StatelessWidget {
   final Color selectedBackgroundColor;
   final Color selectedForegroundColor;
   final Color unselectedForegroundColor;
-  final double horizontalPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -143,18 +101,14 @@ class _BeTabCell extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeInOut,
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: isSelected ? selectedBackgroundColor : Colors.transparent,
               borderRadius: tabRadius,
             ),
-            alignment: Alignment.center,
             child: Text(
               label,
               style: labelStyle.copyWith(color: foregroundColor),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),
