@@ -39,6 +39,7 @@
 
 - Owns composition: DI, routing, feature modules, and Clean Architecture feature folders — see [clean-architecture.md](clean-architecture.md).
 - Feature code should not leak into shared packages unless it is genuinely reusable.
+- **Package imports** — use `package:ermeo_mobile/...` for all `lib/` imports within the app; do not use relative imports (`../`, `../../`, or bare `core/...`). Enforced by `always_use_package_imports` in [`apps/ermeo_mobile/analysis_options.yaml`](../../apps/ermeo_mobile/analysis_options.yaml).
 - **No business logic in presentation** — widgets, views, and pages only render BLoC state and dispatch events.
 - **Display formatting belongs in BLoC** — not in `build()` methods.
 - Presentation must not import repositories or call `ermeo_api` directly.

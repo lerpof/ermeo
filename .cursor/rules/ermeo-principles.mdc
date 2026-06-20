@@ -31,5 +31,7 @@ Before planning or implementing any change, read and follow the documentation in
 9. Run **`melos run analyze`** before considering work done.
 10. Do not commit, push, or amend git history unless the user explicitly asks.
 11. Never commit secrets, `.env`, or ignored build/SDK artifacts.
+12. **Absolute paths** — always use full filesystem paths (not repo-relative like `apps/...`) when citing files, passing paths to tools, or running shell commands. Prefix with the Cursor workspace root (e.g. `/Users/lerpof/Development/Projects/Ermeo/ermeo/apps/ermeo_mobile/lib/main.dart`).
+13. **Package imports in `ermeo_mobile`** — use `package:ermeo_mobile/...` for all `lib/` imports within the app. Never use relative imports (`../`, `../../`, or bare `core/...`).
 
 When principles conflict with a user request, ask for clarification rather than violating architecture rules silently.

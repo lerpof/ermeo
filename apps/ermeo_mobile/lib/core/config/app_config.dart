@@ -1,4 +1,4 @@
-import 'app_environment.dart';
+import 'package:ermeo_mobile/core/config/app_environment.dart';
 
 /// Compile-time configuration from `--dart-define` / `--dart-define-from-file`.
 class AppConfig {

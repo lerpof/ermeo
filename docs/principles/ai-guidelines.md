@@ -62,7 +62,9 @@ Before implementing app feature code, confirm:
 ## How to communicate
 
 - Be concise; explain **what** changed and **why** when summarizing.
-- Use code citations when referencing existing code (`startLine:endLine:path`).
+- Use code citations when referencing existing code (`startLine:endLine:path`); the `path` must be an **absolute filesystem path** from the workspace root (e.g. `/Users/lerpof/Development/Projects/Ermeo/ermeo/apps/ermeo_mobile/lib/main.dart`), not repo-relative (`apps/ermeo_mobile/...`).
+- When referencing files in summaries, tool calls, or shell commands, use the same **absolute path** rule — discover the workspace root from session context when it differs.
+- In **`ermeo_mobile`**, use **`package:ermeo_mobile/...`** for all `lib/` imports — never relative paths (`../`, `../../`, or bare `core/...`).
 - Ask clarifying questions when requirements conflict with architecture principles.
 - If multiple unrelated changes are needed, propose splitting commits or PRs.
 
