@@ -43,5 +43,53 @@
   "authRegisterGoToLogin": "Already have an account? Sign in",
   "@authRegisterGoToLogin": {
     "description": "Link on the register screen to navigate to login."
+  },
+  "authRegisterDisplayNameLabel": "Display name",
+  "@authRegisterDisplayNameLabel": {
+    "description": "Label for the display name field on the register screen."
+  },
+  "authRegisterRoleLabel": "Role",
+  "@authRegisterRoleLabel": {
+    "description": "Label for the role selector on the register screen."
+  },
+  "authRegisterRoleAthlete": "Athlete",
+  "@authRegisterRoleAthlete": {
+    "description": "Athlete option in the register role selector."
+  },
+  "authRegisterRoleInstructor": "Instructor",
+  "@authRegisterRoleInstructor": {
+    "description": "Instructor option in the register role selector."
+  },
+  "authRegisterRoleAdmin": "Admin",
+  "@authRegisterRoleAdmin": {
+    "description": "Admin option in the register role selector."
+  },
+  "authValidationEmailRequired": "Email is required",
+  "@authValidationEmailRequired": {
+    "description": "Validation error when email is empty on auth forms."
+  },
+  "authValidationPasswordRequired": "Password is required",
+  "@authValidationPasswordRequired": {
+    "description": "Validation error when password is empty on auth forms."
+  },
+  "authValidationPasswordTooShort": "Password must be at least 8 characters",
+  "@authValidationPasswordTooShort": {
+    "description": "Validation error when password is shorter than the API minimum."
+  },
+  "authValidationDisplayNameRequired": "Display name is required",
+  "@authValidationDisplayNameRequired": {
+    "description": "Validation error when display name is empty on register."
+  },
+  "homeTitle": "Home",
+  "@homeTitle": {
+    "description": "Title on the dummy home screen app bar."
+  },
+  "homeWelcomeMessage": "You are signed in.",
+  "@homeWelcomeMessage": {
+    "description": "Placeholder welcome copy on the dummy home screen."
+  },
+  "homeLogoutButton": "Sign out",
+  "@homeLogoutButton": {
+    "description": "Logout button on the dummy home screen."
   }
 }

@@ -1,4 +1,3 @@
-// coverage:ignore-file
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'er_localizations.dart';
@@ -41,4 +40,41 @@ class ErLocalizationsEn extends ErLocalizations {
 
   @override
   String get authRegisterGoToLogin => 'Already have an account? Sign in';
+
+  @override
+  String get authRegisterDisplayNameLabel => 'Display name';
+
+  @override
+  String get authRegisterRoleLabel => 'Role';
+
+  @override
+  String get authRegisterRoleAthlete => 'Athlete';
+
+  @override
+  String get authRegisterRoleInstructor => 'Instructor';
+
+  @override
+  String get authRegisterRoleAdmin => 'Admin';
+
+  @override
+  String get authValidationEmailRequired => 'Email is required';
+
+  @override
+  String get authValidationPasswordRequired => 'Password is required';
+
+  @override
+  String get authValidationPasswordTooShort =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get authValidationDisplayNameRequired => 'Display name is required';
+
+  @override
+  String get homeTitle => 'Home';
+
+  @override
+  String get homeWelcomeMessage => 'You are signed in.';
+
+  @override
+  String get homeLogoutButton => 'Sign out';
 }

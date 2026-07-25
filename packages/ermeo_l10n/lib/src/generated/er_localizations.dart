@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -160,6 +159,78 @@ abstract class ErLocalizations {
   /// In en, this message translates to:
   /// **'Already have an account? Sign in'**
   String get authRegisterGoToLogin;
+
+  /// Label for the display name field on the register screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get authRegisterDisplayNameLabel;
+
+  /// Label for the role selector on the register screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get authRegisterRoleLabel;
+
+  /// Athlete option in the register role selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Athlete'**
+  String get authRegisterRoleAthlete;
+
+  /// Instructor option in the register role selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructor'**
+  String get authRegisterRoleInstructor;
+
+  /// Admin option in the register role selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get authRegisterRoleAdmin;
+
+  /// Validation error when email is empty on auth forms.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get authValidationEmailRequired;
+
+  /// Validation error when password is empty on auth forms.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get authValidationPasswordRequired;
+
+  /// Validation error when password is shorter than the API minimum.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get authValidationPasswordTooShort;
+
+  /// Validation error when display name is empty on register.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name is required'**
+  String get authValidationDisplayNameRequired;
+
+  /// Title on the dummy home screen app bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTitle;
+
+  /// Placeholder welcome copy on the dummy home screen.
+  ///
+  /// In en, this message translates to:
+  /// **'You are signed in.'**
+  String get homeWelcomeMessage;
+
+  /// Logout button on the dummy home screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get homeLogoutButton;
 }
 
 class _ErLocalizationsDelegate extends LocalizationsDelegate<ErLocalizations> {
