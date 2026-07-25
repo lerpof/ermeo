@@ -1,4 +1,4 @@
 {
   "APP_ENV": "dev",
-  "ERMEO_API_BASE_URL": "TODO: set dev API base URL"
+  "ERMEO_API_BASE_URL": "http://localhost:8000"
 }
