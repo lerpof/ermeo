@@ -8,6 +8,7 @@ Project principles and conventions for humans and AI assistants working in this 
 |----------|----------------|
 | [Localization](guides/localization.md) | ARB key format, placeholders, `context.l10n`, regeneration workflow |
 | [Routing](guides/routing.md) | auto_route setup, `@RoutePage`, typed navigation, deeplinks |
+| [Backend / BFF](guides/backend.md) | FastAPI + Firebase Auth + Firestore stack, auth/tokens, local setup |
 
 ## Principles
 

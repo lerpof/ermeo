@@ -11,6 +11,7 @@ Instructions for Cursor and other AI assistants working in the Ermeo repository.
 5. For app feature work, read [clean-architecture.md](clean-architecture.md) and identify the correct layer before writing code.
 6. For user-visible copy or ARB keys, read [localization.md](../guides/localization.md) and apply the `add-l10n-string` skill in [`.cursor/skills/add-l10n-string/`](../../.cursor/skills/add-l10n-string/).
 7. For new screens, navigation, or deeplinks, read [routing.md](../guides/routing.md) before adding `@RoutePage` or router entries.
+8. For API, auth, or BFF work, read [backend.md](../guides/backend.md) — do not introduce a Flutter Firebase Auth SDK or a second HTTP stack.
 
 ## Clean Architecture checklist
 

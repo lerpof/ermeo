@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: |
     REST API for Ermeo / Ermeo. Canonical contract for backend and mobile.
-    Stack: FastAPI + PostgreSQL (see backend/openapi/README.md).
+    Stack: FastAPI + Firebase Auth + Firestore (see backend/openapi/README.md).
 servers:
   - url: http://localhost:8000
     description: Local development
@@ -361,7 +361,7 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
+      bearerFormat: Firebase ID token
   parameters:
     WorkoutId:
       name: workoutId
@@ -658,7 +658,7 @@ components:
           format: uuid
         userId:
           type: string
-          format: uuid
+          description: Firebase Auth UID
         clientId:
           type: string
           format: uuid

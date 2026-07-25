@@ -56,7 +56,7 @@ fvm flutter run
 
 ## OpenAPI client generation (`ermeo_api`)
 
-The mobile API package uses [`openapi_generator`](https://pub.dev/packages/openapi_generator). The canonical spec lives in `backend/openapi/openapi.yaml` and is fetched from the running API during `melos run generate:api`.
+The mobile API package uses [`openapi_generator`](https://pub.dev/packages/openapi_generator). The canonical spec lives in the sibling **FastAPI + Firebase Auth + Firestore** BFF (`backend/openapi/openapi.yaml`) and is fetched from the running API during `melos run generate:api`. See [backend.md](../guides/backend.md) for stack and auth details.
 
 **Prerequisite:** Java 8 or newer (`java -version`). The generator wraps the OpenAPI Generator CLI.
 

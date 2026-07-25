@@ -49,6 +49,12 @@ flowchart TB
 
 Rationale: the API layer stays in the app’s domain. UI and monitoring remain reusable without coupling to backend contracts.
 
+## Backend / BFF
+
+The HTTP API is a **sibling FastAPI BFF** (`../backend`), not part of this monorepo. Stack: **Firebase Auth** (email/password behind BFF routes) + **Cloud Firestore** + static exercise catalog. Mobile never embeds a Firebase Auth SDK for product auth — it uses `ermeo_api` Bearer tokens only.
+
+See [backend.md](../guides/backend.md) for the full stack table, ID rules (`userId` = Firebase UID), and local/codegen workflow.
+
 ## Application architecture (Clean Architecture)
 
 `ermeo_mobile` follows Clean Architecture with **flutter_bloc** and a **BLoC → Repository** flow (no use-case layer). See [clean-architecture.md](clean-architecture.md) for folder layout, layer rules, and anti-patterns.

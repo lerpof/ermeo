@@ -4,11 +4,13 @@ Pure Dart HTTP layer for Ermeo: OpenAPI-generated Dio client plus a thin hand-wr
 
 ## Stack
 
+- **BFF:** FastAPI + Firebase Auth + Cloud Firestore (sibling `../backend`) — see [docs/guides/backend.md](../../docs/guides/backend.md)
 - **Contract (canonical):** `backend/openapi/openapi.yaml` — edit on the backend only
 - **Served by BFF:** `GET /openapi.yaml` on the running API
 - **Codegen input:** `openapi/openapi.yaml` — fetched from the BFF during `melos run generate:api` (committed snapshot)
 - **Generated client:** `lib/generated/ermeo_api_client/` (Dio + models)
 - **Facade:** `lib/src/` — `ErmeoApiClient`, `AuthInterceptor`, `ApiException`
+- **Tokens:** Firebase ID token as `accessToken`, Firebase refresh token as `refreshToken`; session `userId` is a Firebase Auth UID (string, not UUID)
 
 ## Public API
 
