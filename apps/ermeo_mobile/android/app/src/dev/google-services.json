@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "923295688170",
+    "project_id": "ermeo-dev",
+    "storage_bucket": "ermeo-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923295688170:android:2138d0ac305f99b02cfe93",
+        "android_client_info": {
+          "package_name": "com.lerpof.ermeo.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923295688170-kiknf3447in1qlak52danp5o6c4j5nv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbb_iSzyp0fG_OZObY-KgDqoB7krESxEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923295688170-kiknf3447in1qlak52danp5o6c4j5nv0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "923295688170-i50pjb2klv8gr75l0telst6mel7dfvjr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lerpof.ermeo.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

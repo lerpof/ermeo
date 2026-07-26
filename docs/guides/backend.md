@@ -34,9 +34,9 @@ flowchart LR
 ## Why this shape
 
 - **Contract-first:** mobile regenerates from `GET /openapi.yaml`; FastAPI matches that workflow.
-- **No Firebase SDK in Flutter:** auth is `/auth/register|login|refresh` on the BFF. Tokens fit `AuthInterceptor` and `SessionService` in `ermeo_api`.
+- **No Firebase Auth SDK in Flutter:** product auth is `/auth/register|login|refresh` on the BFF. Tokens fit `AuthInterceptor` and `SessionService` in `ermeo_api`.
 - **Firestore:** document-shaped domain (workouts, sessions, assignments) and Admin SDK already required for Auth.
-- **Package boundary:** only `ermeo_mobile` depends on `ermeo_api`; UI/monitoring stay Firebase-free.
+- **Package boundary:** only `ermeo_mobile` depends on `ermeo_api`. `ermeo_ui` stays free of Firebase. `ermeo_monitoring` may wrap Firebase **Crashlytics** (and similar observability SDKs), but must not add Firebase Auth or Firestore clients for product auth/data.
 
 Do **not** add a Flutter Firebase Auth client, Supabase, Auth0, GraphQL, or gRPC for the main product API unless an ADR changes this document.
 

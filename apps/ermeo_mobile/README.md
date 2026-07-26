@@ -39,6 +39,14 @@ fvm flutter run --flavor prod --dart-define-from-file=config/dart_defines/prod.j
 
 Environment keys live in `lib/core/config/app_config.dart`. Replace the TODO URLs in `config/dart_defines/dev.json` and `prod.json` when hosted API endpoints are ready.
 
+## Firebase / Crashlytics
+
+- Boot: `initializeErmeoFirebase()` then `ErmeoMonitoring.initialize` + `runAppGuarded` in `lib/main.dart`.
+- Options: `lib/core/firebase/firebase_options.dart` (selected by `APP_ENV`).
+- Android: `android/app/src/{dev,prod}/google-services.json` + Google Services / Crashlytics Gradle plugins.
+- iOS: `ios/Runner/Firebase/{dev,prod}/GoogleService-Info.plist` copied via Xcode build phase (`FIREBASE_ENV` in flavor xcconfigs).
+- Both flavors currently target Firebase project **`ermeo-dev`** (prod package apps registered there). Point the prod flavor at **`ermeo-prod`** when that project’s mobile configs are available.
+
 On a **physical device**, use your machine’s LAN IP instead of `localhost` for the API base URL.
 
 ## App icons

@@ -84,7 +84,42 @@ void main() {
         isNotEmpty,
       );
     });
+
+    test('registers LoggingInterceptor when logger is provided', () {
+      final client = ErmeoApiClient(
+        baseUrl: 'https://api.example.com',
+        logger: _FakeApiLogger(),
+      );
+
+      expect(
+        client.dio.interceptors.whereType<LoggingInterceptor>(),
+        isNotEmpty,
+      );
+    });
+
+    test('does not register LoggingInterceptor when logger is omitted', () {
+      final client = ErmeoApiClient(baseUrl: 'https://api.example.com');
+
+      expect(
+        client.dio.interceptors.whereType<LoggingInterceptor>(),
+        isEmpty,
+      );
+    });
   });
+}
+
+class _FakeApiLogger implements ApiLogger {
+  @override
+  void d(String message) {}
+
+  @override
+  void i(String message) {}
+
+  @override
+  void w(String message, {Object? error, StackTrace? stackTrace}) {}
+
+  @override
+  void e(String message, {Object? error, StackTrace? stackTrace}) {}
 }
 
 class _FakeSessionService implements SessionService {

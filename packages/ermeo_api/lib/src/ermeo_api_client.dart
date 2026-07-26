@@ -2,7 +2,9 @@ import 'package:ermeo_api_client/ermeo_api_client.dart' as gen;
 import 'package:dio/dio.dart';
 
 import 'api_exception.dart';
+import 'api_logger.dart';
 import 'auth_interceptor.dart';
+import 'logging_interceptor.dart';
 import 'session_service.dart';
 
 /// Hand-written facade over the generated OpenAPI Dio client.
@@ -12,6 +14,7 @@ class ErmeoApiClient {
     Duration connectTimeout = const Duration(seconds: 15),
     Duration receiveTimeout = const Duration(seconds: 30),
     SessionService? sessionService,
+    ApiLogger? logger,
     Dio? dio,
   }) : _dio = dio ?? Dio() {
     _dio.options
@@ -33,6 +36,10 @@ class ErmeoApiClient {
           retryDio: _dio,
         ),
       );
+    }
+
+    if (logger != null) {
+      _dio.interceptors.add(LoggingInterceptor(logger: logger));
     }
 
     _generated = gen.ErmeoApiClient(_dio, basePath: baseUrl);

@@ -9,7 +9,7 @@ Pure Dart HTTP layer for Ermeo: OpenAPI-generated Dio client plus a thin hand-wr
 - **Served by BFF:** `GET /openapi.yaml` on the running API
 - **Codegen input:** `openapi/openapi.yaml` — fetched from the BFF during `melos run generate:api` (committed snapshot)
 - **Generated client:** `lib/generated/ermeo_api_client/` (Dio + models)
-- **Facade:** `lib/src/` — `ErmeoApiClient`, `AuthInterceptor`, `ApiException`
+- **Facade:** `lib/src/` — `ErmeoApiClient`, `AuthInterceptor`, `LoggingInterceptor`, `ApiLogger`, `ApiException`
 - **Tokens:** Firebase ID token as `accessToken`, Firebase refresh token as `refreshToken`; session `userId` is a Firebase Auth UID (string, not UUID)
 
 ## Public API
@@ -20,6 +20,7 @@ import 'package:ermeo_api/ermeo_api.dart';
 final client = ErmeoApiClient(
   baseUrl: 'https://api.example.com',
   sessionService: mySessionService,
+  logger: myApiLogger, // optional; logs method/path/headers/bodies (secrets redacted)
 );
 
 final workouts = await client.run(
