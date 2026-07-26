@@ -5,7 +5,7 @@
       "name": "ermeo_mobile (dev)",
       "type": "dart",
       "request": "launch",
-      "program": "lib/main.dart",
+      "program": "lib/main_dev.dart",
       "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
         "--flavor",
@@ -14,28 +14,40 @@
       ]
     },
     {
-      "name": "ermeo_mobile (prod)",
-      "type": "dart",
-      "request": "launch",
-      "program": "lib/main.dart",
-      "cwd": "${workspaceFolder}/apps/ermeo_mobile",
-      "toolArgs": [
-        "--flavor",
-        "prod",
-        "--dart-define-from-file=config/dart_defines/prod.json"
-      ]
-    },
-    {
       "name": "ermeo_mobile (localhost)",
       "type": "dart",
       "request": "launch",
-      "program": "lib/main.dart",
+      "program": "lib/main_dev.dart",
       "cwd": "${workspaceFolder}/apps/ermeo_mobile",
       "toolArgs": [
         "--flavor",
         "dev",
         "--dart-define-from-file=config/dart_defines/dev.json",
         "--dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
+      ]
+    },
+    {
+      "name": "ermeo_mobile (staging)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main_staging.dart",
+      "cwd": "${workspaceFolder}/apps/ermeo_mobile",
+      "toolArgs": [
+        "--flavor",
+        "dev",
+        "--dart-define-from-file=config/dart_defines/staging.json"
+      ]
+    },
+    {
+      "name": "ermeo_mobile (prod)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main_prod.dart",
+      "cwd": "${workspaceFolder}/apps/ermeo_mobile",
+      "toolArgs": [
+        "--flavor",
+        "prod",
+        "--dart-define-from-file=config/dart_defines/prod.json"
       ]
     },
     {

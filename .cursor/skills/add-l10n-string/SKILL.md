@@ -34,4 +34,4 @@ Follow this workflow when adding or changing user-visible copy in Ermeo.
 ## References
 
 - [`packages/ermeo_l10n/README.md`](../../../packages/ermeo_l10n/README.md)
-- App bootstrap: `erLocalizationDelegates` and `ErLocalizations.supportedLocales` in `apps/ermeo_mobile/lib/main.dart`
+- App bootstrap: `erLocalizationDelegates` and `ErLocalizations.supportedLocales` in `apps/ermeo_mobile/lib/app.dart`

@@ -56,14 +56,14 @@ melos:
       description: Run the Widgetbook catalog in Chrome.
       run: melos exec --scope=ermeo_widgetbook -- "flutter run -d chrome"
     run:mobile:dev:
-      description: Run ermeo_mobile with dev flavor and dart-defines.
-      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor dev --dart-define-from-file=config/dart_defines/dev.json"
+      description: Run ermeo_mobile with dev entry point, flavor, and dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor dev -t lib/main_dev.dart --dart-define-from-file=config/dart_defines/dev.json"
+    run:mobile:staging:
+      description: Run ermeo_mobile with staging entry point (dev native flavor) and dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor dev -t lib/main_staging.dart --dart-define-from-file=config/dart_defines/staging.json"
     run:mobile:prod:
-      description: Run ermeo_mobile with prod flavor and dart-defines.
-      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor prod --dart-define-from-file=config/dart_defines/prod.json"
-    run:mobile:localhost:
-      description: Run ermeo_mobile against local API (dev flavor, localhost URL).
-      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor dev --dart-define-from-file=config/dart_defines/dev.json --dart-define=ERMEO_API_BASE_URL=http://localhost:8000"
+      description: Run ermeo_mobile with prod entry point, flavor, and dart-defines.
+      run: melos exec --scope=ermeo_mobile -- "flutter run --flavor prod -t lib/main_prod.dart --dart-define-from-file=config/dart_defines/prod.json"
     generate:api:
       description: Fetch OpenAPI from running API (GET /openapi.yaml), then regenerate Dio client (requires Java 8+).
       run: |
