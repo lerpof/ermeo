@@ -402,7 +402,15 @@ List<String> _parseRef(String ref) {
   return match.group(1)!.split('.');
 }
 
-String _colorKey(String scale, String step) => '${scale}_$step';
+String _colorKey(String scale, String step) {
+  if (step.isEmpty) {
+    return scale;
+  }
+  if (RegExp(r'^[0-9]').hasMatch(step)) {
+    return '$scale$step';
+  }
+  return '$scale${step[0].toUpperCase()}${step.substring(1)}';
+}
 
 void _validateHex(String hex) {
   if (!RegExp(r'^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$').hasMatch(hex)) {

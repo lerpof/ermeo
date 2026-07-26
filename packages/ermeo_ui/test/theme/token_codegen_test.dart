@@ -10,7 +10,7 @@ void main() {
     test('parses valid fixture and resolves references', () {
       final tokens = parseTokens(_createValidFixture());
 
-      expect(tokens.colors['white_0']!.hex, '#FFFFFF');
+      expect(tokens.colors['white0']!.hex, '#FFFFFF');
       expect(tokens.spacing['md'], 16);
       expect(tokens.radius['lg'], 12);
       expect(tokens.shadows['elevation1']!.alpha, 0.05);
@@ -164,7 +164,7 @@ void main() {
     test('includes color and typography definitions', () {
       final output = generatePrimitiveTokensDart(parseTokens(_createValidFixture()));
 
-      expect(output, contains('static const white_0 = Color(0xFFFFFFFF);'));
+      expect(output, contains('static const white0 = Color(0xFFFFFFFF);'));
       expect(output, contains('static const fontFamily = \'Inter\';'));
       expect(output, contains('toBoxShadows()'));
     });
