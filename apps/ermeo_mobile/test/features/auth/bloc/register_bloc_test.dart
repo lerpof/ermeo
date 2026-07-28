@@ -5,26 +5,20 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:ermeo_mobile/features/auth/bloc/register/register_bloc.dart';
 import 'package:ermeo_mobile/features/auth/data/auth_repository.dart';
-import 'package:ermeo_mobile/features/auth/models/auth_role.dart';
 
 class _MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
   late AuthRepository authRepository;
 
-  setUpAll(() {
-    registerFallbackValue(AuthRole.athlete);
-  });
-
   setUp(() {
     authRepository = _MockAuthRepository();
   });
 
   group('RegisterBloc', () {
-    test('initial state defaults to athlete role', () {
+    test('initial state is empty', () {
       final bloc = RegisterBloc(authRepository: authRepository);
       expect(bloc.state, const RegisterState());
-      expect(bloc.state.role, AuthRole.athlete);
       bloc.close();
     });
 
@@ -35,8 +29,7 @@ void main() {
         bloc
           ..add(const RegisterEmailChanged('a@b.com'))
           ..add(const RegisterPasswordChanged('password1'))
-          ..add(const RegisterDisplayNameChanged('Alex'))
-          ..add(const RegisterRoleChanged(AuthRole.instructor));
+          ..add(const RegisterDisplayNameChanged('Alex'));
       },
       expect: () => [
         const RegisterState(email: 'a@b.com'),
@@ -45,12 +38,6 @@ void main() {
           email: 'a@b.com',
           password: 'password1',
           displayName: 'Alex',
-        ),
-        const RegisterState(
-          email: 'a@b.com',
-          password: 'password1',
-          displayName: 'Alex',
-          role: AuthRole.instructor,
         ),
       ],
     );
@@ -134,14 +121,13 @@ void main() {
     );
 
     blocTest<RegisterBloc, RegisterState>(
-      'emits success navigation on signUp success',
+      'emits role selection navigation on success',
       build: () {
         when(
           () => authRepository.signUp(
             email: any(named: 'email'),
             password: any(named: 'password'),
             displayName: any(named: 'displayName'),
-            role: any(named: 'role'),
           ),
         ).thenAnswer((_) async {});
         return RegisterBloc(authRepository: authRepository);
@@ -150,7 +136,6 @@ void main() {
         email: ' a@b.com ',
         password: 'password1',
         displayName: ' Alex ',
-        role: AuthRole.admin,
       ),
       act: (bloc) => bloc.add(const RegisterSubmitted()),
       expect: () => [
@@ -158,15 +143,13 @@ void main() {
           email: ' a@b.com ',
           password: 'password1',
           displayName: ' Alex ',
-          role: AuthRole.admin,
           isSubmitting: true,
         ),
         const RegisterState(
           email: ' a@b.com ',
           password: 'password1',
           displayName: ' Alex ',
-          role: AuthRole.admin,
-          navigateToHome: true,
+          navigateToRoleSelection: true,
         ),
       ],
       verify: (_) {
@@ -175,7 +158,6 @@ void main() {
             email: 'a@b.com',
             password: 'password1',
             displayName: 'Alex',
-            role: AuthRole.admin,
           ),
         ).called(1);
       },
@@ -189,12 +171,11 @@ void main() {
             email: any(named: 'email'),
             password: any(named: 'password'),
             displayName: any(named: 'displayName'),
-            role: any(named: 'role'),
           ),
         ).thenThrow(
           const ApiException(
             statusCode: 409,
-            code: 'email_taken',
+            code: 'conflict',
             message: 'Email already used',
           ),
         );
@@ -230,7 +211,6 @@ void main() {
             email: any(named: 'email'),
             password: any(named: 'password'),
             displayName: any(named: 'displayName'),
-            role: any(named: 'role'),
           ),
         ).thenThrow(Exception('boom'));
         return RegisterBloc(authRepository: authRepository);

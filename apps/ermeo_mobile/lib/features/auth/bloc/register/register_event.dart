@@ -22,12 +22,6 @@ final class RegisterDisplayNameChanged extends RegisterEvent {
   final String displayName;
 }
 
-final class RegisterRoleChanged extends RegisterEvent {
-  const RegisterRoleChanged(this.role);
-
-  final AuthRole role;
-}
-
 final class RegisterSubmitted extends RegisterEvent {
   const RegisterSubmitted();
 }

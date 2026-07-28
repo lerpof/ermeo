@@ -403,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 28C53ABA97FA4DE1BA40DC8B /* prodProfile.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 					CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = T3KH24L356;
@@ -581,6 +582,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CCBBF273831545F78764EC05 /* prodDebug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 					CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = T3KH24L356;
@@ -602,6 +604,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B5769F5F79FC4508B93A3D5D /* prodRelease.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 					CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = T3KH24L356;
@@ -785,6 +788,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 93E92652B96C4B17877624BF /* devDebug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 					CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = T3KH24L356;
@@ -806,6 +810,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8979FFF6F4A44C0BB17CC00C /* devRelease.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 					CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = T3KH24L356;
@@ -826,6 +831,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C32A64D247A94E94A094FCA2 /* devProfile.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 					CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = T3KH24L356;

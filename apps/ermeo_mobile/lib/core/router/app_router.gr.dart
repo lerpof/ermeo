@@ -73,3 +73,19 @@ class RegisterRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [RoleSelectionPage]
+class RoleSelectionRoute extends PageRouteInfo<void> {
+  const RoleSelectionRoute({List<PageRouteInfo>? children})
+    : super(RoleSelectionRoute.name, initialChildren: children);
+
+  static const String name = 'RoleSelectionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RoleSelectionPage();
+    },
+  );
+}

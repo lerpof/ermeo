@@ -19,3 +19,11 @@ final class LoginPasswordChanged extends LoginEvent {
 final class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }
+
+final class LoginGooglePressed extends LoginEvent {
+  const LoginGooglePressed();
+}
+
+final class LoginApplePressed extends LoginEvent {
+  const LoginApplePressed();
+}

@@ -49,41 +49,37 @@ final class RegisterState {
     this.email = '',
     this.password = '',
     this.displayName = '',
-    this.role = AuthRole.athlete,
     this.isSubmitting = false,
     this.failure,
-    this.navigateToHome = false,
+    this.navigateToRoleSelection = false,
   });
 
   final String email;
   final String password;
   final String displayName;
-  final AuthRole role;
   final bool isSubmitting;
   final RegisterFailure? failure;
-  final bool navigateToHome;
+  final bool navigateToRoleSelection;
 
   RegisterState copyWith({
     String? email,
     String? password,
     String? displayName,
-    AuthRole? role,
     bool? isSubmitting,
     RegisterFailure? failure,
     bool clearFailure = false,
-    bool? navigateToHome,
+    bool? navigateToRoleSelection,
     bool clearNavigation = false,
   }) {
     return RegisterState(
       email: email ?? this.email,
       password: password ?? this.password,
       displayName: displayName ?? this.displayName,
-      role: role ?? this.role,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       failure: clearFailure ? null : (failure ?? this.failure),
-      navigateToHome: clearNavigation
+      navigateToRoleSelection: clearNavigation
           ? false
-          : (navigateToHome ?? this.navigateToHome),
+          : (navigateToRoleSelection ?? this.navigateToRoleSelection),
     );
   }
 
@@ -94,19 +90,17 @@ final class RegisterState {
           other.email == email &&
           other.password == password &&
           other.displayName == displayName &&
-          other.role == role &&
           other.isSubmitting == isSubmitting &&
           other.failure == failure &&
-          other.navigateToHome == navigateToHome;
+          other.navigateToRoleSelection == navigateToRoleSelection;
 
   @override
   int get hashCode => Object.hash(
     email,
     password,
     displayName,
-    role,
     isSubmitting,
     failure,
-    navigateToHome,
+    navigateToRoleSelection,
   );
 }

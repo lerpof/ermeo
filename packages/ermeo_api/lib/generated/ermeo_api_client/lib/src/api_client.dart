@@ -8,6 +8,7 @@ import 'api/exercises_api.dart';
 import 'api/health_api.dart';
 import 'api/instructors_api.dart';
 import 'api/sessions_api.dart';
+import 'api/users_api.dart';
 import 'api/workouts_api.dart';
 
 /// Entry point for generated API classes.
@@ -22,6 +23,7 @@ class ErmeoApiClient {
 
   late final HealthApi health = HealthApi(dio);
   late final AuthApi auth = AuthApi(dio);
+  late final UsersApi users = UsersApi(dio);
   late final ExercisesApi exercises = ExercisesApi(dio);
   late final WorkoutsApi workouts = WorkoutsApi(dio);
   late final SessionsApi sessions = SessionsApi(dio);

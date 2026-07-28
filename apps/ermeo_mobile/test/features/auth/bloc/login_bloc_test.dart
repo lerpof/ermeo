@@ -1,30 +1,43 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:ermeo_api/ermeo_api.dart';
+import 'package:ermeo_secure_storage/ermeo_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:ermeo_mobile/core/session/session_service.dart';
 import 'package:ermeo_mobile/features/auth/bloc/login/login_bloc.dart';
 import 'package:ermeo_mobile/features/auth/data/auth_repository.dart';
+import 'package:ermeo_mobile/features/auth/data/federated_auth_gateway.dart';
+import 'package:ermeo_mobile/features/auth/models/auth_role.dart';
 
 class _MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
   late AuthRepository authRepository;
+  late AppSessionService sessionService;
 
   setUp(() {
     authRepository = _MockAuthRepository();
+    sessionService = AppSessionService(
+      tokenStorage: InMemoryTokenSecureStorage(),
+    );
   });
+
+  LoginBloc buildBloc() => LoginBloc(
+        authRepository: authRepository,
+        sessionService: sessionService,
+      );
 
   group('LoginBloc', () {
     test('initial state is empty', () {
-      final bloc = LoginBloc(authRepository: authRepository);
+      final bloc = buildBloc();
       expect(bloc.state, const LoginState());
       bloc.close();
     });
 
     blocTest<LoginBloc, LoginState>(
       'emits updated email on LoginEmailChanged',
-      build: () => LoginBloc(authRepository: authRepository),
+      build: buildBloc,
       act: (bloc) => bloc.add(const LoginEmailChanged('a@b.com')),
       expect: () => [
         const LoginState(email: 'a@b.com'),
@@ -33,7 +46,7 @@ void main() {
 
     blocTest<LoginBloc, LoginState>(
       'emits updated password on LoginPasswordChanged',
-      build: () => LoginBloc(authRepository: authRepository),
+      build: buildBloc,
       act: (bloc) => bloc.add(const LoginPasswordChanged('secret')),
       expect: () => [
         const LoginState(password: 'secret'),
@@ -42,7 +55,7 @@ void main() {
 
     blocTest<LoginBloc, LoginState>(
       'emits emailRequired when email is empty',
-      build: () => LoginBloc(authRepository: authRepository),
+      build: buildBloc,
       seed: () => const LoginState(password: 'password'),
       act: (bloc) => bloc.add(const LoginSubmitted()),
       expect: () => [
@@ -63,7 +76,7 @@ void main() {
 
     blocTest<LoginBloc, LoginState>(
       'emits passwordRequired when password is empty',
-      build: () => LoginBloc(authRepository: authRepository),
+      build: buildBloc,
       seed: () => const LoginState(email: 'a@b.com'),
       act: (bloc) => bloc.add(const LoginSubmitted()),
       expect: () => [
@@ -77,15 +90,21 @@ void main() {
     );
 
     blocTest<LoginBloc, LoginState>(
-      'emits success navigation on login success',
+      'emits home navigation when profile has role',
       build: () {
         when(
           () => authRepository.login(
             email: any(named: 'email'),
             password: any(named: 'password'),
           ),
-        ).thenAnswer((_) async {});
-        return LoginBloc(authRepository: authRepository);
+        ).thenAnswer((_) async {
+          await sessionService.setSession(
+            accessToken: 'a',
+            refreshToken: 'r',
+          );
+          sessionService.setProfile(role: AuthRole.athlete);
+        });
+        return buildBloc();
       },
       seed: () => const LoginState(email: ' a@b.com ', password: 'password'),
       act: (bloc) => bloc.add(const LoginSubmitted()),
@@ -101,11 +120,39 @@ void main() {
           navigateToHome: true,
         ),
       ],
-      verify: (_) {
-        verify(
-          () => authRepository.login(email: 'a@b.com', password: 'password'),
-        ).called(1);
+    );
+
+    blocTest<LoginBloc, LoginState>(
+      'emits role selection navigation when role is missing',
+      build: () {
+        when(
+          () => authRepository.login(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer((_) async {
+          await sessionService.setSession(
+            accessToken: 'a',
+            refreshToken: 'r',
+          );
+          sessionService.setProfile(role: null);
+        });
+        return buildBloc();
       },
+      seed: () => const LoginState(email: 'a@b.com', password: 'password'),
+      act: (bloc) => bloc.add(const LoginSubmitted()),
+      expect: () => [
+        const LoginState(
+          email: 'a@b.com',
+          password: 'password',
+          isSubmitting: true,
+        ),
+        const LoginState(
+          email: 'a@b.com',
+          password: 'password',
+          navigateToRoleSelection: true,
+        ),
+      ],
     );
 
     blocTest<LoginBloc, LoginState>(
@@ -123,7 +170,7 @@ void main() {
             message: 'Bad credentials',
           ),
         );
-        return LoginBloc(authRepository: authRepository);
+        return buildBloc();
       },
       seed: () => const LoginState(email: 'a@b.com', password: 'password'),
       act: (bloc) => bloc.add(const LoginSubmitted()),
@@ -150,7 +197,7 @@ void main() {
             password: any(named: 'password'),
           ),
         ).thenThrow(Exception('boom'));
-        return LoginBloc(authRepository: authRepository);
+        return buildBloc();
       },
       seed: () => const LoginState(email: 'a@b.com', password: 'password'),
       act: (bloc) => bloc.add(const LoginSubmitted()),
@@ -165,6 +212,59 @@ void main() {
           password: 'password',
           failure: LoginFailure.api(Exception('boom').toString()),
         ),
+      ],
+    );
+
+    blocTest<LoginBloc, LoginState>(
+      'clears submitting when Google sign-in is cancelled',
+      build: () {
+        when(() => authRepository.loginWithGoogle()).thenThrow(
+          const FederatedAuthCancelledException(),
+        );
+        return buildBloc();
+      },
+      act: (bloc) => bloc.add(const LoginGooglePressed()),
+      expect: () => [
+        const LoginState(isSubmitting: true),
+        const LoginState(),
+      ],
+    );
+
+    blocTest<LoginBloc, LoginState>(
+      'navigates home after Google success with role',
+      build: () {
+        when(() => authRepository.loginWithGoogle()).thenAnswer((_) async {
+          await sessionService.setSession(
+            accessToken: 'a',
+            refreshToken: 'r',
+          );
+          sessionService.setProfile(role: AuthRole.instructor);
+        });
+        return buildBloc();
+      },
+      act: (bloc) => bloc.add(const LoginGooglePressed()),
+      expect: () => [
+        const LoginState(isSubmitting: true),
+        const LoginState(navigateToHome: true),
+      ],
+    );
+
+    blocTest<LoginBloc, LoginState>(
+      'navigates home after Apple success with role',
+      build: () {
+        when(() => authRepository.loginWithApple()).thenAnswer((_) async {
+          await sessionService.setSession(
+            accessToken: 'a',
+            refreshToken: 'r',
+          );
+          sessionService.setProfile(role: AuthRole.athlete);
+        });
+        return buildBloc();
+      },
+      act: (bloc) => bloc.add(const LoginApplePressed()),
+      expect: () => [
+        const LoginState(isSubmitting: true),
+        const LoginState(navigateToHome: true),
       ],
     );
   });

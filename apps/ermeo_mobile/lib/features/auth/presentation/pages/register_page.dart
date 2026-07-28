@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ermeo_mobile/core/router/app_router.dart';
 import 'package:ermeo_mobile/features/auth/bloc/register/register_bloc.dart';
 import 'package:ermeo_mobile/features/auth/data/auth_repository.dart';
-import 'package:ermeo_mobile/features/auth/models/auth_role.dart';
 
 @RoutePage()
 class RegisterPage extends StatelessWidget {
@@ -33,10 +32,10 @@ class _RegisterView extends StatelessWidget {
 
     return BlocConsumer<RegisterBloc, RegisterState>(
       listenWhen: (previous, current) =>
-          previous.navigateToHome != current.navigateToHome,
+          previous.navigateToRoleSelection != current.navigateToRoleSelection,
       listener: (context, state) {
-        if (state.navigateToHome) {
-          context.router.replaceAll([const HomeRoute()]);
+        if (state.navigateToRoleSelection) {
+          context.router.replaceAll([const RoleSelectionRoute()]);
         }
       },
       builder: (context, state) {
@@ -87,7 +86,7 @@ class _RegisterView extends StatelessWidget {
                 ErTextField(
                   label: l10n.authRegisterPasswordLabel,
                   obscureText: true,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   enabled: !state.isSubmitting,
                   errorText: _isValidation(
                             state.failure,
@@ -102,36 +101,6 @@ class _RegisterView extends StatelessWidget {
                   onChanged: (value) => context.read<RegisterBloc>().add(
                         RegisterPasswordChanged(value),
                       ),
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<AuthRole>(
-                  initialValue: state.role,
-                  decoration: InputDecoration(
-                    labelText: l10n.authRegisterRoleLabel,
-                  ),
-                  items: [
-                    DropdownMenuItem(
-                      value: AuthRole.athlete,
-                      child: Text(l10n.authRegisterRoleAthlete),
-                    ),
-                    DropdownMenuItem(
-                      value: AuthRole.instructor,
-                      child: Text(l10n.authRegisterRoleInstructor),
-                    ),
-                    DropdownMenuItem(
-                      value: AuthRole.admin,
-                      child: Text(l10n.authRegisterRoleAdmin),
-                    ),
-                  ],
-                  onChanged: state.isSubmitting
-                      ? null
-                      : (role) {
-                          if (role != null) {
-                            context.read<RegisterBloc>().add(
-                                  RegisterRoleChanged(role),
-                                );
-                          }
-                        },
                 ),
                 if (state.failure is RegisterApiFailure) ...[
                   const SizedBox(height: 12),

@@ -48,21 +48,45 @@
   "@authRegisterDisplayNameLabel": {
     "description": "Label for the display name field on the register screen."
   },
-  "authRegisterRoleLabel": "Role",
-  "@authRegisterRoleLabel": {
-    "description": "Label for the role selector on the register screen."
+  "authLoginGoogleButton": "Continue with Google",
+  "@authLoginGoogleButton": {
+    "description": "Google federated sign-in button on the login screen."
+  },
+  "authLoginAppleButton": "Continue with Apple",
+  "@authLoginAppleButton": {
+    "description": "Apple federated sign-in button on the login screen (iOS)."
+  },
+  "authRoleSelectionTitle": "Choose your role",
+  "@authRoleSelectionTitle": {
+    "description": "Title on the post-auth role selection / onboarding screen."
+  },
+  "authRoleSelectionSubtitle": "Tell us how you will use Ermeo.",
+  "@authRoleSelectionSubtitle": {
+    "description": "Supporting copy on the role selection screen."
+  },
+  "authRoleSelectionAthlete": "Athlete",
+  "@authRoleSelectionAthlete": {
+    "description": "Athlete option on the role selection screen."
+  },
+  "authRoleSelectionInstructor": "Instructor",
+  "@authRoleSelectionInstructor": {
+    "description": "Instructor option on the role selection screen."
+  },
+  "authRoleSelectionContinueButton": "Continue",
+  "@authRoleSelectionContinueButton": {
+    "description": "Primary button to submit the chosen role."
+  },
+  "authValidationRoleRequired": "Please select a role",
+  "@authValidationRoleRequired": {
+    "description": "Validation error when no role is selected on onboarding."
   },
   "authRegisterRoleAthlete": "Athlete",
   "@authRegisterRoleAthlete": {
-    "description": "Athlete option in the register role selector."
+    "description": "Athlete option label reused where role names are shown."
   },
   "authRegisterRoleInstructor": "Instructor",
   "@authRegisterRoleInstructor": {
-    "description": "Instructor option in the register role selector."
-  },
-  "authRegisterRoleAdmin": "Admin",
-  "@authRegisterRoleAdmin": {
-    "description": "Admin option in the register role selector."
+    "description": "Instructor option label reused where role names are shown."
   },
   "authValidationEmailRequired": "Email is required",
   "@authValidationEmailRequired": {

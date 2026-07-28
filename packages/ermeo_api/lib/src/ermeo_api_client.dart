@@ -52,6 +52,7 @@ class ErmeoApiClient {
 
   gen.HealthApi get health => _generated.health;
   gen.AuthApi get auth => _generated.auth;
+  gen.UsersApi get users => _generated.users;
   gen.ExercisesApi get exercises => _generated.exercises;
   gen.WorkoutsApi get workouts => _generated.workouts;
   gen.SessionsApi get sessions => _generated.sessions;

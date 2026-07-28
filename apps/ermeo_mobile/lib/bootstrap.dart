@@ -7,6 +7,7 @@ import 'package:ermeo_mobile/core/logging/er_api_logger.dart';
 import 'package:ermeo_mobile/core/router/app_router.dart';
 import 'package:ermeo_mobile/core/session/session_service.dart';
 import 'package:ermeo_mobile/features/auth/data/auth_repository.dart';
+import 'package:ermeo_mobile/features/auth/data/federated_auth_gateway.dart';
 import 'package:ermeo_monitoring/ermeo_monitoring.dart';
 import 'package:ermeo_secure_storage/ermeo_secure_storage.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,16 @@ Future<void> runErmeoApp(AppConfig config) async {
     final authRepository = AuthRepositoryImpl(
       apiClient: apiClient,
       sessionService: sessionService,
+      federatedAuthGateway: NativeFederatedAuthGateway(),
     );
+
+    if (sessionService.isAuthenticated) {
+      try {
+        await authRepository.refreshProfile();
+      } on Object {
+        await sessionService.clearSession();
+      }
+    }
 
     final appRouter = AppRouter(sessionService: sessionService);
 

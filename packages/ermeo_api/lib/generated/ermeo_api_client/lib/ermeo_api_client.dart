@@ -8,6 +8,7 @@ export 'src/api/exercises_api.dart';
 export 'src/api/health_api.dart';
 export 'src/api/instructors_api.dart';
 export 'src/api/sessions_api.dart';
+export 'src/api/users_api.dart';
 export 'src/api/workouts_api.dart';
 export 'src/api_client.dart';
 export 'src/models/models.dart';

@@ -2,7 +2,6 @@ import 'package:ermeo_api/ermeo_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ermeo_mobile/features/auth/data/auth_repository.dart';
-import 'package:ermeo_mobile/features/auth/models/auth_role.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -12,7 +11,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterEmailChanged>(_onEmailChanged);
     on<RegisterPasswordChanged>(_onPasswordChanged);
     on<RegisterDisplayNameChanged>(_onDisplayNameChanged);
-    on<RegisterRoleChanged>(_onRoleChanged);
     on<RegisterSubmitted>(_onSubmitted);
   }
 
@@ -51,19 +49,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     emit(
       state.copyWith(
         displayName: event.displayName,
-        clearFailure: true,
-        clearNavigation: true,
-      ),
-    );
-  }
-
-  void _onRoleChanged(
-    RegisterRoleChanged event,
-    Emitter<RegisterState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        role: event.role,
         clearFailure: true,
         clearNavigation: true,
       ),
@@ -139,12 +124,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         email: email,
         password: password,
         displayName: displayName,
-        role: state.role,
       );
       emit(
         state.copyWith(
           isSubmitting: false,
-          navigateToHome: true,
+          navigateToRoleSelection: true,
           clearFailure: true,
         ),
       );

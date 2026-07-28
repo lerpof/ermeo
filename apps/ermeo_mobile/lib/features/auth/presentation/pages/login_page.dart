@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:ermeo_l10n/ermeo_l10n.dart';
 import 'package:ermeo_ui/ermeo_ui.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ermeo_mobile/core/router/app_router.dart';
+import 'package:ermeo_mobile/core/session/session_service.dart';
 import 'package:ermeo_mobile/features/auth/bloc/login/login_bloc.dart';
 import 'package:ermeo_mobile/features/auth/data/auth_repository.dart';
 
@@ -17,6 +20,7 @@ class LoginPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(
         authRepository: context.read<AuthRepository>(),
+        sessionService: context.read<AppSessionService>(),
       ),
       child: const _LoginView(),
     );
@@ -32,8 +36,13 @@ class _LoginView extends StatelessWidget {
 
     return BlocConsumer<LoginBloc, LoginState>(
       listenWhen: (previous, current) =>
-          previous.navigateToHome != current.navigateToHome,
+          previous.navigateToHome != current.navigateToHome ||
+          previous.navigateToRoleSelection != current.navigateToRoleSelection,
       listener: (context, state) {
+        if (state.navigateToRoleSelection) {
+          context.router.replaceAll([const RoleSelectionRoute()]);
+          return;
+        }
         if (state.navigateToHome) {
           context.router.replaceAll([const HomeRoute()]);
         }
@@ -99,6 +108,28 @@ class _LoginView extends StatelessWidget {
                             const LoginSubmitted(),
                           ),
                 ),
+                const SizedBox(height: 16),
+                ErButton(
+                  label: l10n.authLoginGoogleButton,
+                  variant: ErButtonVariant.secondary,
+                  onPressed: state.isSubmitting
+                      ? null
+                      : () => context.read<LoginBloc>().add(
+                            const LoginGooglePressed(),
+                          ),
+                ),
+                if (Platform.isIOS) ...[
+                  const SizedBox(height: 12),
+                  ErButton(
+                    label: l10n.authLoginAppleButton,
+                    variant: ErButtonVariant.secondary,
+                    onPressed: state.isSubmitting
+                        ? null
+                        : () => context.read<LoginBloc>().add(
+                              const LoginApplePressed(),
+                            ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 ErButton(
                   label: l10n.authLoginGoToRegister,

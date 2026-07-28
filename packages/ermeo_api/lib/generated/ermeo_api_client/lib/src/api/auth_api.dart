@@ -24,6 +24,14 @@ class AuthApi {
     return _tokensResponse(response);
   }
 
+  Future<Response<AuthTokens>> federatedLogin(FederatedLoginRequest body) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '/auth/federated',
+      data: body.toJson(),
+    );
+    return _tokensResponse(response);
+  }
+
   Future<Response<AuthTokens>> refreshAuth(RefreshRequest body) async {
     final response = await _dio.post<Map<String, dynamic>>(
       '/auth/refresh',

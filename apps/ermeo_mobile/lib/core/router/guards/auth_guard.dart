@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:ermeo_mobile/core/router/app_router.dart';
 import 'package:ermeo_mobile/core/session/session_service.dart';
 
-/// Redirects unauthenticated users to login and authenticated users away from auth.
+/// Redirects based on authentication and onboarding (role) status.
 class AuthGuard extends AutoRouteGuard {
   const AuthGuard(this._sessionService);
 
@@ -13,6 +13,10 @@ class AuthGuard extends AutoRouteGuard {
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     final isAuthenticated = _sessionService.isAuthenticated;
     final isAuthRoute = _isAuthRoute(resolver.route.name);
+    final isRoleSelection = resolver.route.name == RoleSelectionRoute.name;
+    final needsOnboarding = _sessionService.needsOnboarding;
+    final profileReady = !_sessionService.isAuthenticated ||
+        _sessionService.isProfileLoaded;
 
     if (!isAuthenticated && !isAuthRoute) {
       resolver.redirectUntil(
@@ -22,7 +26,17 @@ class AuthGuard extends AutoRouteGuard {
       return;
     }
 
-    if (isAuthenticated && isAuthRoute) {
+    if (isAuthenticated && !profileReady) {
+      resolver.next();
+      return;
+    }
+
+    if (isAuthenticated && needsOnboarding && !isRoleSelection) {
+      resolver.redirectUntil(const RoleSelectionRoute(), replace: true);
+      return;
+    }
+
+    if (isAuthenticated && !needsOnboarding && (isAuthRoute || isRoleSelection)) {
       resolver.redirectUntil(const HomeRoute(), replace: true);
       return;
     }

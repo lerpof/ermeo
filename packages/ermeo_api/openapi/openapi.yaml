@@ -12,6 +12,7 @@ tags:
   - name: meta
   - name: health
   - name: auth
+  - name: users
   - name: exercises
   - name: workouts
   - name: sessions
@@ -111,6 +112,64 @@ paths:
                 $ref: '#/components/schemas/AuthTokens'
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /auth/federated:
+    post:
+      tags: [auth]
+      operationId: federatedLogin
+      summary: Login with Google or Apple via Firebase Identity Toolkit
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FederatedLoginRequest'
+      responses:
+        '200':
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokens'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /users/me:
+    get:
+      tags: [users]
+      operationId: getCurrentUser
+      summary: Get the authenticated user profile
+      responses:
+        '200':
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags: [users]
+      operationId: updateCurrentUser
+      summary: Complete onboarding by setting role once
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
   /exercises:
     get:
       tags: [exercises]
@@ -441,9 +500,12 @@ components:
     UserRole:
       type: string
       enum: [athlete, instructor, admin]
+    SelfServeRole:
+      type: string
+      enum: [athlete, instructor]
     RegisterRequest:
       type: object
-      required: [email, password, role, displayName]
+      required: [email, password, displayName]
       properties:
         email:
           type: string
@@ -452,8 +514,6 @@ components:
           type: string
           format: password
           minLength: 8
-        role:
-          $ref: '#/components/schemas/UserRole'
         displayName:
           type: string
           minLength: 1
@@ -467,6 +527,22 @@ components:
         password:
           type: string
           format: password
+    FederatedLoginRequest:
+      type: object
+      required: [provider, idToken]
+      properties:
+        provider:
+          type: string
+          enum: [google, apple]
+        idToken:
+          type: string
+          minLength: 1
+        accessToken:
+          type: string
+          description: Google OAuth access token when available
+        nonce:
+          type: string
+          description: Raw Apple nonce (required for Apple)
     RefreshRequest:
       type: object
       required: [refreshToken]
@@ -487,6 +563,34 @@ components:
         expiresIn:
           type: integer
           description: Access token lifetime in seconds
+    UserProfile:
+      type: object
+      required: [id, email, displayName, profileId]
+      properties:
+        id:
+          type: string
+          description: Firebase Auth UID
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        role:
+          allOf:
+            - $ref: '#/components/schemas/UserRole'
+          nullable: true
+        profileId:
+          type: string
+          format: uuid
+        bio:
+          type: string
+          nullable: true
+    UpdateUserRequest:
+      type: object
+      required: [role]
+      properties:
+        role:
+          $ref: '#/components/schemas/SelfServeRole'
     Exercise:
       type: object
       required: [id, name, bodyPart, equipment, target]

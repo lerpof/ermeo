@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -166,29 +167,65 @@ abstract class ErLocalizations {
   /// **'Display name'**
   String get authRegisterDisplayNameLabel;
 
-  /// Label for the role selector on the register screen.
+  /// Google federated sign-in button on the login screen.
   ///
   /// In en, this message translates to:
-  /// **'Role'**
-  String get authRegisterRoleLabel;
+  /// **'Continue with Google'**
+  String get authLoginGoogleButton;
 
-  /// Athlete option in the register role selector.
+  /// Apple federated sign-in button on the login screen (iOS).
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get authLoginAppleButton;
+
+  /// Title on the post-auth role selection / onboarding screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your role'**
+  String get authRoleSelectionTitle;
+
+  /// Supporting copy on the role selection screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us how you will use Ermeo.'**
+  String get authRoleSelectionSubtitle;
+
+  /// Athlete option on the role selection screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Athlete'**
+  String get authRoleSelectionAthlete;
+
+  /// Instructor option on the role selection screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructor'**
+  String get authRoleSelectionInstructor;
+
+  /// Primary button to submit the chosen role.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get authRoleSelectionContinueButton;
+
+  /// Validation error when no role is selected on onboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a role'**
+  String get authValidationRoleRequired;
+
+  /// Athlete option label reused where role names are shown.
   ///
   /// In en, this message translates to:
   /// **'Athlete'**
   String get authRegisterRoleAthlete;
 
-  /// Instructor option in the register role selector.
+  /// Instructor option label reused where role names are shown.
   ///
   /// In en, this message translates to:
   /// **'Instructor'**
   String get authRegisterRoleInstructor;
-
-  /// Admin option in the register role selector.
-  ///
-  /// In en, this message translates to:
-  /// **'Admin'**
-  String get authRegisterRoleAdmin;
 
   /// Validation error when email is empty on auth forms.
   ///

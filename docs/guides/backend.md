@@ -7,7 +7,7 @@ How the Flutter monorepo talks to the Ermeo backend. The BFF lives in a **siblin
 | Concern | Technology |
 |---------|------------|
 | API / BFF | FastAPI (Python 3.12+) + Uvicorn |
-| Auth | Firebase Auth (email/password), proxied by BFF |
+| Auth | Firebase Auth (email/password + Google/Apple via Identity Toolkit), proxied by BFF |
 | Database | Cloud Firestore |
 | Exercise catalog | Static `data/exercises.json` (loaded at startup) |
 | Contract | OpenAPI 3.1 — backend owns the canonical file |
@@ -34,7 +34,7 @@ flowchart LR
 ## Why this shape
 
 - **Contract-first:** mobile regenerates from `GET /openapi.yaml`; FastAPI matches that workflow.
-- **No Firebase Auth SDK in Flutter:** product auth is `/auth/register|login|refresh` on the BFF. Tokens fit `AuthInterceptor` and `SessionService` in `ermeo_api`.
+- **No Firebase Auth SDK in Flutter:** product auth is `/auth/register|login|federated|refresh` on the BFF. Tokens fit `AuthInterceptor` and `SessionService` in `ermeo_api`. Google/Apple use native SDKs (`google_sign_in` / `sign_in_with_apple`) only to obtain provider tokens; the BFF exchanges them via Identity Toolkit `signInWithIdp`.
 - **Firestore:** document-shaped domain (workouts, sessions, assignments) and Admin SDK already required for Auth.
 - **Package boundary:** only `ermeo_mobile` depends on `ermeo_api`. `ermeo_ui` stays free of Firebase. `ermeo_monitoring` may wrap Firebase **Crashlytics** (and similar observability SDKs), but must not add Firebase Auth or Firestore clients for product auth/data.
 
@@ -46,13 +46,14 @@ Do **not** add a Flutter Firebase Auth client, Supabase, Auth0, GraphQL, or gRPC
 - Protected routes: `Authorization: Bearer <accessToken>`.
 - Session `userId` values are **Firebase Auth UIDs** (opaque strings), not UUIDs.
 - Workout / session / assignment / profile IDs remain UUIDs where the OpenAPI `format: uuid` says so.
-- Roles: `athlete` | `instructor` | `admin` (set at register; enforced on assignments and athlete session reads).
+- Roles: `athlete` | `instructor` | `admin`. Self-serve onboarding sets `athlete` or `instructor` once via `PATCH /users/me`. Register and federated login create the Firestore profile with `role: null` until that step.
+- `GET /users/me` returns the current profile (`role` nullable) so the app can route to role selection.
 
 ## Local development
 
 1. Configure and run the sibling backend (see its README): `uvicorn app.main:app --reload --port 8000`.
 2. Run the app with default `ERMEO_API_BASE_URL=http://localhost:8000` (or Melos localhost target).
-3. After backend contract changes: `melos run generate:api` from this repo root.
+3. After backend contract changes: `melos run generate:api` from this repo root (falls back to `../backend/openapi/openapi.yaml` if the API is not running). Keep the hand-written `ermeo_api_client` facade in sync with new paths when codegen layouts differ.
 
 ## Errors
 

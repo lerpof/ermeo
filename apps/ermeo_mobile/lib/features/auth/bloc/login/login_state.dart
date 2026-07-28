@@ -49,6 +49,7 @@ final class LoginState {
     this.isSubmitting = false,
     this.failure,
     this.navigateToHome = false,
+    this.navigateToRoleSelection = false,
   });
 
   final String email;
@@ -56,6 +57,7 @@ final class LoginState {
   final bool isSubmitting;
   final LoginFailure? failure;
   final bool navigateToHome;
+  final bool navigateToRoleSelection;
 
   LoginState copyWith({
     String? email,
@@ -64,6 +66,7 @@ final class LoginState {
     LoginFailure? failure,
     bool clearFailure = false,
     bool? navigateToHome,
+    bool? navigateToRoleSelection,
     bool clearNavigation = false,
   }) {
     return LoginState(
@@ -74,6 +77,9 @@ final class LoginState {
       navigateToHome: clearNavigation
           ? false
           : (navigateToHome ?? this.navigateToHome),
+      navigateToRoleSelection: clearNavigation
+          ? false
+          : (navigateToRoleSelection ?? this.navigateToRoleSelection),
     );
   }
 
@@ -85,7 +91,8 @@ final class LoginState {
           other.password == password &&
           other.isSubmitting == isSubmitting &&
           other.failure == failure &&
-          other.navigateToHome == navigateToHome;
+          other.navigateToHome == navigateToHome &&
+          other.navigateToRoleSelection == navigateToRoleSelection;
 
   @override
   int get hashCode => Object.hash(
@@ -94,5 +101,6 @@ final class LoginState {
     isSubmitting,
     failure,
     navigateToHome,
+    navigateToRoleSelection,
   );
 }

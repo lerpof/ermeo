@@ -7,24 +7,35 @@ enum UserRole {
   String get value => name;
 }
 
+enum SelfServeRole {
+  athlete,
+  instructor;
+
+  String get value => name;
+}
+
+enum FederatedProvider {
+  google,
+  apple;
+
+  String get value => name;
+}
+
 class RegisterRequest {
   RegisterRequest({
     required this.email,
     required this.password,
-    required this.role,
     required this.displayName,
   });
 
   final String email;
   final String password;
-  final UserRole role;
   final String displayName;
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
-        'role': role.value,
-        'display_name': displayName,
+        'displayName': displayName,
       };
 }
 
@@ -37,6 +48,27 @@ class LoginRequest {
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
+      };
+}
+
+class FederatedLoginRequest {
+  FederatedLoginRequest({
+    required this.provider,
+    required this.idToken,
+    this.accessToken,
+    this.nonce,
+  });
+
+  final FederatedProvider provider;
+  final String idToken;
+  final String? accessToken;
+  final String? nonce;
+
+  Map<String, dynamic> toJson() => {
+        'provider': provider.value,
+        'idToken': idToken,
+        if (accessToken != null) 'accessToken': accessToken,
+        if (nonce != null) 'nonce': nonce,
       };
 }
 
@@ -67,4 +99,41 @@ class AuthTokens {
   final String refreshToken;
   final String tokenType;
   final int expiresIn;
+}
+
+class UserProfile {
+  UserProfile({
+    required this.id,
+    required this.email,
+    required this.displayName,
+    required this.profileId,
+    this.role,
+    this.bio,
+  });
+
+  factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
+        id: json['id'] as String,
+        email: json['email'] as String,
+        displayName: json['displayName'] as String,
+        profileId: json['profileId'] as String,
+        role: json['role'] == null
+            ? null
+            : UserRole.values.byName(json['role'] as String),
+        bio: json['bio'] as String?,
+      );
+
+  final String id;
+  final String email;
+  final String displayName;
+  final String profileId;
+  final UserRole? role;
+  final String? bio;
+}
+
+class UpdateUserRequest {
+  UpdateUserRequest({required this.role});
+
+  final SelfServeRole role;
+
+  Map<String, dynamic> toJson() => {'role': role.value};
 }

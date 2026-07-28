@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'er_localizations.dart';
@@ -45,16 +46,34 @@ class ErLocalizationsEn extends ErLocalizations {
   String get authRegisterDisplayNameLabel => 'Display name';
 
   @override
-  String get authRegisterRoleLabel => 'Role';
+  String get authLoginGoogleButton => 'Continue with Google';
+
+  @override
+  String get authLoginAppleButton => 'Continue with Apple';
+
+  @override
+  String get authRoleSelectionTitle => 'Choose your role';
+
+  @override
+  String get authRoleSelectionSubtitle => 'Tell us how you will use Ermeo.';
+
+  @override
+  String get authRoleSelectionAthlete => 'Athlete';
+
+  @override
+  String get authRoleSelectionInstructor => 'Instructor';
+
+  @override
+  String get authRoleSelectionContinueButton => 'Continue';
+
+  @override
+  String get authValidationRoleRequired => 'Please select a role';
 
   @override
   String get authRegisterRoleAthlete => 'Athlete';
 
   @override
   String get authRegisterRoleInstructor => 'Instructor';
-
-  @override
-  String get authRegisterRoleAdmin => 'Admin';
 
   @override
   String get authValidationEmailRequired => 'Email is required';

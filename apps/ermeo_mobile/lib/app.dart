@@ -20,8 +20,11 @@ class ErmeoMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<AuthRepository>.value(
-      value: authRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>.value(value: authRepository),
+        RepositoryProvider<AppSessionService>.value(value: sessionService),
+      ],
       child: MaterialApp.router(
         localizationsDelegates: erLocalizationDelegates,
         supportedLocales: ErLocalizations.supportedLocales,

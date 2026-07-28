@@ -5,6 +5,7 @@ import 'package:ermeo_mobile/core/session/session_service.dart';
 import 'package:ermeo_mobile/features/auth/presentation/pages/auth_shell_page.dart';
 import 'package:ermeo_mobile/features/auth/presentation/pages/login_page.dart';
 import 'package:ermeo_mobile/features/auth/presentation/pages/register_page.dart';
+import 'package:ermeo_mobile/features/auth/presentation/pages/role_selection_page.dart';
 import 'package:ermeo_mobile/features/home/presentation/pages/home_page.dart';
 
 part 'app_router.gr.dart';
@@ -27,6 +28,10 @@ class AppRouter extends RootStackRouter {
       path: '/home',
       page: HomeRoute.page,
       initial: true,
+    ),
+    AutoRoute(
+      path: '/onboarding/role',
+      page: RoleSelectionRoute.page,
     ),
     AutoRoute(
       path: '/auth',
