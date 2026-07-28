@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "923295688170-iu6o0f3lk5ipjt4tjp9is5tg17oll5q7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lerpof.ermeo",
+            "certificate_hash": "2f5c154d26a4a1aafcb4ea310dfb2e18fb1f2d17"
+          }
+        },
+        {
           "client_id": "923295688170-kiknf3447in1qlak52danp5o6c4j5nv0.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -49,6 +57,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "923295688170-o0n9k4ur7u2jc2trr5l4ft02enh2694k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lerpof.ermeo.dev",
+            "certificate_hash": "2f5c154d26a4a1aafcb4ea310dfb2e18fb1f2d17"
+          }
+        },
         {
           "client_id": "923295688170-kiknf3447in1qlak52danp5o6c4j5nv0.apps.googleusercontent.com",
           "client_type": 3

@@ -5,10 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:ermeo_mobile/core/session/session_state.dart';
 import 'package:ermeo_mobile/features/auth/models/auth_role.dart';
 
-class AppSessionService extends ChangeNotifier implements api.SessionService {
+class AppSessionService implements api.SessionService {
   AppSessionService({required this._tokenStorage});
 
   final TokenSecureStorage _tokenStorage;
+
+  final ChangeNotifier _notifier = ChangeNotifier();
 
   SessionStatus _status = SessionStatus.unknown;
 
@@ -20,7 +22,12 @@ class AppSessionService extends ChangeNotifier implements api.SessionService {
 
   bool _profileLoaded = false;
 
-  Listenable get listenable => this;
+  Listenable get listenable => _notifier;
+
+  void addListener(VoidCallback listener) => _notifier.addListener(listener);
+
+  void removeListener(VoidCallback listener) =>
+      _notifier.removeListener(listener);
 
   SessionStatus get status => _status;
 
@@ -47,13 +54,12 @@ class AppSessionService extends ChangeNotifier implements api.SessionService {
     final tokens = await _tokenStorage.readTokens();
     if (tokens == null) {
       await clearSession();
-      return;
+    } else {
+      await _persistTokens(
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+      );
     }
-
-    await _persistTokens(
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-    );
   }
 
   Future<void> setSession({
@@ -66,13 +72,13 @@ class AppSessionService extends ChangeNotifier implements api.SessionService {
   void setProfile({required AuthRole? role}) {
     _role = role;
     _profileLoaded = true;
-    notifyListeners();
+    _notifier.notifyListeners();
   }
 
   void clearProfile() {
     _role = null;
     _profileLoaded = false;
-    notifyListeners();
+    _notifier.notifyListeners();
   }
 
   @override
@@ -110,6 +116,6 @@ class AppSessionService extends ChangeNotifier implements api.SessionService {
       return;
     }
     _status = status;
-    notifyListeners();
+    _notifier.notifyListeners();
   }
 }
