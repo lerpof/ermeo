@@ -10,7 +10,7 @@ class AppSessionService implements api.SessionService {
 
   final TokenSecureStorage _tokenStorage;
 
-  final ChangeNotifier _notifier = ChangeNotifier();
+  final _SessionChangeNotifier _notifier = _SessionChangeNotifier();
 
   SessionStatus _status = SessionStatus.unknown;
 
@@ -72,13 +72,13 @@ class AppSessionService implements api.SessionService {
   void setProfile({required AuthRole? role}) {
     _role = role;
     _profileLoaded = true;
-    _notifier.notifyListeners();
+    _notifier.notify();
   }
 
   void clearProfile() {
     _role = null;
     _profileLoaded = false;
-    _notifier.notifyListeners();
+    _notifier.notify();
   }
 
   @override
@@ -116,6 +116,12 @@ class AppSessionService implements api.SessionService {
       return;
     }
     _status = status;
-    _notifier.notifyListeners();
+    _notifier.notify();
   }
+}
+
+/// Private [ChangeNotifier] subclass so [notifyListeners] can be invoked
+/// from [AppSessionService] without violating the protected API.
+class _SessionChangeNotifier extends ChangeNotifier {
+  void notify() => notifyListeners();
 }
