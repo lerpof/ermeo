@@ -5,6 +5,7 @@ import 'package:ermeo_l10n/ermeo_l10n.dart';
 import 'package:ermeo_ui/ermeo_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:ermeo_mobile/core/router/app_router.dart';
 import 'package:ermeo_mobile/core/session/session_service.dart';
@@ -111,6 +112,7 @@ class _LoginView extends StatelessWidget {
                 const SizedBox(height: 16),
                 ErButton(
                   label: l10n.authLoginGoogleButton,
+                  icon: FontAwesomeIcons.google.data,
                   variant: ErButtonVariant.secondary,
                   onPressed: state.isSubmitting
                       ? null
@@ -122,6 +124,7 @@ class _LoginView extends StatelessWidget {
                   const SizedBox(height: 12),
                   ErButton(
                     label: l10n.authLoginAppleButton,
+                    icon: Icons.apple,
                     variant: ErButtonVariant.secondary,
                     onPressed: state.isSubmitting
                         ? null
